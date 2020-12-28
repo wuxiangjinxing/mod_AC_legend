@@ -85,7 +85,7 @@
 			this.m.HairColors = this.Const.HairColors.All;
 			this.m.Beards = this.Const.Beards.Untidy;
 			this.m.Bodies = this.Const.Bodies.AllMale;
-			this.m.IsLowborn = false;
+			this.m.IsLowborn = false;			
 			this.m.Level = this.Math.rand(1, 2);
 		}
 
@@ -541,10 +541,11 @@
 		}
 
 		local setStartValuesEx = o.setStartValuesEx;
-		o.setStartValuesEx = function(_backgrounds, _addTraits = true)
+		o.setStartValuesEx = function( _backgrounds, _addTraits = true, _gender = -1, _addEquipment = true )
 		{
-			setStartValuesEx(_backgrounds, _addTraits = true);
-			if (this.m.Background.m.ID == "background.houndmaster" && this.World.State.getCurrentTown() != null && (BeastmasterSettlementsLarge.find(this.World.State.getCurrentTown().m.Description) || BeastmasterSettlementsMedium.find(this.World.State.getCurrentTown().m.Description)))
+			setStartValuesEx( _backgrounds, _addTraits = true, _gender = -1, _addEquipment = true );
+			//if (this.m.Background.m.ID == "background.houndmaster" && this.World.State.getCurrentTown() != null && (BeastmasterSettlementsLarge.find(this.World.State.getCurrentTown().m.Description) || BeastmasterSettlementsMedium.find(this.World.State.getCurrentTown().m.Description)))
+			if (true)
 			{
 				this.m.Background = null;
 				this.m.Title = "";
@@ -557,65 +558,34 @@
 					if (r.getID() != "special.mood_check")
 						this.m.Skills.removeByID(r.getID());
 				}
-				remove = this.m.Skills.query(this.Const.SkillType.Trait);
-				foreach(r in remove)
-				{
-					if (r.getID() != "special.mood_check")
-						this.m.Skills.removeByID(r.getID());
-				}
 
 				local background = this.new("scripts/skills/backgrounds/houndmaster_background");
 				background.applyBeastmasterModification();
 				this.m.Skills.add(background);
 				this.m.Background = background;
 				this.m.Ethnicity = this.m.Background.getEthnicity();
-				background.buildAttributes();
+				
+				local attributes = background.buildPerkTree();
+				if (this.getFlags().has("PlayerZombie"))
+				{
+					this.m.StarWeights = background.buildAttributes("zombie", attributes);
+				}
+				else if (this.getFlags().has("PlayerSkeleton"))
+				{
+					this.m.StarWeights = background.buildAttributes("skeleton", attributes);
+				}
+				else
+				{
+					this.m.StarWeights = background.buildAttributes(null, attributes);
+				}
+				
 				background.buildDescription();
 
-				if (_addTraits)
+				if (_addEquipment)
 				{
-					local maxTraits = 2;
-					local traits = [
-						background
-					];
-
-					for( local i = 0; i < maxTraits; i = ++i )
-					{
-						for( local j = 0; j < 10; j = ++j )
-						{
-							local trait = this.Const.CharacterTraits[this.Math.rand(0, this.Const.CharacterTraits.len() - 1)];
-							local nextTrait = false;
-
-							for( local k = 0; k < traits.len(); k = ++k )
-							{
-								if (traits[k].getID() == trait[0] || traits[k].isExcluded(trait[0]))
-								{
-									nextTrait = true;
-									break;
-								}
-							}
-
-							if (!nextTrait)
-							{
-								traits.push(this.new(trait[1]));
-								break;
-							}
-						}
-					}
-
-					for( local i = 1; i < traits.len(); i = ++i )
-					{
-						this.m.Skills.add(traits[i]);
-
-						if (traits[i].getContainer() != null)
-						{
-							traits[i].addTitle();
-						}
-					}
+					background.addEquipment();
 				}
-
-				background.addEquipment();
-				background.setAppearance();
+				
 				background.buildDescription(true);
 				this.m.Skills.update();
 				local p = this.m.CurrentProperties;
@@ -623,7 +593,7 @@
 
 				if (_addTraits)
 				{
-					this.fillTalentValues();
+					this.fillTalentValues(3);
 					this.fillAttributeLevelUpValues(this.Const.XP.MaxLevelWithPerkpoints - 1);
 				}
 			}
