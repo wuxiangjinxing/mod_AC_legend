@@ -86,7 +86,7 @@ this.companions_spider <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.AIAgent.setActor(this);
 	}
 
-	function setItem( _i )
+	function setItem(_i)
 	{
 		if (typeof _i == "instance")
 		{
@@ -98,7 +98,7 @@ this.companions_spider <- this.inherit("scripts/entity/tactical/actor", {
 		}
 	}
 
-	function setName( _n )
+	function setName(_n)
 	{
 		this.m.Name = _n;
 	}
@@ -108,7 +108,7 @@ this.companions_spider <- this.inherit("scripts/entity/tactical/actor", {
 		return this.m.Name;
 	}
 
-	function setVariant( _v )
+	function setVariant(_v)
 	{
 		this.getSprite("body").setBrush("bust_spider_body_0" + _v);
 		this.getSprite("head").setBrush("bust_spider_head_01");
@@ -116,7 +116,7 @@ this.companions_spider <- this.inherit("scripts/entity/tactical/actor", {
 		this.setSize(this.Math.rand(70, 90) * 0.01);
 	}
 
-	function setSize( _s )
+	function setSize(_s)
 	{
 		this.m.Size = _s;
 		this.m.DecapitateBloodAmount = _s * 0.75;
@@ -318,7 +318,7 @@ this.companions_spider <- this.inherit("scripts/entity/tactical/actor", {
 		}
 	}
 
-	function onActorKilled( _actor, _tile, _skill )
+	function onActorKilled(_actor, _tile, _skill)
 	{
 		this.actor.onActorKilled(_actor, _tile, _skill);
 
@@ -330,14 +330,12 @@ this.companions_spider <- this.inherit("scripts/entity/tactical/actor", {
 			foreach( bro in brothers )
 			{
 				bro.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-				local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
 
+				local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
 				if (acc != null && "setType" in acc)
 				{
 					if (acc.getType() != null)
-					{
 						acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-					}
 				}
 			}
 		}
@@ -368,12 +366,10 @@ this.companions_spider <- this.inherit("scripts/entity/tactical/actor", {
 		{
 			body.varySaturation(0.3);
 		}
-
 		if (this.Math.rand(0, 100) < 90)
 		{
 			body.varyColor(0.1, 0.1, 0.1);
 		}
-
 		if (this.Math.rand(0, 100) < 90)
 		{
 			body.varyBrightness(0.1);
@@ -405,7 +401,8 @@ this.companions_spider <- this.inherit("scripts/entity/tactical/actor", {
 
 	function applyCompanionScaling()
 	{
-		local propertiesNew = {
+		local propertiesNew =
+		{
 			ActionPoints = 11,
 			Hitpoints = this.m.Item.m.Attributes.Hitpoints,
 			Stamina = this.m.Item.m.Attributes.Stamina,
@@ -415,10 +412,7 @@ this.companions_spider <- this.inherit("scripts/entity/tactical/actor", {
 			RangedSkill = this.m.Item.m.Attributes.RangedSkill,
 			MeleeDefense = this.m.Item.m.Attributes.MeleeDefense,
 			RangedDefense = this.m.Item.m.Attributes.RangedDefense,
-			Armor = [
-				20,
-				20
-			],
+			Armor = [20, 20],
 			FatigueEffectMult = 1.0,
 			MoraleEffectMult = 1.0,
 			FatigueRecoveryRate = 20
@@ -428,13 +422,11 @@ this.companions_spider <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.CurrentProperties = propertiesBase;
 		this.m.Hitpoints = propertiesBase.Hitpoints;
 
-		foreach( quirk in this.m.Item.m.Quirks )
+
+		foreach(quirk in this.m.Item.m.Quirks)
 		{
 			this.m.Skills.add(this.new(quirk));
 		}
-
 		this.m.AIAgent.addQuirkBehaviors();
 	}
-
 });
-

@@ -44,7 +44,7 @@ this.companions_nightmare_skill <- this.inherit("scripts/skills/skill", {
 		local bonusMin = this.getContainer().getActor().getSkills().hasSkill("quirk.good_boy") ? (this.getContainer().getActor().m.Item.m.Level - 10.0) * 0.5 : 0;
 		local bonusMax = this.getContainer().getActor().getSkills().hasSkill("quirk.good_boy") ? (this.getContainer().getActor().m.Item.m.Level - 10.0) * 1.0 : 0;
 		local bonusRng = this.Math.floor(this.Math.rand(bonusMin, bonusMax));
-		return this.Math.max(5 + bonusRng, 25 - this.Math.floor(_actor.getCurrentProperties().getBravery() * 0.25) + bonusRng);
+		return this.Math.max(5 + bonusRng, (25 - this.Math.floor(_actor.getCurrentProperties().getBravery() * 0.25)) + bonusRng);
 	}
 
 	function isUsable()
@@ -120,6 +120,4 @@ this.companions_nightmare_skill <- this.inherit("scripts/skills/skill", {
 		hitInfo.FatalityChanceMult = 0.0;
 		target.onDamageReceived(user, this, hitInfo);
 	}
-
 });
-

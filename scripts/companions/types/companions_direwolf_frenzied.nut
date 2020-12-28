@@ -21,6 +21,4 @@ this.companions_direwolf_frenzied <- this.inherit("scripts/companions/types/comp
 		local head_frenzy = this.getSprite("head_frenzy");
 		head_frenzy.setBrush(this.getSprite("head").getBrush().Name + "_frenzy");
 	}
-
 });
-

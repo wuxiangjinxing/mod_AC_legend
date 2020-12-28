@@ -3,7 +3,7 @@ this.companions_good_boy <- this.inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "quirk.good_boy";
-		this.m.Name = "Good Boy";
+		this.m.Name = "Good Boy/Girl";
 		this.m.Description = "Who\'s a good boy?!";
 		this.m.Icon = "skills/status_effect_06.png";
 		this.m.Type = this.Const.SkillType.StatusEffect;
@@ -35,6 +35,4 @@ this.companions_good_boy <- this.inherit("scripts/skills/skill", {
 		_properties.DamageRegularMin += this.Math.floor(0.5 * bonus);
 		_properties.DamageRegularMax += this.Math.floor(1.0 * bonus);
 	}
-
 });
-

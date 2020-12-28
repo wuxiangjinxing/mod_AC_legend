@@ -7,7 +7,7 @@ this.companions_blank <- this.inherit("scripts/skills/skill", {
 		this.m.ID = "passives.blank_blank";
 		this.m.Icon = "";
 		this.m.Type = this.Const.SkillType.Passive;
-		this.m.Order = this.Const.SkillOrder.VeryLast;
+		this.m.Order = this.Const.SkillOrder.BeforeLast + 100;
 		this.m.IsActive = false;
 		this.m.IsStacking = false;
 		this.m.IsHidden = true;
@@ -18,7 +18,7 @@ this.companions_blank <- this.inherit("scripts/skills/skill", {
 		return this.m.Item;
 	}
 
-	function setItem( _i )
+	function setItem(_i)
 	{
 		if (typeof _i == "instance")
 		{
@@ -33,6 +33,4 @@ this.companions_blank <- this.inherit("scripts/skills/skill", {
 	function applyCompanionModification()
 	{
 	}
-
 });
-

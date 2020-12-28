@@ -53,38 +53,35 @@ this.companions_swallow_whole <- this.inherit("scripts/skills/skill", {
 		{
 			return false;
 		}
-
 		if (ET == ETC.SkeletonLich || ET == ETC.SkeletonLichMirrorImage || ET == ETC.SkeletonPhylactery || ET == ETC.FlyingSkull)
 		{
 			return false;
 		}
-
 		if (ET == ETC.BarbarianMadman || ET == ETC.TricksterGod)
 		{
 			return false;
 		}
-
 		if (ET == ETC.ZombieBoss)
 		{
 			return false;
 		}
-
 		if (ET == ETC.SkeletonBoss)
 		{
 			return false;
 		}
-
 		if (ET == ETC.OrcWarlord)
 		{
 			return false;
 		}
-
 		if (ET == ETC.BarbarianChosen)
 		{
 			return false;
 		}
-
 		if (ET == ETC.Lindwurm)
+		{
+			return false;
+		}
+		if (ET == ETC.Mortar)
 		{
 			return false;
 		}
@@ -130,6 +127,4 @@ this.companions_swallow_whole <- this.inherit("scripts/skills/skill", {
 
 		return true;
 	}
-
 });
-

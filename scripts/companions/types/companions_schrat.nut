@@ -8,7 +8,7 @@ this.companions_schrat <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.Type = this.Const.EntityType.Schrat;
 		this.m.BloodType = this.Const.BloodType.Wood;
 		this.m.XP = this.Const.Tactical.Actor.Schrat.XP;
-		this.m.IsActingImmediately = true;
+		this.m.IsActingImmediately = false;
 		this.m.BloodSplatterOffset = this.createVec(0, 0);
 		this.m.DecapitateSplatterOffset = this.createVec(-10, -25);
 		this.m.DecapitateBloodAmount = 1.0;
@@ -65,7 +65,7 @@ this.companions_schrat <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.AIAgent.setActor(this);
 	}
 
-	function setItem( _i )
+	function setItem(_i)
 	{
 		if (typeof _i == "instance")
 		{
@@ -77,7 +77,7 @@ this.companions_schrat <- this.inherit("scripts/entity/tactical/actor", {
 		}
 	}
 
-	function setName( _n )
+	function setName(_n)
 	{
 		this.m.Name = _n;
 	}
@@ -87,7 +87,7 @@ this.companions_schrat <- this.inherit("scripts/entity/tactical/actor", {
 		return this.m.Name;
 	}
 
-	function setVariant( _v )
+	function setVariant(_v)
 	{
 		this.getSprite("body").setBrush("bust_schrat_body_01");
 		this.getSprite("head").setBrush("bust_schrat_head_0" + _v);
@@ -175,7 +175,7 @@ this.companions_schrat <- this.inherit("scripts/entity/tactical/actor", {
 		}
 	}
 
-	function onActorKilled( _actor, _tile, _skill )
+	function onActorKilled(_actor, _tile, _skill)
 	{
 		this.actor.onActorKilled(_actor, _tile, _skill);
 
@@ -187,14 +187,12 @@ this.companions_schrat <- this.inherit("scripts/entity/tactical/actor", {
 			foreach( bro in brothers )
 			{
 				bro.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-				local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
 
+				local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
 				if (acc != null && "setType" in acc)
 				{
 					if (acc.getType() != null)
-					{
 						acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-					}
 				}
 			}
 		}
@@ -234,8 +232,8 @@ this.companions_schrat <- this.inherit("scripts/entity/tactical/actor", {
 		injury.setBrush("bust_schrat_01_injured");
 		this.addDefaultStatusSprites();
 		this.getSprite("status_rooted").Scale = 0.54;
-		this.setSpriteOffset("status_rooted", this.createVec(0, 0));
-		this.setSpriteOffset("status_stunned", this.createVec(0, 0));
+		this.setSpriteOffset("status_rooted", this.createVec(0, -0));
+		this.setSpriteOffset("status_stunned", this.createVec(0, -0));
 		this.setSpriteOffset("arrow", this.createVec(0, 10));
 		this.m.Skills.add(this.new("scripts/skills/racial/schrat_racial"));
 		this.m.Skills.add(this.new("scripts/skills/actives/grow_shield_skill"));
@@ -246,7 +244,8 @@ this.companions_schrat <- this.inherit("scripts/entity/tactical/actor", {
 
 	function applyCompanionScaling()
 	{
-		local propertiesNew = {
+		local propertiesNew =
+		{
 			ActionPoints = 7,
 			Hitpoints = this.m.Item.m.Attributes.Hitpoints,
 			Stamina = this.m.Item.m.Attributes.Stamina,
@@ -256,10 +255,7 @@ this.companions_schrat <- this.inherit("scripts/entity/tactical/actor", {
 			RangedSkill = this.m.Item.m.Attributes.RangedSkill,
 			MeleeDefense = this.m.Item.m.Attributes.MeleeDefense,
 			RangedDefense = this.m.Item.m.Attributes.RangedDefense,
-			Armor = [
-				0,
-				0
-			],
+			Armor = [0, 0],
 			FatigueEffectMult = 1.0,
 			MoraleEffectMult = 1.0,
 			FatigueRecoveryRate = 25
@@ -269,13 +265,11 @@ this.companions_schrat <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.CurrentProperties = propertiesBase;
 		this.m.Hitpoints = propertiesBase.Hitpoints;
 
-		foreach( quirk in this.m.Item.m.Quirks )
+
+		foreach(quirk in this.m.Item.m.Quirks)
 		{
 			this.m.Skills.add(this.new(quirk));
 		}
-
 		this.m.AIAgent.addQuirkBehaviors();
 	}
-
 });
-

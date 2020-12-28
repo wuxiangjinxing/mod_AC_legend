@@ -71,7 +71,7 @@ this.companions_warwolf <- this.inherit("scripts/entity/tactical/actor", {
 		return this.m.Name;
 	}
 
-	function setVariant( _v )
+	function setVariant(_v)
 	{
 		this.getSprite("body").setBrush("bust_wolf_0" + _v + "_body");
 		this.getSprite("head").setBrush("bust_wolf_0" + _v + "_head");
@@ -178,7 +178,7 @@ this.companions_warwolf <- this.inherit("scripts/entity/tactical/actor", {
 		}
 	}
 
-	function onActorKilled( _actor, _tile, _skill )
+	function onActorKilled(_actor, _tile, _skill)
 	{
 		this.actor.onActorKilled(_actor, _tile, _skill);
 
@@ -190,14 +190,12 @@ this.companions_warwolf <- this.inherit("scripts/entity/tactical/actor", {
 			foreach( bro in brothers )
 			{
 				bro.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-				local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
 
+				local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
 				if (acc != null && "setType" in acc)
 				{
 					if (acc.getType() != null)
-					{
 						acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-					}
 				}
 			}
 		}
@@ -246,7 +244,8 @@ this.companions_warwolf <- this.inherit("scripts/entity/tactical/actor", {
 
 	function applyCompanionScaling()
 	{
-		local propertiesNew = {
+		local propertiesNew =
+		{
 			ActionPoints = 12,
 			Hitpoints = this.m.Item.m.Attributes.Hitpoints,
 			Stamina = this.m.Item.m.Attributes.Stamina,
@@ -256,10 +255,7 @@ this.companions_warwolf <- this.inherit("scripts/entity/tactical/actor", {
 			RangedSkill = this.m.Item.m.Attributes.RangedSkill,
 			MeleeDefense = this.m.Item.m.Attributes.MeleeDefense,
 			RangedDefense = this.m.Item.m.Attributes.RangedDefense,
-			Armor = [
-				0,
-				0
-			],
+			Armor = [0, 0],
 			FatigueEffectMult = 1.0,
 			MoraleEffectMult = 1.0,
 			FatigueRecoveryRate = 20
@@ -269,13 +265,11 @@ this.companions_warwolf <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.CurrentProperties = propertiesBase;
 		this.m.Hitpoints = propertiesBase.Hitpoints;
 
-		foreach( quirk in this.m.Item.m.Quirks )
+
+		foreach(quirk in this.m.Item.m.Quirks)
 		{
 			this.m.Skills.add(this.new(quirk));
 		}
-
 		this.m.AIAgent.addQuirkBehaviors();
 	}
-
 });
-

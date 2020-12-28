@@ -8,7 +8,7 @@ this.companions_noodle <- this.inherit("scripts/entity/tactical/actor", {
 	{
 		this.m.Type = this.Const.EntityType.Lindwurm;
 		this.m.BloodType = this.Const.BloodType.Green;
-		this.m.IsActingImmediately = true;
+		this.m.IsActingImmediately = false;
 		this.m.XP = this.Const.Tactical.Actor.Lindwurm.XP;
 		this.m.BloodSplatterOffset = this.createVec(0, 0);
 		this.m.DecapitateSplatterOffset = this.createVec(-30, -15);
@@ -81,7 +81,7 @@ this.companions_noodle <- this.inherit("scripts/entity/tactical/actor", {
 		return this.m.Name;
 	}
 
-	function setVariant( _v )
+	function setVariant(_v)
 	{
 	}
 
@@ -247,7 +247,7 @@ this.companions_noodle <- this.inherit("scripts/entity/tactical/actor", {
 		}
 	}
 
-	function onActorKilled( _actor, _tile, _skill )
+	function onActorKilled(_actor, _tile, _skill)
 	{
 		this.actor.onActorKilled(_actor, _tile, _skill);
 
@@ -259,14 +259,12 @@ this.companions_noodle <- this.inherit("scripts/entity/tactical/actor", {
 			foreach( bro in brothers )
 			{
 				bro.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-				local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
 
+				local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
 				if (acc != null && "setType" in acc)
 				{
 					if (acc.getType() != null)
-					{
 						acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-					}
 				}
 			}
 		}
@@ -323,13 +321,13 @@ this.companions_noodle <- this.inherit("scripts/entity/tactical/actor", {
 			local myTile = this.getTile();
 			local spawnTile;
 
-			if (myTile.hasNextTile(this.Const.Direction.NW) && myTile.getNextTile(this.Const.Direction.NW).IsEmpty)
+			if (myTile.hasNextTile(this.Const.Direction.NE) && myTile.getNextTile(this.Const.Direction.NE).IsEmpty)
 			{
-				spawnTile = myTile.getNextTile(this.Const.Direction.NW);
+				spawnTile = myTile.getNextTile(this.Const.Direction.NE);
 			}
-			else if (myTile.hasNextTile(this.Const.Direction.SW) && myTile.getNextTile(this.Const.Direction.SW).IsEmpty)
+			else if (myTile.hasNextTile(this.Const.Direction.SE) && myTile.getNextTile(this.Const.Direction.SE).IsEmpty)
 			{
-				spawnTile = myTile.getNextTile(this.Const.Direction.SW);
+				spawnTile = myTile.getNextTile(this.Const.Direction.SE);
 			}
 			else if (myTile.hasNextTile(this.Const.Direction.N) && myTile.getNextTile(this.Const.Direction.N).IsEmpty)
 			{
@@ -339,13 +337,13 @@ this.companions_noodle <- this.inherit("scripts/entity/tactical/actor", {
 			{
 				spawnTile = myTile.getNextTile(this.Const.Direction.S);
 			}
-			else if (myTile.hasNextTile(this.Const.Direction.NE) && myTile.getNextTile(this.Const.Direction.NE).IsEmpty)
+			else if (myTile.hasNextTile(this.Const.Direction.NW) && myTile.getNextTile(this.Const.Direction.NW).IsEmpty)
 			{
-				spawnTile = myTile.getNextTile(this.Const.Direction.NE);
+				spawnTile = myTile.getNextTile(this.Const.Direction.NW);
 			}
-			else if (myTile.hasNextTile(this.Const.Direction.SE) && myTile.getNextTile(this.Const.Direction.S).IsEmpty)
+			else if (myTile.hasNextTile(this.Const.Direction.SW) && myTile.getNextTile(this.Const.Direction.SW).IsEmpty)
 			{
-				spawnTile = myTile.getNextTile(this.Const.Direction.SE);
+				spawnTile = myTile.getNextTile(this.Const.Direction.SW);
 			}
 
 			if (spawnTile != null)
@@ -370,7 +368,8 @@ this.companions_noodle <- this.inherit("scripts/entity/tactical/actor", {
 
 	function applyCompanionScaling()
 	{
-		local propertiesNew = {
+		local propertiesNew =
+		{
 			ActionPoints = 7,
 			Hitpoints = this.m.Item.m.Attributes.Hitpoints,
 			Stamina = this.m.Item.m.Attributes.Stamina,
@@ -380,10 +379,7 @@ this.companions_noodle <- this.inherit("scripts/entity/tactical/actor", {
 			RangedSkill = this.m.Item.m.Attributes.RangedSkill,
 			MeleeDefense = this.m.Item.m.Attributes.MeleeDefense,
 			RangedDefense = this.m.Item.m.Attributes.RangedDefense,
-			Armor = [
-				400,
-				200
-			],
+			Armor = [400, 200],
 			FatigueEffectMult = 1.0,
 			MoraleEffectMult = 1.0,
 			FatigueRecoveryRate = 30
@@ -393,12 +389,13 @@ this.companions_noodle <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.CurrentProperties = propertiesBase;
 		this.m.Hitpoints = propertiesBase.Hitpoints;
 
-		foreach( quirk in this.m.Item.m.Quirks )
+
+		foreach(quirk in this.m.Item.m.Quirks)
 		{
 			this.m.Skills.add(this.new(quirk));
 		}
-
 		this.m.AIAgent.addQuirkBehaviors();
+
 
 		if (this.m.Tail != null)
 		{
@@ -406,6 +403,4 @@ this.companions_noodle <- this.inherit("scripts/entity/tactical/actor", {
 			this.m.Tail.applyCompanionScaling();
 		}
 	}
-
 });
-

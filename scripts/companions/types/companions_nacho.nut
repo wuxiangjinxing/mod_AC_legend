@@ -103,7 +103,7 @@ this.companions_nacho <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.AIAgent.setActor(this);
 	}
 
-	function setItem( _i )
+	function setItem(_i)
 	{
 		if (typeof _i == "instance")
 		{
@@ -115,7 +115,7 @@ this.companions_nacho <- this.inherit("scripts/entity/tactical/actor", {
 		}
 	}
 
-	function setName( _n )
+	function setName(_n)
 	{
 		this.m.Name = _n;
 	}
@@ -125,11 +125,10 @@ this.companions_nacho <- this.inherit("scripts/entity/tactical/actor", {
 		return this.m.Name;
 	}
 
-	function setVariant( _v )
+	function setVariant(_v)
 	{
 		this.m.Head = _v;
 		this.m.Size = 1;
-
 		if (this.m.Size == 1)
 		{
 			this.getSprite("body").setBrush("bust_ghoul_body_01");
@@ -147,7 +146,6 @@ this.companions_nacho <- this.inherit("scripts/entity/tactical/actor", {
 			this.setSpriteOffset("status_rooted", this.createVec(-4, 10));
 			this.setSpriteOffset("status_rooted_back", this.createVec(-4, 10));
 		}
-
 		this.setDirty(true);
 	}
 
@@ -387,7 +385,7 @@ this.companions_nacho <- this.inherit("scripts/entity/tactical/actor", {
 		}
 	}
 
-	function onActorKilled( _actor, _tile, _skill )
+	function onActorKilled(_actor, _tile, _skill)
 	{
 		this.actor.onActorKilled(_actor, _tile, _skill);
 
@@ -399,14 +397,12 @@ this.companions_nacho <- this.inherit("scripts/entity/tactical/actor", {
 			foreach( bro in brothers )
 			{
 				bro.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-				local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
 
+				local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
 				if (acc != null && "setType" in acc)
 				{
 					if (acc.getType() != null)
-					{
 						acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-					}
 				}
 			}
 		}
@@ -446,12 +442,13 @@ this.companions_nacho <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.Skills.add(this.new("scripts/skills/actives/ghoul_claws"));
 		this.m.Skills.add(this.new("scripts/skills/actives/gruesome_feast"));
 		this.m.Skills.add(this.new("scripts/skills/effects/gruesome_feast_effect"));
-		this.m.Skills.add(this.new("scripts/companions/skills/companions_swallow_whole"));
+		this.m.Skills.add(this.new("scripts/companions/skills/companions_swallow_whole")); // modified version of the original that ignores bosses and special entities
 	}
 
 	function applyCompanionScaling()
 	{
-		local propertiesNew = {
+		local propertiesNew =
+		{
 			ActionPoints = 9,
 			Hitpoints = this.m.Item.m.Attributes.Hitpoints,
 			Stamina = this.m.Item.m.Attributes.Stamina,
@@ -461,10 +458,7 @@ this.companions_nacho <- this.inherit("scripts/entity/tactical/actor", {
 			RangedSkill = this.m.Item.m.Attributes.RangedSkill,
 			MeleeDefense = this.m.Item.m.Attributes.MeleeDefense,
 			RangedDefense = this.m.Item.m.Attributes.RangedDefense,
-			Armor = [
-				0,
-				0
-			],
+			Armor = [0, 0],
 			FatigueEffectMult = 1.0,
 			MoraleEffectMult = 1.0,
 			FatigueRecoveryRate = 15
@@ -474,13 +468,11 @@ this.companions_nacho <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.CurrentProperties = propertiesBase;
 		this.m.Hitpoints = propertiesBase.Hitpoints;
 
-		foreach( quirk in this.m.Item.m.Quirks )
+
+		foreach(quirk in this.m.Item.m.Quirks)
 		{
 			this.m.Skills.add(this.new(quirk));
 		}
-
 		this.m.AIAgent.addQuirkBehaviors();
 	}
-
 });
-

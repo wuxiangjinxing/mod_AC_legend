@@ -33,6 +33,4 @@ this.companions_healthy <- this.inherit("scripts/skills/skill", {
 	{
 		_properties.Hitpoints += 25;
 	}
-
 });
-

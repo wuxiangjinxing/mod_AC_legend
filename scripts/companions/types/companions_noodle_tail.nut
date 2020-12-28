@@ -9,6 +9,7 @@ this.companions_noodle_tail <- this.inherit("scripts/entity/tactical/actor", {
 	{
 		this.m.Type = this.Const.EntityType.Lindwurm;
 		this.m.BloodType = this.Const.BloodType.Green;
+		this.m.IsActingImmediately = false;
 		this.m.XP = this.Const.Tactical.Actor.Lindwurm.XP;
 		this.m.BloodSplatterOffset = this.createVec(0, 0);
 		this.m.DecapitateSplatterOffset = this.createVec(-10, -25);
@@ -67,7 +68,7 @@ this.companions_noodle_tail <- this.inherit("scripts/entity/tactical/actor", {
 		return this.m.Name;
 	}
 
-	function setVariant( _v )
+	function setVariant(_v)
 	{
 	}
 
@@ -509,7 +510,7 @@ this.companions_noodle_tail <- this.inherit("scripts/entity/tactical/actor", {
 		}
 	}
 
-	function onActorKilled( _actor, _tile, _skill )
+	function onActorKilled(_actor, _tile, _skill)
 	{
 		this.actor.onActorKilled(_actor, _tile, _skill);
 
@@ -521,14 +522,12 @@ this.companions_noodle_tail <- this.inherit("scripts/entity/tactical/actor", {
 			foreach( bro in brothers )
 			{
 				bro.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-				local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
 
+				local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
 				if (acc != null && "setType" in acc)
 				{
 					if (acc.getType() != null)
-					{
 						acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-					}
 				}
 			}
 		}
@@ -591,20 +590,18 @@ this.companions_noodle_tail <- this.inherit("scripts/entity/tactical/actor", {
 
 	function applyCompanionScaling()
 	{
-		local propertiesNew = {
+		local propertiesNew =
+		{
 			ActionPoints = 7,
 			Hitpoints = this.m.Item.m.Attributes.Hitpoints,
 			Stamina = this.m.Item.m.Attributes.Stamina,
 			Bravery = this.m.Item.m.Attributes.Bravery,
-			Initiative = this.Math.round(this.m.Item.m.Attributes.Initiative / 2),
+			Initiative = this.Math.ceil(this.m.Item.m.Attributes.Initiative / 10),
 			MeleeSkill = this.m.Item.m.Attributes.MeleeSkill,
 			RangedSkill = this.m.Item.m.Attributes.RangedSkill,
 			MeleeDefense = this.m.Item.m.Attributes.MeleeDefense,
 			RangedDefense = this.m.Item.m.Attributes.RangedDefense,
-			Armor = [
-				400,
-				200
-			],
+			Armor = [400, 200],
 			FatigueEffectMult = 1.0,
 			MoraleEffectMult = 1.0,
 			FatigueRecoveryRate = 30
@@ -614,16 +611,12 @@ this.companions_noodle_tail <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.CurrentProperties = propertiesBase;
 		this.m.Hitpoints = propertiesBase.Hitpoints;
 
-		foreach( quirk in this.m.Item.m.Quirks )
+
+		foreach(quirk in this.m.Item.m.Quirks)
 		{
 			if (quirk != "scripts/skills/perks/perk_adrenalin")
-			{
 				this.m.Skills.add(this.new(quirk));
-			}
 		}
-
 		this.m.AIAgent.addQuirkBehaviors();
 	}
-
 });
-

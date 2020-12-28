@@ -7,7 +7,7 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 	{
 		this.m.ID = "actives.unleash_companion";
 		this.m.Type = this.Const.SkillType.Active;
-		this.m.Order = this.Const.SkillOrder.NonTargeted + 5;
+		this.m.Order = this.Const.SkillOrder.BeforeLast + 100;
 		this.m.IsSerialized = false;
 		this.m.IsActive = true;
 		this.m.IsTargeted = true;
@@ -25,7 +25,7 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 		return this.m.Item;
 	}
 
-	function setItem( _i )
+	function setItem(_i)
 	{
 		if (typeof _i == "instance")
 		{
@@ -40,18 +40,11 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 	function applyCompanionModification()
 	{
 		if (this.m.Item == null || this.m.Item.isNull())
-		{
 			return;
-		}
 
 		this.m.Name = "Unleash " + this.m.Item.m.Name;
-		this.m.Description = "Unleash " + this.m.Item.m.Name + " and have them engage the enemy. Needs a free adjacent tile. Can be used once per battle.";
-
-		if (this.m.Item.m.Type == this.Const.Companions.TypeList.Noodle)
-		{
-			this.m.Description = "Unleash " + this.m.Item.m.Name + " and have them engage the enemy. Needs a free adjacent tile (and a free adjacent tile next to that one, for the tail). Can be used once per battle.";
-		}
-
+		this.m.Description = "Unleash " + this.m.Item.m.Name + " and have them engage the enemy. Needs a free adjacent tile. Can be used once per battle."
+		if (this.m.Item.m.Type == this.Const.Companions.TypeList.Noodle) this.m.Description = "Unleash " + this.m.Item.m.Name + " and have them engage the enemy. Needs a free adjacent tile (and a free adjacent tile next to that one, for the tail). Can be used once per battle."
 		this.m.Icon = this.Const.Companions.Library[this.m.Item.m.Type].Unleash.Icon(this.m.Item.m.Variant);
 		this.m.IconDisabled = this.Const.Companions.Library[this.m.Item.m.Type].Unleash.IconDisabled(this.m.Item.m.Variant);
 		this.m.Overlay = this.Const.Companions.Library[this.m.Item.m.Type].Unleash.Overlay;
@@ -75,12 +68,6 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 				id = 3,
 				type = "text",
 				text = this.getCostString()
-			},
-			{
-				id = 4,
-				type = "text",
-				icon = "ui/icons/vision.png",
-				text = "Has a max range of [color=" + this.Const.UI.Color.PositiveValue + "]" + this.m.MaxRange + "[/color] tile"
 			}
 		];
 		return ret;
@@ -101,7 +88,7 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 		return true;
 	}
 
-	function onUpdate( _properties )
+	function onUpdate(_properties)
 	{
 		this.applyCompanionModification();
 		this.m.IsHidden = this.isUsed();
@@ -112,15 +99,15 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 		this.m.IsUsed = false;
 	}
 
-	function findTailTile( _targetTile )
+	function findTailTile(_targetTile)
 	{
 		local myTile = _targetTile;
 
-		if (myTile.hasNextTile(this.Const.Direction.NW) && myTile.getNextTile(this.Const.Direction.NW).IsEmpty)
+		if (myTile.hasNextTile(this.Const.Direction.NE) && myTile.getNextTile(this.Const.Direction.NE).IsEmpty)
 		{
 			return true;
 		}
-		else if (myTile.hasNextTile(this.Const.Direction.SW) && myTile.getNextTile(this.Const.Direction.SW).IsEmpty)
+		else if (myTile.hasNextTile(this.Const.Direction.SE) && myTile.getNextTile(this.Const.Direction.SE).IsEmpty)
 		{
 			return true;
 		}
@@ -132,11 +119,11 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 		{
 			return true;
 		}
-		else if (myTile.hasNextTile(this.Const.Direction.NE) && myTile.getNextTile(this.Const.Direction.NE).IsEmpty)
+		else if (myTile.hasNextTile(this.Const.Direction.NW) && myTile.getNextTile(this.Const.Direction.NW).IsEmpty)
 		{
 			return true;
 		}
-		else if (myTile.hasNextTile(this.Const.Direction.SE) && myTile.getNextTile(this.Const.Direction.S).IsEmpty)
+		else if (myTile.hasNextTile(this.Const.Direction.SW) && myTile.getNextTile(this.Const.Direction.SW).IsEmpty)
 		{
 			return true;
 		}
@@ -144,7 +131,7 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 		return false;
 	}
 
-	function onVerifyTarget( _originTile, _targetTile )
+	function onVerifyTarget(_originTile, _targetTile)
 	{
 		if (this.m.Item.m.Type == this.Const.Companions.TypeList.Noodle && !this.findTailTile(_targetTile))
 		{
@@ -154,7 +141,7 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 		return this.skill.onVerifyTarget(_originTile, _targetTile) && _targetTile.IsEmpty;
 	}
 
-	function onUse( _user, _targetTile )
+	function onUse(_user, _targetTile)
 	{
 		local entity = this.Tactical.spawnEntity(this.m.Item.getScript(), _targetTile.Coords.X, _targetTile.Coords.Y);
 		entity.setItem(this.m.Item);
@@ -177,7 +164,7 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 			entity.getItems().equip(item);
 		}
 
-		if (this.getContainer().hasSkill("background.houndmaster"))
+		if (this.getContainer().hasSkill("background.houndmaster") || this.getContainer().hasSkill("background.companions_beastmaster"))
 		{
 			entity.setMoraleState(this.Const.MoraleState.Confident);
 		}
@@ -190,14 +177,7 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 		this.m.IsUsed = true;
 		this.m.IsHidden = this.isUsed();
 		local leash = this.getContainer().getActor().getSkills().getSkillByID("actives.leash_companion");
-
-		if (leash != null)
-		{
-			leash.m.IsHidden = !this.m.Item.isUnleashed();
-		}
-
+		if (leash != null) leash.m.IsHidden = !this.m.Item.isUnleashed();
 		return true;
 	}
-
 });
-

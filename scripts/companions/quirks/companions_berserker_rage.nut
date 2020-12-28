@@ -4,7 +4,7 @@ this.companions_berserker_rage <- this.inherit("scripts/skills/skill", {
 	},
 	function create()
 	{
-		this.m.ID = "effects.berserker_rage";
+		this.m.ID = "quirk.berserker_rage";
 		this.m.Name = "Rage";
 		this.m.Description = "Rage.";
 		this.m.Icon = "skills/status_effect_34.png";
@@ -47,6 +47,4 @@ this.companions_berserker_rage <- this.inherit("scripts/skills/skill", {
 	{
 		this.addRage(5);
 	}
-
 });
-

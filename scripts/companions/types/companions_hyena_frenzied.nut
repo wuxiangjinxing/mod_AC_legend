@@ -24,6 +24,4 @@ this.companions_hyena_frenzied <- this.inherit("scripts/companions/types/compani
 		local head = this.getSprite("head");
 		head.setBrush("bust_hyena_0" + this.Math.rand(4, 6) + "_head");
 	}
-
 });
-

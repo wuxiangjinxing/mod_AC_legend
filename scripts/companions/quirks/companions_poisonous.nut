@@ -2,7 +2,7 @@ this.companions_poisonous <- this.inherit("scripts/skills/skill", {
 	m = {},
 	function create()
 	{
-		this.m.ID = "effects.poison_coat";
+		this.m.ID = "quirk.poison_coat";
 		this.m.Name = "Poisonous";
 		this.m.Description = "Poisonous.";
 		this.m.Icon = "skills/status_effect_54.png";
@@ -79,6 +79,4 @@ this.companions_poisonous <- this.inherit("scripts/skills/skill", {
 	function onTargetMissed( _skill, _targetEntity )
 	{
 	}
-
 });
-

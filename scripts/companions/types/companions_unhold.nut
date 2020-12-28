@@ -8,7 +8,7 @@ this.companions_unhold <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.Type = this.Const.EntityType.Unhold;
 		this.m.BloodType = this.Const.BloodType.Red;
 		this.m.XP = this.Const.Tactical.Actor.Unhold.XP;
-		this.m.IsActingImmediately = true;
+		this.m.IsActingImmediately = false;
 		this.m.BloodSplatterOffset = this.createVec(0, 0);
 		this.m.DecapitateSplatterOffset = this.createVec(40, -20);
 		this.m.DecapitateBloodAmount = 3.0;
@@ -54,7 +54,7 @@ this.companions_unhold <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.AIAgent.setActor(this);
 	}
 
-	function setItem( _i )
+	function setItem(_i)
 	{
 		if (typeof _i == "instance")
 		{
@@ -66,7 +66,7 @@ this.companions_unhold <- this.inherit("scripts/entity/tactical/actor", {
 		}
 	}
 
-	function setName( _n )
+	function setName(_n)
 	{
 		this.m.Name = _n;
 	}
@@ -76,10 +76,14 @@ this.companions_unhold <- this.inherit("scripts/entity/tactical/actor", {
 		return this.m.Name;
 	}
 
-	function setVariant( _v )
+	function setVariant(_v)
 	{
-		this.getSprite("body").setBrush("bust_unhold_body_0" + _v);
-		this.getSprite("head").setBrush("bust_unhold_head_0" + _v);
+		local var = _v;
+		if (_v == 4) var = 2;
+		if (_v == 5) var = 1;
+
+		this.getSprite("body").setBrush("bust_unhold_body_0" + var);
+		this.getSprite("head").setBrush("bust_unhold_head_0" + var);
 		this.setDirty(true);
 	}
 
@@ -160,7 +164,6 @@ this.companions_unhold <- this.inherit("scripts/entity/tactical/actor", {
 					decap[idx].Scale = 0.9;
 					decap[idx].setBrightness(0.9);
 					idx = ++idx;
-					idx = idx;
 				}
 
 				if (appearance.HelmetCorpse.len() != 0)
@@ -168,7 +171,6 @@ this.companions_unhold <- this.inherit("scripts/entity/tactical/actor", {
 					decap[idx].Scale = 0.9;
 					decap[idx].setBrightness(0.9);
 					idx = ++idx;
-					idx = idx;
 				}
 			}
 
@@ -247,7 +249,7 @@ this.companions_unhold <- this.inherit("scripts/entity/tactical/actor", {
 		}
 	}
 
-	function onActorKilled( _actor, _tile, _skill )
+	function onActorKilled(_actor, _tile, _skill)
 	{
 		this.actor.onActorKilled(_actor, _tile, _skill);
 
@@ -259,14 +261,12 @@ this.companions_unhold <- this.inherit("scripts/entity/tactical/actor", {
 			foreach( bro in brothers )
 			{
 				bro.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-				local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
 
+				local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
 				if (acc != null && "setType" in acc)
 				{
 					if (acc.getType() != null)
-					{
 						acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-					}
 				}
 			}
 		}
@@ -313,13 +313,14 @@ this.companions_unhold <- this.inherit("scripts/entity/tactical/actor", {
 
 	function applyCompanionScaling()
 	{
-		local variantHitpoints = this.m.Item.m.Variant == 1 ? 100 : 0;
-		local variantBravery = this.m.Item.m.Variant == 1 ? 20 : 0;
-		local variantInitiative = this.m.Item.m.Variant == 1 ? 10 : 0;
-		local variantMeleeSkill = this.m.Item.m.Variant == 1 ? 5 : 0;
+		local variantHitpoints = (this.m.Item.m.Variant == 1 || this.m.Item.m.Variant == 5) ? 100 : 0;
+		local variantBravery = (this.m.Item.m.Variant == 1 || this.m.Item.m.Variant == 5) ? 20 : 0;
+		local variantInitiative = (this.m.Item.m.Variant == 1 || this.m.Item.m.Variant == 5) ? 10 : 0;
+		local variantMeleeSkill = (this.m.Item.m.Variant == 1 || this.m.Item.m.Variant == 5) ? 5 : 0;
 		local variantRangedDefense = this.m.Item.m.Variant == 3 ? 5 : 0;
-		local variantArmor = this.m.Item.m.Variant == 1 ? 90 : 0;
-		local propertiesNew = {
+		local variantArmor = (this.m.Item.m.Variant == 1 || this.m.Item.m.Variant == 5) ? 90 : 0;
+		local propertiesNew =
+		{
 			ActionPoints = 9,
 			Hitpoints = variantHitpoints + this.m.Item.m.Attributes.Hitpoints,
 			Stamina = this.m.Item.m.Attributes.Stamina,
@@ -329,10 +330,7 @@ this.companions_unhold <- this.inherit("scripts/entity/tactical/actor", {
 			RangedSkill = this.m.Item.m.Attributes.RangedSkill,
 			MeleeDefense = this.m.Item.m.Attributes.MeleeDefense,
 			RangedDefense = variantRangedDefense + this.m.Item.m.Attributes.RangedDefense,
-			Armor = [
-				variantArmor
-				variantArmor
-			],
+			Armor = [variantArmor, variantArmor],
 			FatigueEffectMult = 1.0,
 			MoraleEffectMult = 1.0,
 			FatigueRecoveryRate = 30
@@ -342,32 +340,25 @@ this.companions_unhold <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.CurrentProperties = propertiesBase;
 		this.m.Hitpoints = propertiesBase.Hitpoints;
 
-		foreach( quirk in this.m.Item.m.Quirks )
+		foreach(quirk in this.m.Item.m.Quirks)
 		{
 			this.m.Skills.add(this.new(quirk));
 		}
-
-		if (this.m.Item.m.Variant == 1 && this.getSkills().getSkillByID("perk.killing_frenzy") == null)
+		if ((this.m.Item.m.Variant == 1 || this.m.Item.m.Variant == 5) && !this.getSkills().hasSkill("perk.killing_frenzy"))
 		{
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_killing_frenzy"));
 		}
-
 		this.m.AIAgent.addQuirkBehaviors();
 
-		if (this.m.Item.m.Type == this.Const.Companions.TypeList.UnholdArmor)
+		if (this.m.Item.m.Variant == 5)
 		{
-			if (this.m.Item.m.Variant == 1)
-			{
-				this.m.Items.equip(this.new("scripts/items/armor/barbarians/unhold_armor_heavy"));
-				this.m.Items.equip(this.new("scripts/items/helmets/barbarians/unhold_helmet_heavy"));
-			}
-			else if (this.m.Item.m.Variant == 2)
-			{
-				this.m.Items.equip(this.new("scripts/items/armor/barbarians/unhold_armor_light"));
-				this.m.Items.equip(this.new("scripts/items/helmets/barbarians/unhold_helmet_light"));
-			}
+			this.m.Items.equip(this.new("scripts/items/armor/barbarians/unhold_armor_heavy"));
+			this.m.Items.equip(this.new("scripts/items/helmets/barbarians/unhold_helmet_heavy"));
+		}
+		else if (this.m.Item.m.Variant == 4)
+		{
+			this.m.Items.equip(this.new("scripts/items/armor/barbarians/unhold_armor_light"));
+			this.m.Items.equip(this.new("scripts/items/helmets/barbarians/unhold_helmet_light"));
 		}
 	}
-
 });
-

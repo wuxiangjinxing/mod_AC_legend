@@ -82,6 +82,4 @@ this.companions_recover <- this.inherit("scripts/ai/tactical/behavior", {
 		this.m.Skill = null;
 		return true;
 	}
-
 });
-

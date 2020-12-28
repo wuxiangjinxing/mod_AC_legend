@@ -48,43 +48,35 @@ this.companions_wardog_agent <- this.inherit("scripts/ai/tactical/agent", {
 			this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_adrenaline"));
 			this.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.Adrenaline] = 0.25;
 		}
-
 		if (this.m.Actor.getSkills().hasSkill("perk.recover") && this.getBehavior(this.Const.AI.Behavior.ID.Recover) == null)
 		{
 			this.addBehavior(this.new("scripts/companions/behaviors/companions_recover"));
 			this.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.Recover] = 0.25;
 		}
-
 		if (this.m.Actor.getSkills().hasSkill("perk.rotation") && this.getBehavior(this.Const.AI.Behavior.ID.Rotation) == null)
 		{
 			this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_defend_rotation"));
 			this.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.Rotation] = 0.25;
 		}
-
 		if (this.m.Actor.getSkills().hasSkill("perk.rally_the_troops") && this.getBehavior(this.Const.AI.Behavior.ID.Rally) == null)
 		{
 			this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_rally"));
 			this.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.Rally] = 0.25;
 		}
-
 		if (this.m.Actor.getSkills().hasSkill("perk.footwork") && this.getBehavior(this.Const.AI.Behavior.ID.Disengage) == null)
 		{
 			this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_disengage"));
 			this.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.Disengage] = 0.25;
 		}
-
 		if (this.m.Actor.getSkills().hasSkill("perk.indomitable") && this.getBehavior(this.Const.AI.Behavior.ID.Indomitable) == null)
 		{
 			this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_indomitable"));
 			this.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.Indomitable] = 0.25;
 		}
-
 		if (this.m.Actor.getSkills().hasSkill("actives.throw_dirt") && this.getBehavior(this.Const.AI.Behavior.ID.Distract) == null)
 		{
 			this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_distract"));
 			this.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.Distract] = 0.25;
 		}
 	}
-
 });
-

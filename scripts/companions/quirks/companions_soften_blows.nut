@@ -49,12 +49,10 @@ this.companions_soften_blows <- this.inherit("scripts/skills/skill", {
 		{
 			return;
 		}
-
 		if (this.getContainer().getActor().getCurrentProperties().IsStunned)
 		{
 			return;
 		}
-
 		if (this.getContainer().getActor().getMoraleState() == this.Const.MoraleState.Fleeing)
 		{
 			return;
@@ -64,6 +62,4 @@ this.companions_soften_blows <- this.inherit("scripts/skills/skill", {
 		this.m.IsHidden = true;
 		_properties.DamageReceivedTotalMult *= 0.8;
 	}
-
 });
-
