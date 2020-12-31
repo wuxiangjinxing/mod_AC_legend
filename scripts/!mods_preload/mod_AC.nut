@@ -1,4 +1,4 @@
-::mods_registerMod("mod_AC", 1.18, "Accessory Companions");
+::mods_registerMod("mod_AC", 1.19, "Accessory Companions");
 ::mods_queue("mod_AC", null, function()
 {
 	///// extends maximum tooltip height in order to fit companion details and makes sure long tooltips don't go outside of the window
@@ -30,13 +30,19 @@
 						type = "text",
 						icon = "ui/icons/bravery.png",
 						text = "Beasts unleashed by this character will start at confident morale."
+					},
+					{
+						id = 15,
+						type = "text",
+						icon = "ui/icons/xp_received.png",
+						text = "Beasts handled by this character gain more experience."
 					}
 				];
 
 				if (this.m.ID == "background.companions_beastmaster")
 				{
 					ret.push({
-						id = 55,
+						id = 56,
 						type = "text",
 						icon = "ui/icons/special.png",
 						text = "Higher chance of success when taming beasts."
@@ -55,8 +61,8 @@
 			this.m.BackgroundDescription = "Beastmasters are used to handle various beasts.";
 			this.m.GoodEnding = "Beasts were not simply \'beasts\' to %name%, despite his title as \'beastmaster.\' To him, they were the most loyal friends of his life. After leaving the company, he discovered an ingenious way to breed the animals specifically tailored to the desires of the nobility. Wanted a brutish beast for a guard? He could do it. Wanted something small and cuddly for the children? He could do that, too. The former mercenary now earns an incredible earning doing what he loves - working with beasts.";
 			this.m.BadEnding = "What\'s merely a beast to one man is a loyal companion to %name%. After leaving the company, the beastmaster went out to work for the nobility. Unfortunately, he refused to let hundreds of his beasts be used as a battle vanguard to be thrown away for some short-lived tactical advantage. He was hanged for his \'traitorous ideals\'.";
-			this.m.HiringCost = 160;
-			this.m.DailyCost = 14;
+			this.m.HiringCost = 100;
+			this.m.DailyCost = 21;
 			this.m.Excluded = [
 				"trait.fear_beasts",
 				"trait.hate_beasts",
@@ -85,15 +91,15 @@
 			this.m.HairColors = this.Const.HairColors.All;
 			this.m.Beards = this.Const.Beards.Untidy;
 			this.m.Bodies = this.Const.Bodies.AllMale;
-			this.m.IsLowborn = false;			
-			this.m.Level = this.Math.rand(1, 2);
+			this.m.IsLowborn = false;
+			this.m.Level = this.Math.rand(1, 3);
 		}
 
 		o.onBuildDescription = function()
 		{
 			if (this.m.ID == "background.companions_beastmaster")
 			{
-				return "{%name%\'s fondness for beasts started after his father won a serpent in a shooting contest. | When a direwolf saved him from a bear, %name% dedicated his life to beasts of all sorts. | Seeing a webknecht stave off a would-be robber, %name%\'s fondness for beasts only grew. | A young, bird-hunting %name% quickly saw the honor, loyalty, and workmanship of a trained beast. | Once bitten by a wild hyena, %name% confronted his fear of beasts by learning to train them.} {The beastmaster spent many years working for a local lord. He gave up the post after the liege struck one of his post-ferals down just for sport. | Quick with training the wildlife, the beastmaster put his post-ferals into a lucrative traveling tradeshow. | The man made a great deal of money on the beast-fighting circuits, his post-ferals renowned for their easily commanded - and unleashed - ferocity. | Employed by lawmen, the beastmaster used his strong-nosed post-ferals to hunt down many a criminal element. | Used by a local lord, many of the beastmaster\'s post-ferals found their way onto the battlefield. | For many years, the beastmaster used his post-ferals to help lift the spirits of orphaned children and the crippled.} {Now, though, %name% seeks a change of vocation. | When he heard word of a mercenary\'s pay, %name% decided to try his hand at being a sellsword. | Approached by a sellsword to buy one of his creatures, %name% became more interested in the prospect of he, himself, becoming a mercenary. | Tired of training creatures for this purpose or that, %name% seeks to train himself for... well, this purpose or that. | An interesting prospect, you can only hope %name% is as loyal as the creatures he once commanded.}";
+				return "{%name%\'s affection for beasts started after his father won a serpent in a shooting contest. | When a direwolf saved him from a bear, %name% dedicated his life to beasts of all sorts. | Seeing a webknecht stave off a would-be robber, %name%\'s fondness for beasts only grew. | A young, bird-hunting %name% quickly saw the honor, loyalty, and workmanship of a trained beast. | Once bitten by a wild hyena, %name% confronted his fear of beasts by learning to train them.} {The beastmaster spent many years working for a local lord. He gave up the post after the liege struck one of his post-ferals down just for sport. | Quick with training the wildlife, the beastmaster put his post-ferals into a lucrative traveling tradeshow. | The man made a great deal of money on the beast-fighting circuits, his post-ferals renowned for their easily commanded - and unleashed - ferocity. | Employed by lawmen, the beastmaster used his strong-nosed post-ferals to hunt down many a criminal element. | Used by a local lord, many of the beastmaster\'s post-ferals found their way onto the battlefield. | For many years, the beastmaster used his post-ferals to help lift the spirits of orphaned children and the crippled.} {Now, though, %name% seeks a change of vocation. | When he heard word of a mercenary\'s pay, %name% decided to try his hand at being a sellsword. | Approached by a sellsword to buy one of his creatures, %name% became more interested in the prospect of he, himself, becoming a mercenary. | Tired of training creatures for this purpose or that, %name% seeks to train himself for... well, this purpose or that. | An interesting prospect, you can only hope %name% is as loyal as the creatures he once commanded.}";
 			}
 			else
 			{
@@ -140,90 +146,124 @@
 				local items = this.getContainer().getActor().getItems();
 
 				///// mainhand
-				local r = this.Math.rand(1, 2);
+				local r = this.Math.rand(1, 3);
 				if (r == 1)
 				{
-					local rr = this.Math.rand(1, 2);
+					local rr;
+					if (this.Const.DLC.Wildmen)
+					{
+						rr = this.Math.rand(1, 2);
+					}
+					else
+					{
+						rr = this.Math.rand(1, 1);
+					}
+
 					if (rr == 1)
 					{
 						items.equip(this.new("scripts/items/weapons/battle_whip"));
 					}
-					else
+					else if (rr == 2)
 					{
 						items.equip(this.new("scripts/items/weapons/barbarians/thorned_whip"));
 					}
 				}
 				else
 				{
-					local rr = this.Math.rand(1, 16);
+					local rr;
+					if (this.Const.DLC.Wildmen)
+					{
+						rr = this.Math.rand(1, 20);
+					}
+					else
+					{
+						rr = this.Math.rand(1, 15);
+					}
+
 					if (rr == 1)
 					{
 						items.equip(this.new("scripts/items/weapons/dagger"));
 					}
 					else if (rr == 2)
-					{
-						items.equip(this.new("scripts/items/weapons/dagger"));
-					}
-					else if (rr == 3)
 					{	
 						items.equip(this.new("scripts/items/weapons/shortsword"));
 					}
-					else if (rr == 4)
+					else if (rr == 3)
 					{
 						items.equip(this.new("scripts/items/weapons/falchion"));
 					}
-					else if (rr == 5)
+					else if (rr == 4)
 					{
 						items.equip(this.new("scripts/items/weapons/bludgeon"));
 					}
-					else if (rr == 6)
+					else if (rr == 5)
 					{
 						items.equip(this.new("scripts/items/weapons/morning_star"));
 					}
-					else if (rr == 7)
+					else if (rr == 6)
 					{
 						items.equip(this.new("scripts/items/weapons/militia_spear"));
 					}
-					else if (rr == 8)
+					else if (rr == 7)
 					{
 						items.equip(this.new("scripts/items/weapons/boar_spear"));
 					}
-					else if (rr == 9)
+					else if (rr == 8)
 					{
 						items.equip(this.new("scripts/items/weapons/hatchet"));
 					}
-					else if (rr == 10)
+					else if (rr == 9)
 					{
 						items.equip(this.new("scripts/items/weapons/hand_axe"));
 					}
-					else if (rr == 11)
+					else if (rr == 10)
 					{
 						items.equip(this.new("scripts/items/weapons/reinforced_wooden_flail"));
+					}
+					else if (rr == 11)
+					{
+						items.equip(this.new("scripts/items/weapons/flail"));
 					}
 					else if (rr == 12)
 					{
-						items.equip(this.new("scripts/items/weapons/reinforced_wooden_flail"));
+						items.equip(this.new("scripts/items/weapons/butchers_cleaver"));
 					}
 					else if (rr == 13)
 					{
-						items.equip(this.new("scripts/items/weapons/butchers_cleaver"));
+						items.equip(this.new("scripts/items/weapons/scramasax"));
 					}
 					else if (rr == 14)
 					{
-						items.equip(this.new("scripts/items/weapons/scramasax"));
+						items.equip(this.new("scripts/items/weapons/pickaxe"));
 					}
 					else if (rr == 15)
 					{
-						items.equip(this.new("scripts/items/weapons/pickaxe"));
+						items.equip(this.new("scripts/items/weapons/military_pick"));
 					}
 					else if (rr == 16)
 					{
-						items.equip(this.new("scripts/items/weapons/military_pick"));
+						items.equip(this.new("scripts/items/weapons/barbarians/claw_club"));
+					}
+					else if (rr == 17)
+					{
+						items.equip(this.new("scripts/items/weapons/barbarians/crude_axe"));
+					}
+					else if (rr == 18)
+					{
+						items.equip(this.new("scripts/items/weapons/barbarians/axehammer"));
+					}
+					else if (rr == 19)
+					{
+						items.equip(this.new("scripts/items/weapons/barbarians/antler_cleaver"));
+					}
+					else if (rr == 20)
+					{
+						items.equip(this.new("scripts/items/weapons/barbarians/blunt_cleaver"));
 					}
 				}
 
 				///// offhand
-				local r = this.Math.rand(1, 2);
+				r = this.Math.rand(1, 3);
 				if (r == 1)
 				{
 					items.equip(this.new("scripts/items/tools/throwing_net"));
@@ -235,29 +275,57 @@
 					{
 						items.equip(this.new("scripts/items/shields/buckler_shield"));
 					}
-					else
+					else if (rr == 2)
 					{
 						items.equip(this.new("scripts/items/shields/wooden_shield"));
 					}
 				}
 
 				///// helmet
-				local r = this.Math.rand(1, 3);
+				if (this.Const.DLC.Wildmen)
+				{
+					r = this.Math.rand(1, 6);
+				}
+				else
+				{
+					r = this.Math.rand(1, 4);
+				}
+
 				if (r == 1)
 				{
-					items.equip(this.new("scripts/items/helmets/open_leather_cap"));
+					items.equip(this.new("scripts/items/helmets/mouth_piece"));
 				}
 				else if (r == 2)
 				{
-					items.equip(this.new("scripts/items/helmets/full_leather_cap"));
+					items.equip(this.new("scripts/items/helmets/open_leather_cap"));
 				}
 				else if (r == 3)
 				{
+					items.equip(this.new("scripts/items/helmets/full_leather_cap"));
+				}
+				else if (r == 4)
+				{
 					items.equip(this.new("scripts/items/helmets/rusty_mail_coif"));
+				}
+				else if (r == 5)
+				{
+					items.equip(this.new("scripts/items/helmets/barbarians/leather_headband"));
+				}
+				else if (r == 6)
+				{
+					items.equip(this.new("scripts/items/helmets/barbarians/bear_headpiece"));
 				}
 
 				///// armor
-				local r = this.Math.rand(1, 5);
+				if (this.Const.DLC.Wildmen)
+				{
+					r = this.Math.rand(1, 10);
+				}
+				else
+				{
+					r = this.Math.rand(1, 5);
+				}
+
 				if (r == 1)
 				{
 					items.equip(this.new("scripts/items/armor/ragged_surcoat"));
@@ -277,6 +345,26 @@
 				else if (r == 5)
 				{
 					items.equip(this.new("scripts/items/armor/worn_mail_shirt"));
+				}
+				else if (r == 6)
+				{
+					items.equip(this.new("scripts/items/armor/barbarians/thick_furs_armor"));
+				}
+				else if (r == 7)
+				{
+					items.equip(this.new("scripts/items/armor/barbarians/animal_hide_armor"));
+				}
+				else if (r == 8)
+				{
+					items.equip(this.new("scripts/items/armor/barbarians/reinforced_animal_hide_armor"));
+				}
+				else if (r == 9)
+				{
+					items.equip(this.new("scripts/items/armor/barbarians/scrap_metal_armor"));
+				}
+				else if (r == 10)
+				{
+					items.equip(this.new("scripts/items/armor/barbarians/hide_and_bone_armor"));
 				}
 			}
 			else
@@ -440,7 +528,7 @@
 	});
 
 
-	///// necromancers have a chance to drop the Tome of Reanimation when killed
+	///// necromancers have a chance to drop the Tome of Reanimation when killed, webknecht eggs have a chance to drop a webknecht companion when killed
 	::mods_hookBaseClass("entity/tactical/actor", function(o)
 	{
 		while(!("onDeath" in o)) o = o[o.SuperName];
@@ -448,11 +536,24 @@
 		o.onDeath = function(_killer, _skill, _tile, _fatalityType)
 		{
 			onDeath(_killer, _skill, _tile, _fatalityType);
-			if (this.m.Type == this.Const.EntityType.Necromancer && (_killer == null || _killer.getFaction() == this.Const.Faction.Player || _killer.getFaction() == this.Const.Faction.PlayerAnimals))
+			if ((this.m.Type == this.Const.EntityType.Necromancer || this.m.Type == this.Const.EntityType.SpiderEggs) && (_killer == null || _killer.getFaction() == this.Const.Faction.Player || _killer.getFaction() == this.Const.Faction.PlayerAnimals))
 			{
 				if (this.Math.rand(1, 1000) <= this.Const.Companions.TameChance.Default)
 				{
-					local type = this.Const.Companions.TypeList.TomeReanimation;
+					local type;
+					if (this.m.Type == this.Const.EntityType.Necromancer)
+					{
+						type = this.Const.Companions.TypeList.TomeReanimation;
+					}
+					else if (this.m.Type == this.Const.EntityType.SpiderEggs)
+					{
+						type = this.Const.Companions.TypeList.Spider;
+					}
+					else
+					{
+						type = this.Const.Companions.TypeList.Wardog;
+					}
+
 					local matchNum = 0;
 					local size = this.Tactical.getMapSize();
 					for( local x = 0; x < size.X; x = ++x )
@@ -1370,6 +1471,19 @@
 				_xp = _xp * 0.67;
 				_xp = _xp * this.Const.Combat.GlobalXPMult;
 
+				if (this.getContainer() != null && !this.getContainer().isNull() && this.getContainer().getActor() != null && !this.getContainer().getActor().isNull() && this.getContainer().getActor().m.Type == this.Const.EntityType.Player && this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
+				{
+					local actor = this.getContainer().getActor();
+					if (actor.getSkills().hasSkill("background.companions_beastmaster"))
+					{
+						_xp = _xp * (1.15 + (actor.getLevel() / 66.667));
+					}
+					else if (actor.getSkills().hasSkill("background.houndmaster"))
+					{
+						_xp = _xp * (1.1 + (actor.getLevel() / 100.0));
+					}
+				}
+
 				if (this.m.Level >= 11)
 				{
 					_xp = _xp * this.Const.Combat.GlobalXPVeteranLevelMult;
@@ -1425,14 +1539,14 @@
 				local availableQuirks = [];
 				foreach(quirk in this.Const.Companions.AttainableQuirks)
 				{
-					if (this.m.Quirks.find(quirk) == null)
+					if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
 						availableQuirks.push(quirk);
 				}
 				if (this.Const.DLC.Unhold)
 				{
 					foreach(quirk in this.Const.Companions.AttainableQuirksDLCUnhold)
 					{
-						if (this.m.Quirks.find(quirk) == null)
+						if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
 							availableQuirks.push(quirk);
 					}
 				}
@@ -1440,7 +1554,7 @@
 				{
 					foreach(quirk in this.Const.Companions.AttainableQuirksDLCWildmen)
 					{
-						if (this.m.Quirks.find(quirk) == null)
+						if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
 							availableQuirks.push(quirk);
 					}
 				}
@@ -1448,16 +1562,15 @@
 				{
 					foreach(quirk in this.Const.Companions.AttainableQuirksDLCDesert)
 					{
-						if (this.m.Quirks.find(quirk) == null)
+						if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
 							availableQuirks.push(quirk);
 					}
 				}
-//				if (this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
-				if (this.m.Type <= this.Const.Companions.TypeList.Noodle)
+				if (this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
 				{
 					foreach(quirk in this.Const.Companions.AttainableQuirksBeasts)
 					{
-						if (this.m.Quirks.find(quirk) == null)
+						if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
 							availableQuirks.push(quirk);
 					}
 				}
@@ -1478,21 +1591,13 @@
 						attributeArray.remove(randomAttribute);
 						++bonusesSpent;
 					}
-					if (availableQuirks.len() != 0 && this.m.Level < 11)
+					if (availableQuirks.len() != 0 && this.m.Level <= 11)
 					{
 						local rng = this.Math.rand(0, availableQuirks.len() - 1);
 						this.m.Quirks.push(availableQuirks[rng]);
 						availableQuirks.remove(rng);
-					}
-					if (this.m.Level == 11)
-					{
-						if (availableQuirks.len() != 0 && this.m.Type == this.Const.Companions.TypeList.TomeReanimation)
-						{
-							local rng = this.Math.rand(0, availableQuirks.len() - 1);
-							this.m.Quirks.push(availableQuirks[rng]);
-							availableQuirks.remove(rng);
-						}
-						else
+
+						if (this.m.Level == 11 && this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
 						{
 							this.m.Quirks.push("scripts/companions/quirks/companions_good_boy");
 						}

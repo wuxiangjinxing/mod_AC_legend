@@ -68,8 +68,10 @@ gt.Const.Companions.AttainableQuirks <- [
 
 	// ACTIVES, EFFECTS, QUIRKS
 	"scripts/companions/quirks/companions_berserker_rage",
+	"scripts/companions/quirks/companions_poisonous",
 	"scripts/companions/quirks/companions_healthy",
-	"scripts/companions/quirks/companions_soften_blows"
+	"scripts/companions/quirks/companions_soften_blows",
+	"scripts/companions/quirks/companions_regenerative"
 ];
 gt.Const.Companions.AttainableQuirksDLCUnhold <- [ // Beasts and Exploration
 ];
@@ -79,7 +81,6 @@ gt.Const.Companions.AttainableQuirksDLCDesert <- [ // Blazing Deserts
 	"scripts/skills/actives/throw_dirt_skill"
 ];
 gt.Const.Companions.AttainableQuirksBeasts <- [ // Beast-specific Quirks
-	"scripts/companions/quirks/companions_poisonous"
 ];
 gt.Const.Companions.SerializeQuirks <- [
 	// PERKS
@@ -152,7 +153,8 @@ gt.Const.Companions.SerializeQuirks <- [
 	"quirk.berserker_rage",
 	"quirk.poison_coat",
 	"quirk.healthy",
-	"quirk.soften_blows"
+	"quirk.soften_blows",
+	"quirk.regenerative"
 ];
 gt.Const.Companions.DeserializeQuirks <- [
 	// PERKS
@@ -225,5 +227,6 @@ gt.Const.Companions.DeserializeQuirks <- [
 	"scripts/companions/quirks/companions_berserker_rage",
 	"scripts/companions/quirks/companions_poisonous",
 	"scripts/companions/quirks/companions_healthy",
-	"scripts/companions/quirks/companions_soften_blows"
+	"scripts/companions/quirks/companions_soften_blows",
+	"scripts/companions/quirks/companions_regenerative"
 ];

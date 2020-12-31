@@ -60,6 +60,6 @@ this.companions_soften_blows <- this.inherit("scripts/skills/skill", {
 
 		this.m.IsUsed = true;
 		this.m.IsHidden = true;
-		_properties.DamageReceivedTotalMult *= 0.8;
+		_properties.DamageReceivedTotalMult *= 0.75;
 	}
 });

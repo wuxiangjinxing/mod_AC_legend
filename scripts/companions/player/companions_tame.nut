@@ -19,7 +19,7 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 		this.m.MaxRange = 1;
 
 		this.m.Name = "Tame Beast";
-		this.m.Description = "Attempt to tame a beast. Failing the attempt makes further attempts on the same beast impossible. Succeeding the attempt equips the beast in the brother\'s accessory slot, but it cannot be unleashed in the same battle in which it was tamed.";
+		this.m.Description = "Attempt to tame an adjacent beast. Failing the attempt makes further attempts on the same beast impossible. Succeeding the attempt equips the beast in the brother\'s accessory slot, but it cannot be unleashed in the same battle in which it was tamed.";
 		this.m.Icon = "skills/tame_ac.png";
 		this.m.IconDisabled = "skills/tame_sw_ac.png";
 		this.m.SoundOnUse = ["sounds/dice_01.wav", "sounds/dice_02.wav", "sounds/dice_03.wav"];
