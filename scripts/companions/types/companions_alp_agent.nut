@@ -40,6 +40,7 @@ this.companions_alp_agent <- this.inherit("scripts/ai/tactical/agent", {
 		this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_attack_default"));
 		this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_alp_teleport"));
 		this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_sleep"));
+		this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_break_free"));
 	}
 
 	function onUpdate()

@@ -1,9 +1,48 @@
-::mods_registerMod("mod_AC", 1.19, "Accessory Companions");
+::mods_registerMod("mod_AC", 1.21, "Accessory Companions");
 ::mods_queue("mod_AC", null, function()
 {
 	///// extends maximum tooltip height in order to fit companion details and makes sure long tooltips don't go outside of the window
 	::mods_registerCSS("companions_tooltip.css");
 	::mods_registerJS("companions_tooltip.js");
+
+
+	///// make companions heal their wounds at the same time as brothers heal theirs
+	::mods_hookNewObject("states/world/asset_manager", function(o)
+	{
+		local update = o.update;
+		o.update = function(_worldState)
+		{
+			if (this.World.getTime().Hours != this.m.LastHourUpdated && this.m.IsConsumingAssets)
+			{
+				local roster = this.World.getPlayerRoster().getAll();
+				foreach(bro in roster)
+				{
+					local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
+					if (acc != null && "setType" in acc)
+					{
+						if (acc.getType() != null && acc.m.Wounds > 0)
+						{
+							acc.m.Wounds = this.Math.max(0, this.Math.floor(acc.m.Wounds - 2));
+						}
+					}
+				}
+
+				local stash = this.World.Assets.getStash().getItems();
+				foreach(item in stash)
+				{
+					if (item != null && item.getItemType() == this.Const.Items.ItemType.Accessory && "setType" in item)
+					{
+						if (item.getType() != null && item.m.Wounds > 0)
+						{
+							item.m.Wounds = this.Math.max(0, this.Math.floor(item.m.Wounds - 2));
+						}
+					}
+				}
+			}
+
+			update(_worldState);
+		}
+	});
 
 
 	///// hide the Beastmaster background within the Houndmaster background
@@ -76,6 +115,7 @@
 				"trait.fragile",
 				"trait.asthmatic",
 				"trait.clubfooted",
+				"trait.clumsy",
 				"trait.cocky"
 			];
 			this.m.ExcludedTalents = [
@@ -509,7 +549,7 @@
 				}
 			}
 
-			updateRoster(_force = false);
+			updateRoster(_force);
 		}
 	});
 
@@ -820,7 +860,7 @@
 		{
 			o.mod_AC <- true;
 			local updateStrength = o.updateStrength;
-			o.updateStrength = function ()
+			o.updateStrength = function()
 			{
 				updateStrength();
 				local company = this.World.getPlayerRoster().getAll();
@@ -947,6 +987,7 @@
 			o.m.Type <- null;
 			o.m.Level <- 1;
 			o.m.XP <- 0;
+			o.m.Wounds <- 0;
 			o.m.Quirks <- [];
 			o.m.Attributes <- {	Hitpoints = 0,
 								Stamina = 0,
@@ -1086,7 +1127,8 @@
 				}
 				else
 				{
-					return this.Const.Companions.Library[this.m.Type].NameUnleashed + " (" + this.m.Name + ")";
+//					return this.Const.Companions.Library[this.m.Type].NameUnleashed + " (" + this.m.Name + ")";
+					return this.m.Name + "\'s Collar";
 				}
 			}
 
@@ -1137,11 +1179,23 @@
 				if (this.m.Level < this.Const.LevelXP.len())
 					xpText = this.m.XP + " / " + this.Const.LevelXP[this.m.Level];
 
+				local woundsCalc = (100 - this.m.Wounds);
+				if (this.m.Entity != null)
+					woundsCalc = this.Math.floor(this.m.Entity.getHitpointsPct() * 100.0);
+
+				local nameText = this.getName() + " ([color=" + this.Const.UI.Color.PositiveValue + "]" + woundsCalc + "%[/color])";
+				local levelText = "Level " + this.m.Level + ", Health " + woundsCalc + "%"
+				if (this.m.Type == this.Const.Companions.TypeList.TomeReanimation)
+				{
+					nameText = this.getName();
+					levelText = "Level " + this.m.Level;
+				}
+
 				local result = [
 					{
 						id = 1,
 						type = "title",
-						text = this.getName()
+						text = nameText
 					},
 					{
 						id = 2,
@@ -1166,7 +1220,7 @@
 					{
 						id = 6,
 						type = "text",
-						text = "Level " + this.m.Level
+						text = levelText
 					},
 					{
 						id = 7,
@@ -1408,6 +1462,11 @@
 
 			o.onCombatFinished <- function()
 			{
+				if (this.m.Entity != null)
+				{
+					this.m.Wounds = this.Math.floor((1.0 - this.m.Entity.getHitpointsPct()) * 100.0);
+				}
+
 				this.setEntity(null);
 			}
 
@@ -1434,6 +1493,9 @@
 						entity.getSkills().add(this.new("scripts/skills/special/night_effect"));
 					}
 
+					local healthPercentage = (100.0 - this.m.Wounds) / 100.0;
+					entity.setHitpoints(this.Math.max(1, this.Math.floor(healthPercentage * entity.m.Hitpoints)));
+					entity.setDirty(true);
 					this.Sound.play(this.m.UnleashSounds[this.Math.rand(0, this.m.UnleashSounds.len() - 1)], this.Const.Sound.Volume.Skill, _onTile.Pos);
 				}
 			}
@@ -1664,10 +1726,20 @@
 				this.m.Attributes.RangedDefense = _a.RangedDefense;
 			}
 
+			o.getWounds <- function()
+			{
+				return this.m.Wounds;
+			}
+
+			o.setWounds <- function(_w)
+			{
+				this.m.Wounds = _w;
+			}
+
 			o.serializeCompanionName <- function()
 			{
 				local nameCopy = this.m.Name;
-				local serializedName = nameCopy += "\nmod_AC=" + this.m.Type + "," + this.m.Level + "," + this.m.XP + ",A=" + this.m.Attributes.Hitpoints + "," + this.m.Attributes.Stamina + "," + this.m.Attributes.Bravery + "," + this.m.Attributes.Initiative + "," + this.m.Attributes.MeleeSkill + "," + this.m.Attributes.RangedSkill + "," + this.m.Attributes.MeleeDefense + "," + this.m.Attributes.RangedDefense + ",Q=";
+				local serializedName = nameCopy += "\nmod_AC=" + this.m.Type + "," + this.m.Level + "," + this.m.XP + "," + this.m.Wounds + ",A=" + this.m.Attributes.Hitpoints + "," + this.m.Attributes.Stamina + "," + this.m.Attributes.Bravery + "," + this.m.Attributes.Initiative + "," + this.m.Attributes.MeleeSkill + "," + this.m.Attributes.RangedSkill + "," + this.m.Attributes.MeleeDefense + "," + this.m.Attributes.RangedDefense + ",Q=";
 
 				foreach(i, quirk in this.m.Quirks)
 				{
@@ -1683,6 +1755,7 @@
 			{
 				local nameMod = "\nmod_AC=";
 				local findMod = _cn.find(nameMod);
+
 				if (findMod != null)
 				{
 					local slicedName = _cn.slice(0, findMod);
@@ -1694,6 +1767,9 @@
 					this.m.Type = arrayBasics[0].tointeger();
 					this.m.Level = arrayBasics[1].tointeger();
 					this.m.XP = arrayBasics[2].tointeger();
+
+					if (arrayBasics.len() == 4)
+						this.m.Wounds = arrayBasics[3].tointeger();
 
 					slicedDetails = slicedDetails.slice(findAttributes + nameAttributes.len());
 					local nameQuirks = "Q=";

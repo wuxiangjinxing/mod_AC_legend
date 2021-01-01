@@ -130,11 +130,10 @@ this.companions_leash <- this.inherit("scripts/skills/skill", {
 
 		if (this.isKindOf(entity, "companions_noodle") && entity.m.Tail != null && !entity.m.Tail.isNull() && entity.m.Tail.isAlive())
 		{
-//			entity.m.Tail.m.IsTurnDone = true;
 			entity.m.Tail.removeFromMap();
 		}
 
-//		entity.m.IsTurnDone = true;
+		this.m.Item.m.Wounds = this.Math.floor((1.0 - entity.getHitpointsPct()) * 100.0);
 		entity.removeFromMap();
 		this.m.Item.setEntity(null);
 		this.m.IsHidden = !this.m.Item.isUnleashed();

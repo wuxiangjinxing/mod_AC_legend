@@ -174,6 +174,10 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 			entity.getSkills().add(this.new("scripts/skills/special/night_effect"));
 		}
 
+		local healthPercentage = (100.0 - this.m.Item.m.Wounds) / 100.0;
+		entity.setHitpoints(this.Math.max(1, this.Math.floor(healthPercentage * entity.m.Hitpoints)));
+		entity.setDirty(true);
+
 		this.m.IsUsed = true;
 		this.m.IsHidden = this.isUsed();
 		local leash = this.getContainer().getActor().getSkills().getSkillByID("actives.leash_companion");

@@ -93,20 +93,21 @@ this.companions_snake <- this.inherit("scripts/entity/tactical/actor", {
 
 	function setVariant(_v)
 	{
-		switch (_v)
+		if (_v == 1)
 		{
-			case 1:
-				this.getSprite("body").setBrush("bust_snake_01_head_01");
-				break;
-			case 2:
-				this.getSprite("body").setBrush("bust_snake_01_head_02");
-				break;
-			case 3:
-				this.getSprite("body").setBrush("bust_snake_02_head_01");
-				break;
-			case 4:
-				this.getSprite("body").setBrush("bust_snake_02_head_02");
-				break;
+			this.getSprite("body").setBrush("bust_snake_01_head_01");
+		}
+		else if (_v == 2)
+		{
+			this.getSprite("body").setBrush("bust_snake_01_head_02");
+		}
+		else if (_v == 3)
+		{
+			this.getSprite("body").setBrush("bust_snake_02_head_01");
+		}
+		else if (_v == 4)
+		{
+			this.getSprite("body").setBrush("bust_snake_02_head_02");
 		}
 
 		this.setDirty(true);

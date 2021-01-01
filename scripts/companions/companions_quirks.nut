@@ -55,7 +55,7 @@ gt.Const.Companions.AttainableQuirks <- [
 //	"scripts/skills/perks/perk_duelist",
 	"scripts/skills/perks/perk_killing_frenzy",
 	"scripts/skills/perks/perk_indomitable",
-	"scripts/skills/perks/perk_battle_flow",
+//	"scripts/skills/perks/perk_battle_flow",
 	"scripts/skills/perks/perk_devastating_strikes",
 	"scripts/skills/perks/perk_battering_ram",
 //	"scripts/skills/perks/perk_steadfast",

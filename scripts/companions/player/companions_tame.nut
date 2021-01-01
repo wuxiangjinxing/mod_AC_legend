@@ -243,6 +243,7 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 				loot.setVariant(5);
 			}
 
+			loot.m.Wounds = this.Math.floor((1.0 - target.getHitpointsPct()) * 100.0);
 			loot.updateCompanion();
 			actor.getItems().equip(loot);
 
@@ -260,16 +261,10 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 
 			if (this.isKindOf(target, "lindwurm") && target.m.Tail != null && !target.m.Tail.isNull() && target.m.Tail.isAlive())
 			{
-//				target.m.Tail.m.IsTurnDone = true;
-//				target.m.Tail.m.IsAlive = false;
-//				target.m.Tail.m.IsDying = true;
 				target.m.Tail.removeFromMap();
 				target.m.Tail = null;
 			}
 
-//			target.m.IsTurnDone = true;
-//			target.m.IsAlive = false;
-//			target.m.IsDying = true;
 			target.die();
 		}
 		else
