@@ -48,50 +48,6 @@
 	///// hide the Beastmaster background within the Houndmaster background
 	::mods_hookNewObject("skills/backgrounds/houndmaster_background", function(o)
 	{
-		///// avoids houndmaster_background.getTooltip double hook for "Backgrounds and Attribute Ranges" compatibility
-		if (::mods_getRegisteredMod("mod_BAR") == null || (::mods_getRegisteredMod("mod_BAR") != null && ::mods_getRegisteredMod("mod_BAR").Version < 1.05))
-		{
-			o.getTooltip = function()
-			{
-				local ret = [
-					{
-						id = 1,
-						type = "title",
-						text = this.getName()
-					},
-					{
-						id = 2,
-						type = "description",
-						text = this.getDescription()
-					},
-					{
-						id = 14,
-						type = "text",
-						icon = "ui/icons/bravery.png",
-						text = "Beasts unleashed by this character will start at confident morale."
-					},
-					{
-						id = 15,
-						type = "text",
-						icon = "ui/icons/xp_received.png",
-						text = "Beasts handled by this character gain more experience."
-					}
-				];
-
-				if (this.m.ID == "background.companions_beastmaster")
-				{
-					ret.push({
-						id = 56,
-						type = "text",
-						icon = "ui/icons/special.png",
-						text = "Higher chance of success when taming beasts."
-					});
-				}
-
-				return ret;
-			}
-		}
-
 		o.applyBeastmasterModification <- function()
 		{
 			this.m.ID = "background.companions_beastmaster";
@@ -135,6 +91,50 @@
 			this.m.Level = this.Math.rand(1, 3);
 		}
 
+		///// "Backgrounds and Attribute Ranges" houndmaster_background.getTooltip fix
+		if (::mods_getRegisteredMod("mod_BAR") == null || (::mods_getRegisteredMod("mod_BAR") != null && ::mods_getRegisteredMod("mod_BAR").Version < 1.05))
+		{
+			o.getTooltip = function()
+			{
+				local ret = [
+					{
+						id = 1,
+						type = "title",
+						text = this.getName()
+					},
+					{
+						id = 2,
+						type = "description",
+						text = this.getDescription()
+					},
+					{
+						id = 14,
+						type = "text",
+						icon = "ui/icons/bravery.png",
+						text = "Beasts unleashed by this character will start at confident morale."
+					},
+					{
+						id = 15,
+						type = "text",
+						icon = "ui/icons/xp_received.png",
+						text = "Beasts handled by this character gain more experience."
+					}
+				];
+
+				if (this.m.ID == "background.companions_beastmaster")
+				{
+					ret.push({
+						id = 56,
+						type = "text",
+						icon = "ui/icons/special.png",
+						text = "Higher chance of success when taming beasts."
+					});
+				}
+
+				return ret;
+			}
+		}
+
 		o.onBuildDescription = function()
 		{
 			if (this.m.ID == "background.companions_beastmaster")
@@ -176,260 +176,6 @@
 					Initiative = [5, 0]
 				};
 				return c;
-			}
-		}
-
-		o.onAddEquipment = function()
-		{
-			if (this.m.ID == "background.companions_beastmaster")
-			{
-				local items = this.getContainer().getActor().getItems();
-
-				///// mainhand
-				local r = this.Math.rand(1, 3);
-				if (r == 1)
-				{
-					local rr;
-					if (this.Const.DLC.Wildmen)
-					{
-						rr = this.Math.rand(1, 2);
-					}
-					else
-					{
-						rr = this.Math.rand(1, 1);
-					}
-
-					if (rr == 1)
-					{
-						items.equip(this.new("scripts/items/weapons/battle_whip"));
-					}
-					else if (rr == 2)
-					{
-						items.equip(this.new("scripts/items/weapons/barbarians/thorned_whip"));
-					}
-				}
-				else
-				{
-					local rr;
-					if (this.Const.DLC.Wildmen)
-					{
-						rr = this.Math.rand(1, 20);
-					}
-					else
-					{
-						rr = this.Math.rand(1, 15);
-					}
-
-					if (rr == 1)
-					{
-						items.equip(this.new("scripts/items/weapons/dagger"));
-					}
-					else if (rr == 2)
-					{	
-						items.equip(this.new("scripts/items/weapons/shortsword"));
-					}
-					else if (rr == 3)
-					{
-						items.equip(this.new("scripts/items/weapons/falchion"));
-					}
-					else if (rr == 4)
-					{
-						items.equip(this.new("scripts/items/weapons/bludgeon"));
-					}
-					else if (rr == 5)
-					{
-						items.equip(this.new("scripts/items/weapons/morning_star"));
-					}
-					else if (rr == 6)
-					{
-						items.equip(this.new("scripts/items/weapons/militia_spear"));
-					}
-					else if (rr == 7)
-					{
-						items.equip(this.new("scripts/items/weapons/boar_spear"));
-					}
-					else if (rr == 8)
-					{
-						items.equip(this.new("scripts/items/weapons/hatchet"));
-					}
-					else if (rr == 9)
-					{
-						items.equip(this.new("scripts/items/weapons/hand_axe"));
-					}
-					else if (rr == 10)
-					{
-						items.equip(this.new("scripts/items/weapons/reinforced_wooden_flail"));
-					}
-					else if (rr == 11)
-					{
-						items.equip(this.new("scripts/items/weapons/flail"));
-					}
-					else if (rr == 12)
-					{
-						items.equip(this.new("scripts/items/weapons/butchers_cleaver"));
-					}
-					else if (rr == 13)
-					{
-						items.equip(this.new("scripts/items/weapons/scramasax"));
-					}
-					else if (rr == 14)
-					{
-						items.equip(this.new("scripts/items/weapons/pickaxe"));
-					}
-					else if (rr == 15)
-					{
-						items.equip(this.new("scripts/items/weapons/military_pick"));
-					}
-					else if (rr == 16)
-					{
-						items.equip(this.new("scripts/items/weapons/barbarians/claw_club"));
-					}
-					else if (rr == 17)
-					{
-						items.equip(this.new("scripts/items/weapons/barbarians/crude_axe"));
-					}
-					else if (rr == 18)
-					{
-						items.equip(this.new("scripts/items/weapons/barbarians/axehammer"));
-					}
-					else if (rr == 19)
-					{
-						items.equip(this.new("scripts/items/weapons/barbarians/antler_cleaver"));
-					}
-					else if (rr == 20)
-					{
-						items.equip(this.new("scripts/items/weapons/barbarians/blunt_cleaver"));
-					}
-				}
-
-				///// offhand
-				r = this.Math.rand(1, 3);
-				if (r == 1)
-				{
-					items.equip(this.new("scripts/items/tools/throwing_net"));
-				}
-				else
-				{
-					local rr = this.Math.rand(1, 2);
-					if (rr == 1)
-					{
-						items.equip(this.new("scripts/items/shields/buckler_shield"));
-					}
-					else if (rr == 2)
-					{
-						items.equip(this.new("scripts/items/shields/wooden_shield"));
-					}
-				}
-
-				///// helmet
-				if (this.Const.DLC.Wildmen)
-				{
-					r = this.Math.rand(1, 6);
-				}
-				else
-				{
-					r = this.Math.rand(1, 4);
-				}
-
-				if (r == 1)
-				{
-					items.equip(this.new("scripts/items/helmets/mouth_piece"));
-				}
-				else if (r == 2)
-				{
-					items.equip(this.new("scripts/items/helmets/open_leather_cap"));
-				}
-				else if (r == 3)
-				{
-					items.equip(this.new("scripts/items/helmets/full_leather_cap"));
-				}
-				else if (r == 4)
-				{
-					items.equip(this.new("scripts/items/helmets/rusty_mail_coif"));
-				}
-				else if (r == 5)
-				{
-					items.equip(this.new("scripts/items/helmets/barbarians/leather_headband"));
-				}
-				else if (r == 6)
-				{
-					items.equip(this.new("scripts/items/helmets/barbarians/bear_headpiece"));
-				}
-
-				///// armor
-				if (this.Const.DLC.Wildmen)
-				{
-					r = this.Math.rand(1, 10);
-				}
-				else
-				{
-					r = this.Math.rand(1, 5);
-				}
-
-				if (r == 1)
-				{
-					items.equip(this.new("scripts/items/armor/ragged_surcoat"));
-				}
-				else if (r == 2)
-				{
-					items.equip(this.new("scripts/items/armor/blotched_gambeson"));
-				}
-				else if (r == 3)
-				{
-					items.equip(this.new("scripts/items/armor/padded_leather"));
-				}
-				else if (r == 4)
-				{
-					items.equip(this.new("scripts/items/armor/patched_mail_shirt"));
-				}
-				else if (r == 5)
-				{
-					items.equip(this.new("scripts/items/armor/worn_mail_shirt"));
-				}
-				else if (r == 6)
-				{
-					items.equip(this.new("scripts/items/armor/barbarians/thick_furs_armor"));
-				}
-				else if (r == 7)
-				{
-					items.equip(this.new("scripts/items/armor/barbarians/animal_hide_armor"));
-				}
-				else if (r == 8)
-				{
-					items.equip(this.new("scripts/items/armor/barbarians/reinforced_animal_hide_armor"));
-				}
-				else if (r == 9)
-				{
-					items.equip(this.new("scripts/items/armor/barbarians/scrap_metal_armor"));
-				}
-				else if (r == 10)
-				{
-					items.equip(this.new("scripts/items/armor/barbarians/hide_and_bone_armor"));
-				}
-			}
-			else
-			{
-				local items = this.getContainer().getActor().getItems();
-				local r;
-
-				if (this.Math.rand(1, 100) >= 50)
-				{
-					items.equip(this.new("scripts/items/tools/throwing_net"));
-				}
-
-				r = this.Math.rand(0, 0);
-
-				if (r == 0)
-				{
-					items.equip(this.new("scripts/items/armor/ragged_surcoat"));
-				}
-
-				r = this.Math.rand(0, 1);
-
-				if (r == 0)
-				{
-					items.equip(this.new("scripts/items/helmets/open_leather_cap"));
-				}
 			}
 		}
 
@@ -690,7 +436,6 @@
 				this.m.Background = null;
 				this.m.Title = "";
 				this.m.Talents = [];
-				this.m.Items.clear();
 
 				local remove = this.m.Skills.query(this.Const.SkillType.Background);
 				foreach(r in remove)
@@ -768,7 +513,7 @@
 							}
 						}
 					}
-					if (onActorKilled != null) onActorKilled(_actor, _tile, _skill);
+					onActorKilled(_actor, _tile, _skill);
 				}
 			}
 			else
@@ -791,6 +536,7 @@
 							}
 						}
 					}
+					this.actor.onActorKilled(_actor, _tile, _skill);
 				}
 			}
 		}
@@ -824,7 +570,7 @@
 							}
 						}
 					}
-					if (onActorKilled != null) onActorKilled(_actor, _tile, _skill);
+					onActorKilled(_actor, _tile, _skill);
 				}
 			}
 			else
@@ -847,6 +593,7 @@
 							}
 						}
 					}
+					this.actor.onActorKilled(_actor, _tile, _skill);
 				}
 			}
 		}
@@ -1092,7 +839,7 @@
 			{
 				this.m.ID = this.Const.Companions.Library[this.m.Type].ID;
 				this.m.Description = this.Const.Companions.Library[this.m.Type].Description;
-				this.m.Value = this.Math.floor(this.Const.Companions.Library[this.m.Type].Value + ((this.m.Level - 1.00) * (this.Const.Companions.Library[this.m.Type].Value / 32.00)));
+				this.m.Value = this.Math.floor(this.Const.Companions.Library[this.m.Type].Value + ((this.m.Level - 1.00) * (this.Const.Companions.Library[this.m.Type].Value / 65.00)));
 				this.m.Script = this.Const.Companions.Library[this.m.Type].Script;
 				this.m.ArmorScript = this.Const.Companions.Library[this.m.Type].ArmorScript;
 				this.m.UnleashSounds = this.Const.Companions.Library[this.m.Type].UnleashSounds;
@@ -1362,7 +1109,7 @@
 					{
 						id = 8,
 						type = "text",
-						text = this.m.Type == this.Const.Companions.TypeList.TomeReanimation ? "This power of this incantation:" : "This individual\'s base attributes:"
+						text = this.m.Type == this.Const.Companions.TypeList.TomeReanimation ? "The power of this incantation:" : "This individual\'s base attributes:"
 					},
 					{
 						id = 9,

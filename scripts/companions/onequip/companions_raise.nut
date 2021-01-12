@@ -167,6 +167,7 @@ this.companions_raise <- this.inherit("scripts/skills/skill", {
 			propertiesBase.setValues(propertiesNew);
 			e.m.CurrentProperties = propertiesBase;
 			e.m.Hitpoints = propertiesBase.Hitpoints;
+
 			if (currentOffhand != null) e.getItems().equip(currentOffhand);
 			if (currentMainhand != null) e.getItems().equip(currentMainhand);
 

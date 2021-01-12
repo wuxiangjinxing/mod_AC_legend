@@ -45,24 +45,9 @@ this.companions_nacho_agent <- this.inherit("scripts/ai/tactical/agent", {
 			this.m.Properties.EngageAgainstSpearwallMult = 1.25;
 		}
 
-		local ghouls = 0;
-		local nonGhouls = 0;
-
-		foreach( ally in this.m.KnownAllies )
-		{
-			if (ally.getFlags().has("ghoul"))
-			{
-				ghouls = ++ghouls;
-			}
-			else
-			{
-				nonGhouls = ++nonGhouls;
-			}
-		}
-
 		local strategy = this.Tactical.Entities.getStrategy(this.getActor().getFaction());
 
-		if (!strategy.getStats().IsEngaged && this.m.Actor.getAttackedCount() == 0 && this.Time.getRound() <= 3 && ghouls < nonGhouls)
+		if (!strategy.getStats().IsEngaged && this.m.Actor.getAttackedCount() == 0)
 		{
 			this.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.EngageMelee] = 0.0;
 			this.m.Properties.PreferWait = true;
