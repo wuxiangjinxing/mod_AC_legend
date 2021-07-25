@@ -282,7 +282,8 @@ this.companions_direwolf <- this.inherit("scripts/entity/tactical/actor", {
 		this.actor.onInit();
 		local b = this.m.BaseProperties;
 		b.setValues(this.Const.Tactical.Actor.Direwolf);
-		b.IsAffectedByNight = false;
+	    b.IsAffectedByNight = false; 
+		b.TargetAttractionMult = 0.2;
 		b.IsImmuneToDisarm = true;
 		this.m.ActionPoints = b.ActionPoints;
 		this.m.Hitpoints = b.Hitpoints;
@@ -317,6 +318,7 @@ this.companions_direwolf <- this.inherit("scripts/entity/tactical/actor", {
 		this.getSprite("status_rooted").Scale = 0.54;
 		this.setSpriteOffset("status_rooted", this.createVec(0, 0));
 		this.m.Skills.add(this.new("scripts/skills/actives/werewolf_bite"));
+	//	this.m.Skills.add(this.new("scripts/skills/traits/delz_darkvision_trait"));
 	}
 
 	function applyCompanionScaling()

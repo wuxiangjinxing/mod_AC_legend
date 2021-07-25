@@ -54,7 +54,7 @@ gt.Const.Companions.AttainableQuirks <- [
 	"scripts/skills/perks/perk_fearsome",
 //	"scripts/skills/perks/perk_duelist",
 	"scripts/skills/perks/perk_killing_frenzy",
-	"scripts/skills/perks/perk_indomitable",
+//	"scripts/skills/perks/perk_indomitable", - Never seen it used
 //	"scripts/skills/perks/perk_battle_flow",
 	"scripts/skills/perks/perk_devastating_strikes",
 	"scripts/skills/perks/perk_battering_ram",
@@ -62,16 +62,42 @@ gt.Const.Companions.AttainableQuirks <- [
 	"scripts/skills/perks/perk_stalwart",
 	"scripts/skills/perks/perk_sundering_strikes",
 
+// PERKS - Legends
+    "scripts/skills/perks/perk_legend_escape_artist",
+    "scripts/skills/perks/perk_legend_terrifying_visage",  
+    "scripts/skills/perks/perk_slaughterer",  
+    "scripts/skills/perks/perk_legend_poison_immunity",  // -> Make sure to change properties of creatures to give it as bonus perk instead of unaffected
+    "scripts/skills/perks/perk_legend_onslaught",  
+    "scripts/skills/perks/perk_legend_assured_conquest",  
+    "scripts/skills/perks/perk_legend_alert",
+    "scripts/skills/perks/perk_double_strike",  
+    "scripts/skills/perks/perk_legend_second_wind",  
+    "scripts/skills/perks/perk_return_favor",  
+    "scripts/skills/perks/perk_feint"
 	// TRAITS
-	"scripts/skills/traits/huge_trait",
+
+//	"scripts/skills/traits/huge_trait",   Effectively a nerf, and hurts the high tier stuff less than dogs and such
 	"scripts/skills/traits/lucky_trait",
+	"scripts/skills/traits/delz_darkvision_trait",
+
+
+
+
+
 
 	// ACTIVES, EFFECTS, QUIRKS
-	"scripts/companions/quirks/companions_berserker_rage",
+	"scripts/companions/quirks/companions_berserker_rage", // Berserker
 	"scripts/companions/quirks/companions_poisonous",
 	"scripts/companions/quirks/companions_healthy",
 	"scripts/companions/quirks/companions_soften_blows",
-	"scripts/companions/quirks/companions_regenerative"
+	"scripts/companions/quirks/companions_regenerative",
+
+	"scripts/companions/quirks/companions_delz_ferocity",
+	"scripts/companions/quirks/companions_delz_tenacity"
+    
+
+
+
 ];
 gt.Const.Companions.AttainableQuirksDLCUnhold <- [ // Beasts and Exploration
 ];
@@ -141,6 +167,7 @@ gt.Const.Companions.SerializeQuirks <- [
 	"perk.stalwart",
 	"perk.sundering_strikes",
 
+
 	// BEAST-SPECIFICS
 	"quirk.good_boy",
 
@@ -148,13 +175,37 @@ gt.Const.Companions.SerializeQuirks <- [
 	"trait.huge",
 	"trait.lucky",
 
+
 	// ACTIVES, EFFECTS, QUIRKS
 	"actives.throw_dirt",
 	"quirk.berserker_rage",
 	"quirk.poison_coat",
 	"quirk.healthy",
 	"quirk.soften_blows",
-	"quirk.regenerative"
+	"quirk.regenerative",
+
+
+ // Legends
+    "perk.legend_escape_artist",
+    "perk.legend_terrifying_visage",
+    "perk.slaughterer",
+    "perk.legend_poison_immunity",
+    "perk.legend_onslaught",
+    "perk.legend_assured_conquest",
+    "perk.legend_alert",
+    "perk.double_strike",
+    "perk.legend_second_wind",
+    "perk.return_favor",
+
+
+
+    "trait.delz_darkvision",
+    
+
+    "quirk.delz_ferocity",
+    "quirk.delz_tenacity",
+    "perk.feint"
+
 ];
 gt.Const.Companions.DeserializeQuirks <- [
 	// PERKS
@@ -228,5 +279,24 @@ gt.Const.Companions.DeserializeQuirks <- [
 	"scripts/companions/quirks/companions_poisonous",
 	"scripts/companions/quirks/companions_healthy",
 	"scripts/companions/quirks/companions_soften_blows",
-	"scripts/companions/quirks/companions_regenerative"
+	"scripts/companions/quirks/companions_regenerative",
+
+ // Legends
+
+    "scripts/skills/perks/perk_legend_escape_artist",
+    "scripts/skills/perks/perk_legend_terrifying_visage",  
+    "scripts/skills/perks/perk_slaughterer",  
+    "scripts/skills/perks/perk_legend_poison_immunity", 
+    "scripts/skills/perks/perk_legend_onslaught",  
+    "scripts/skills/perks/perk_legend_assured_conquest",  
+    "scripts/skills/perks/perk_legend_alert",
+    "scripts/skills/perks/perk_double_strike",  
+    "scripts/skills/perks/perk_legend_second_wind",  
+    "scripts/skills/perks/perk_return_favor",  
+	"scripts/skills/traits/delz_darkvision_trait",
+	"scripts/companions/quirks/companions_delz_ferocity",
+	"scripts/companions/quirks/companions_delz_tenacity",
+	"scripts/skills/perks/perk_feint"
+
+
 ];

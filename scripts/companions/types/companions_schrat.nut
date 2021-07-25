@@ -204,12 +204,12 @@ this.companions_schrat <- this.inherit("scripts/entity/tactical/actor", {
 		local b = this.m.BaseProperties;
 		b.setValues(this.Const.Tactical.Actor.Schrat);
 		b.IsImmuneToBleeding = true;
-		b.IsImmuneToPoison = true;
+		b.IsImmuneToPoison = true; 
 		b.IsImmuneToKnockBackAndGrab = true;
 		b.IsImmuneToStun = true;
 		b.IsImmuneToRoot = true;
 		b.IsIgnoringArmorOnAttack = true;
-		b.IsAffectedByNight = false;
+	    b.IsAffectedByNight = false; 
 		b.IsAffectedByInjuries = false;
 		b.IsImmuneToDisarm = true;
 		this.m.ActionPoints = b.ActionPoints;
@@ -240,6 +240,10 @@ this.companions_schrat <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.Skills.add(this.new("scripts/skills/actives/uproot_skill"));
 		this.m.Skills.add(this.new("scripts/skills/actives/uproot_zoc_skill"));
 		this.m.Items.equip(this.new("scripts/items/shields/beasts/schrat_shield"));
+	//	this.m.Skills.add(this.new("scripts/skills/traits/delz_darkvision_trait"));
+	//	this.m.Skills.add(this.new("scripts/skills/perks/perk_stalwart"));
+	//	this.m.Skills.add(this.new("scripts/skills/perks/perk_battering_ram"));
+	//	this.m.Skills.add(this.new("scripts/skills/perks/perk_legend_poison_immunity"));
 	}
 
 	function applyCompanionScaling()

@@ -268,7 +268,8 @@ this.companions_hyena <- this.inherit("scripts/entity/tactical/actor", {
 		this.actor.onInit();
 		local b = this.m.BaseProperties;
 		b.setValues(this.Const.Tactical.Actor.Hyena);
-		b.IsAffectedByNight = false;
+		b.TargetAttractionMult = 0.2;
+	    b.IsAffectedByNight = false;
 		b.IsImmuneToDisarm = true;
 		this.m.ActionPoints = b.ActionPoints;
 		this.m.Hitpoints = b.Hitpoints;
@@ -302,6 +303,7 @@ this.companions_hyena <- this.inherit("scripts/entity/tactical/actor", {
 		this.getSprite("status_rooted").Scale = 0.54;
 		this.setSpriteOffset("status_rooted", this.createVec(0, 0));
 		this.m.Skills.add(this.new("scripts/skills/actives/hyena_bite_skill"));
+	//	this.m.Skills.add(this.new("scripts/skills/traits/delz_darkvision_trait"));
 	}
 
 	function applyCompanionScaling()

@@ -544,8 +544,8 @@ this.companions_noodle_tail <- this.inherit("scripts/entity/tactical/actor", {
 		this.actor.onInit();
 		local b = this.m.BaseProperties;
 		b.setValues(this.Const.Tactical.Actor.Lindwurm);
-		b.IsAffectedByNight = false;
-		b.IsImmuneToKnockBackAndGrab = true;
+     	b.IsAffectedByNight = false;
+		b.IsImmuneToKnockBackAndGrab = true; 
 		b.IsImmuneToStun = true;
 		b.IsMovable = false;
 		b.IsImmuneToDisarm = true;
@@ -586,6 +586,9 @@ this.companions_noodle_tail <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.Skills.add(this.new("scripts/skills/actives/tail_slam_split_skill"));
 		this.m.Skills.add(this.new("scripts/skills/actives/tail_slam_zoc_skill"));
 		this.m.Skills.add(this.new("scripts/skills/actives/move_tail_skill"));
+	//	this.m.Skills.add(this.new("scripts/skills/traits/delz_darkvision_trait"));
+	//	this.m.Skills.add(this.new("scripts/skills/perks/perk_stalwart"));
+	//	this.m.Skills.add(this.new("scripts/skills/perks/perk_battering_ram"));
 	}
 
 	function applyCompanionScaling()

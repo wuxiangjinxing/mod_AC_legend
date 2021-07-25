@@ -76,9 +76,20 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 
 	function getHitchance(_targetEntity)
 	{
-		local tameDefault = this.Const.Companions.TameChance.Default / 10.0;
-		local tameBeastmaster = this.Const.Companions.TameChance.Beastmaster / 10.0;
-		return this.getContainer().getActor().getSkills().hasSkill("background.companions_beastmaster") ? (1.0 - _targetEntity.getHitpointsPct()) * tameBeastmaster : (1.0 - _targetEntity.getHitpointsPct()) * tameDefault;
+		local tameDefault = this.Const.Companions.TameChance.Default / 1.0;
+		local tameBeastmaster = this.Const.Companions.TameChance.Beastmaster / 1.0;
+		local chance = this.getContainer().getActor().getSkills().hasSkill("background.companions_beastmaster") 
+		? 
+		(1.0 - _targetEntity.getHitpointsPct()) * tameBeastmaster 
+		: 
+		(1.0 - _targetEntity.getHitpointsPct()) * tameDefault;
+
+		if (_targetEntity.getCurrentProperties().IsRooted)
+		{
+			chance *= 1.25;
+		}
+
+		return chance;
 	}
 
 	function hasMaxTamed(check)
@@ -211,9 +222,18 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 		local tameBeastmaster = this.Const.Companions.TameChance.Beastmaster;
 		local actor = this.getContainer().getActor();
 		local target = _targetTile.getEntity();
-		local chance = actor.getSkills().hasSkill("background.companions_beastmaster") ? (1.0 - target.getHitpointsPct()) * tameBeastmaster : (1.0 - target.getHitpointsPct()) * tameDefault;
+		local chance = actor.getSkills().hasSkill("background.companions_beastmaster") 
+		? 
+		(1.0 - target.getHitpointsPct()) * tameBeastmaster 
+		: 
+		(1.0 - target.getHitpointsPct()) * tameDefault;
 
-		if (this.Math.rand(1, 1000) <= chance)
+		if (target.getCurrentProperties().IsRooted)
+		{
+			chance *= 1.25;
+		}
+
+		if (this.Math.rand(1, 100) <= chance)
 		{
 			this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(actor) + " successfully tamed " + this.Const.UI.getColorizedEntityName(target));
 			local loot = this.new("scripts/items/accessory/wardog_item");
@@ -279,24 +299,10 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 			this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(actor) + " failed to tame " + this.Const.UI.getColorizedEntityName(target));
 			this.spawnIcon("status_effect_111", _targetTile);
 			target.getFlags().add("taming_protection");
+			target.m.Skills.add(this.new("scripts/companions/player/companions_taming_protection"));
 		}
 
 		this.m.IsHidden = this.isHidden();
 		return true;
-	}
-
-	function onCombatFinished()
-	{
-		local entities = this.Tactical.Entities.getAllInstances();
-		foreach(ent in entities)
-		{
-			foreach(e in ent)
-			{
-				if (e.getFlags().has("taming_protection"))
-				{
-					e.getFlags().remove("taming_protection");
-				}
-			}
-		}
 	}
 });

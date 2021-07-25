@@ -413,7 +413,8 @@ this.companions_nacho <- this.inherit("scripts/entity/tactical/actor", {
 		this.actor.onInit();
 		local b = this.m.BaseProperties;
 		b.setValues(this.Const.Tactical.Actor.Ghoul);
-		b.IsAffectedByNight = false;
+		b.TargetAttractionMult = 0.10;
+	    b.IsAffectedByNight = false;
 		b.IsImmuneToDisarm = true;
 		this.m.ActionPoints = b.ActionPoints;
 		this.m.Hitpoints = b.Hitpoints;
@@ -443,6 +444,7 @@ this.companions_nacho <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.Skills.add(this.new("scripts/skills/actives/gruesome_feast"));
 		this.m.Skills.add(this.new("scripts/skills/effects/gruesome_feast_effect"));
 		this.m.Skills.add(this.new("scripts/companions/skills/companions_swallow_whole")); // modified version of the original that ignores bosses and special entities
+	//	this.m.Skills.add(this.new("scripts/skills/traits/delz_darkvision_trait"));
 	}
 
 	function applyCompanionScaling()

@@ -320,11 +320,12 @@ this.companions_alp <- this.inherit("scripts/entity/tactical/actor", {
 		this.actor.onInit();
 		local b = this.m.BaseProperties;
 		b.setValues(this.Const.Tactical.Actor.Alp);
+		b.TargetAttractionMult = 0.30;
 		b.Initiative += this.Math.rand(0, 55);
-		b.IsAffectedByNight = false;
+	    b.IsAffectedByNight = false; 
 		b.IsAffectedByInjuries = false;
 		b.IsImmuneToBleeding = true;
-		b.IsImmuneToPoison = true;
+		b.IsImmuneToPoison = true;  
 		b.IsImmuneToDisarm = true;
 		b.IsImmuneToKnockBackAndGrab = true;
 		this.m.ActionPoints = b.ActionPoints;
@@ -349,6 +350,9 @@ this.companions_alp <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.Skills.add(this.new("scripts/skills/actives/alp_teleport_skill"));
 		this.m.Skills.add(this.new("scripts/skills/actives/sleep_skill"));
 		this.m.Skills.add(this.new("scripts/companions/skills/companions_nightmare_skill")); // modified version of the original that scales damage with Good Boy
+	//	this.m.Skills.add(this.new("scripts/skills/traits/delz_darkvision_trait"));
+	//	this.m.Skills.add(this.new("scripts/skills/perks/perk_stalwart"));
+	//	this.m.Skills.add(this.new("scripts/skills/perks/perk_legend_poison_immunity"));
 	}
 
 	function applyCompanionScaling()

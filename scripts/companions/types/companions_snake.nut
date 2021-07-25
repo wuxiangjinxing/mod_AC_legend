@@ -241,7 +241,8 @@ this.companions_snake <- this.inherit("scripts/entity/tactical/actor", {
 		local b = this.m.BaseProperties;
 		b.setValues(this.Const.Tactical.Actor.Serpent);
 		b.Initiative += this.Math.rand(0, 50);
-		b.IsAffectedByNight = false;
+	    b.IsAffectedByNight = false;
+		b.TargetAttractionMult = 0.20;
 		b.IsImmuneToDisarm = true;
 		this.m.ActionPoints = b.ActionPoints;
 		this.m.Hitpoints = b.Hitpoints;
@@ -277,6 +278,7 @@ this.companions_snake <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.Skills.add(this.new("scripts/skills/racial/serpent_racial"));
 		this.m.Skills.add(this.new("scripts/skills/actives/serpent_hook_skill"));
 		this.m.Skills.add(this.new("scripts/skills/actives/serpent_bite_skill"));
+	//	this.m.Skills.add(this.new("scripts/skills/traits/delz_darkvision_trait"));
 	}
 
 	function applyCompanionScaling()

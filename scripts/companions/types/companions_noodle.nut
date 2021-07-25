@@ -276,7 +276,7 @@ this.companions_noodle <- this.inherit("scripts/entity/tactical/actor", {
 		local b = this.m.BaseProperties;
 		b.setValues(this.Const.Tactical.Actor.Lindwurm);
 		b.IsAffectedByNight = false;
-		b.IsImmuneToKnockBackAndGrab = true;
+		b.IsImmuneToKnockBackAndGrab = true; 
 		b.IsImmuneToStun = true;
 		b.IsMovable = false;
 		b.IsImmuneToDisarm = true;
@@ -315,6 +315,10 @@ this.companions_noodle <- this.inherit("scripts/entity/tactical/actor", {
 		this.setSpriteOffset("arrow", this.createVec(-5, 30));
 		this.m.Skills.add(this.new("scripts/skills/actives/gorge_skill"));
 		this.m.Skills.add(this.new("scripts/skills/racial/lindwurm_racial"));
+	//	this.m.Skills.add(this.new("scripts/skills/traits/delz_darkvision_trait"));
+	//	this.m.Skills.add(this.new("scripts/skills/perks/perk_stalwart"));
+	//	this.m.Skills.add(this.new("scripts/skills/perks/perk_battering_ram"));
+
 
 		if (this.m.Tail == null)
 		{

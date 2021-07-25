@@ -1,9 +1,9 @@
-::mods_registerMod("mod_AC", 1.21, "Accessory Companions");
+::mods_registerMod("mod_AC", 1.26, "Accessory Companions");
 ::mods_queue("mod_AC", null, function()
 {
 	///// extends maximum tooltip height in order to fit companion details and makes sure long tooltips don't go outside of the window
-	::mods_registerCSS("companions_tooltip.css");
-	::mods_registerJS("companions_tooltip.js");
+//	::mods_registerCSS("companions_tooltip.css");
+//	::mods_registerJS("companions_tooltip.js");
 
 
 	///// make companions heal their wounds at the same time as brothers heal theirs
@@ -46,7 +46,7 @@
 
 
 	///// hide the Beastmaster background within the Houndmaster background
-	::mods_hookNewObject("skills/backgrounds/houndmaster_background", function(o)
+/*	::mods_hookNewObject("skills/backgrounds/houndmaster_background", function(o)
 	{
 		o.applyBeastmasterModification <- function()
 		{
@@ -91,50 +91,36 @@
 			this.m.Level = this.Math.rand(1, 3);
 		}
 
-		///// "Backgrounds and Attribute Ranges" houndmaster_background.getTooltip fix
-		if (::mods_getRegisteredMod("mod_BAR") == null || (::mods_getRegisteredMod("mod_BAR") != null && ::mods_getRegisteredMod("mod_BAR").Version < 1.05))
+		local getTooltip = o.getTooltip;
+		o.getTooltip = function()
 		{
-			o.getTooltip = function()
+			local tooltip = getTooltip();
+			if (tooltip.len() >= 3)
 			{
-				local ret = [
-					{
-						id = 1,
-						type = "title",
-						text = this.getName()
-					},
-					{
-						id = 2,
-						type = "description",
-						text = this.getDescription()
-					},
-					{
-						id = 14,
-						type = "text",
-						icon = "ui/icons/bravery.png",
-						text = "Beasts unleashed by this character will start at confident morale."
-					},
-					{
-						id = 15,
-						type = "text",
-						icon = "ui/icons/xp_received.png",
-						text = "Beasts handled by this character gain more experience."
-					}
-				];
-
-				if (this.m.ID == "background.companions_beastmaster")
+				if (tooltip[0].text == this.getName() && tooltip[1].text == this.getDescription() && tooltip[2].id == 14)
 				{
-					ret.push({
-						id = 56,
-						type = "text",
-						icon = "ui/icons/special.png",
-						text = "Higher chance of success when taming beasts."
-					});
-				}
+					tooltip[2].text = "Beasts unleashed by this character will start at confident morale.";
+					tooltip.insert(3, { id = 4, type = "text", icon = "ui/icons/xp_received.png", text = "Beasts handled by this character gain more experience." });
 
-				return ret;
+					if (this.m.ID == "background.companions_beastmaster")
+					{
+						tooltip.insert(4, { id = 5, type = "text", icon = "ui/icons/special.png", text = "Higher chance of success when taming beasts." });
+					}
+				}
+				else
+				{
+					this.logInfo("mod_AC: Houndmaster default tooltip indexes already modified or moved to other index positions by another mod?");
+				}
 			}
+			else
+			{
+				this.logInfo("mod_AC: Houndmaster default tooltip reduced below default length by another mod?");
+			}
+
+			return tooltip;
 		}
 
+		local onBuildDescription = o.onBuildDescription;
 		o.onBuildDescription = function()
 		{
 			if (this.m.ID == "background.companions_beastmaster")
@@ -143,10 +129,11 @@
 			}
 			else
 			{
-				return "{%name%\'s fondness for dogs started after his father won a pup in a shooting contest. | When a dog saved him from a bear, %name% dedicated his life to the canine lot. | Seeing a dog stave off a would-be robber, %name%\'s fondness for the mutts only grew. | A young, bird-hunting %name% quickly saw the honor, loyalty, and workmanship of a dog. | Once bitten by a wild dog, %name% confronted his fear of canines by learning to train them.} {The houndmaster spent many years working for a local lord. He gave up the post after the liege struck a dog down just for sport. | Quick with training his mongrels, the houndmaster put his dogs into a lucrative traveling tradeshow. | The man made a great deal of money on the dog-fighting circuits, his mutts renowned for their easily commanded - and unleashed - ferocity. | Employed by lawmen, the houndmaster used his strong-nosed dogs to hunt down many a criminal element. | Used by a local lord, many of the houndmaster\'s dogs found their way onto the battlefield. | For many years, the houndmaster used his dogs to help lift the spirits of orphaned children and the crippled.} {Now, though, %name% seeks a change of vocation. | When he heard word of a mercenary\'s pay, %name% decided to try his hand at being a sellsword. | Approached by a sellsword to buy one of his dogs, %name% became more interested in the prospect of he, himself, becoming a mercenary. | Tired of training dogs for this purpose or that, %name% seeks to train himself for... well, this purpose or that. | An interesting prospect, you can only hope %name% is as loyal as the dogs he once commanded.}";
+				return onBuildDescription();
 			}
 		}
 
+		local onChangeAttributes = o.onChangeAttributes;
 		o.onChangeAttributes = function()
 		{
 			if (this.m.ID == "background.companions_beastmaster")
@@ -165,17 +152,242 @@
 			}
 			else
 			{
-				local c = {
-					Hitpoints = [5, 0],
-					Bravery = [5, 5],
-					Stamina = [5, 0],
-					MeleeSkill = [0, 0],
-					RangedSkill = [0, 0],
-					MeleeDefense = [3, 3],
-					RangedDefense = [0, 0],
-					Initiative = [5, 0]
-				};
-				return c;
+				return onChangeAttributes();
+			}
+		}
+
+		local onAddEquipment = o.onAddEquipment;
+		o.onAddEquipment = function()
+		{
+			if (this.m.ID == "background.companions_beastmaster")
+			{
+				local items = this.getContainer().getActor().getItems();
+
+				///// mainhand
+				local r = this.Math.rand(1, 3);
+				if (r == 1)
+				{
+					local rr;
+					if (this.Const.DLC.Wildmen)
+					{
+						rr = this.Math.rand(1, 2);
+					}
+					else
+					{
+						rr = this.Math.rand(1, 1);
+					}
+
+					if (rr == 1)
+					{
+						items.equip(this.new("scripts/items/weapons/battle_whip"));
+					}
+					else if (rr == 2)
+					{
+						items.equip(this.new("scripts/items/weapons/barbarians/thorned_whip"));
+					}
+				}
+				else
+				{
+					local rr;
+					if (this.Const.DLC.Wildmen)
+					{
+						rr = this.Math.rand(1, 20);
+					}
+					else
+					{
+						rr = this.Math.rand(1, 15);
+					}
+
+					if (rr == 1)
+					{
+						items.equip(this.new("scripts/items/weapons/dagger"));
+					}
+					else if (rr == 2)
+					{	
+						items.equip(this.new("scripts/items/weapons/shortsword"));
+					}
+					else if (rr == 3)
+					{
+						items.equip(this.new("scripts/items/weapons/falchion"));
+					}
+					else if (rr == 4)
+					{
+						items.equip(this.new("scripts/items/weapons/bludgeon"));
+					}
+					else if (rr == 5)
+					{
+						items.equip(this.new("scripts/items/weapons/morning_star"));
+					}
+					else if (rr == 6)
+					{
+						items.equip(this.new("scripts/items/weapons/militia_spear"));
+					}
+					else if (rr == 7)
+					{
+						items.equip(this.new("scripts/items/weapons/boar_spear"));
+					}
+					else if (rr == 8)
+					{
+						items.equip(this.new("scripts/items/weapons/hatchet"));
+					}
+					else if (rr == 9)
+					{
+						items.equip(this.new("scripts/items/weapons/hand_axe"));
+					}
+					else if (rr == 10)
+					{
+						items.equip(this.new("scripts/items/weapons/reinforced_wooden_flail"));
+					}
+					else if (rr == 11)
+					{
+						items.equip(this.new("scripts/items/weapons/flail"));
+					}
+					else if (rr == 12)
+					{
+						items.equip(this.new("scripts/items/weapons/butchers_cleaver"));
+					}
+					else if (rr == 13)
+					{
+						items.equip(this.new("scripts/items/weapons/scramasax"));
+					}
+					else if (rr == 14)
+					{
+						items.equip(this.new("scripts/items/weapons/pickaxe"));
+					}
+					else if (rr == 15)
+					{
+						items.equip(this.new("scripts/items/weapons/military_pick"));
+					}
+					else if (rr == 16)
+					{
+						items.equip(this.new("scripts/items/weapons/barbarians/claw_club"));
+					}
+					else if (rr == 17)
+					{
+						items.equip(this.new("scripts/items/weapons/barbarians/crude_axe"));
+					}
+					else if (rr == 18)
+					{
+						items.equip(this.new("scripts/items/weapons/barbarians/axehammer"));
+					}
+					else if (rr == 19)
+					{
+						items.equip(this.new("scripts/items/weapons/barbarians/antler_cleaver"));
+					}
+					else if (rr == 20)
+					{
+						items.equip(this.new("scripts/items/weapons/barbarians/blunt_cleaver"));
+					}
+				}
+
+				///// offhand
+				r = this.Math.rand(1, 3);
+				if (r == 1)
+				{
+					items.equip(this.new("scripts/items/tools/throwing_net"));
+				}
+				else
+				{
+					local rr = this.Math.rand(1, 2);
+					if (rr == 1)
+					{
+						items.equip(this.new("scripts/items/shields/buckler_shield"));
+					}
+					else if (rr == 2)
+					{
+						items.equip(this.new("scripts/items/shields/wooden_shield"));
+					}
+				}
+
+				///// helmet
+				if (this.Const.DLC.Wildmen)
+				{
+					r = this.Math.rand(1, 6);
+				}
+				else
+				{
+					r = this.Math.rand(1, 4);
+				}
+
+				if (r == 1)
+				{
+					items.equip(this.new("scripts/items/helmets/mouth_piece"));
+				}
+				else if (r == 2)
+				{
+					items.equip(this.new("scripts/items/helmets/open_leather_cap"));
+				}
+				else if (r == 3)
+				{
+					items.equip(this.new("scripts/items/helmets/full_leather_cap"));
+				}
+				else if (r == 4)
+				{
+					items.equip(this.new("scripts/items/helmets/rusty_mail_coif"));
+				}
+				else if (r == 5)
+				{
+					items.equip(this.new("scripts/items/helmets/barbarians/leather_headband"));
+				}
+				else if (r == 6)
+				{
+					items.equip(this.new("scripts/items/helmets/barbarians/bear_headpiece"));
+				}
+
+				///// armor
+				if (this.Const.DLC.Wildmen)
+				{
+					r = this.Math.rand(1, 10);
+				}
+				else
+				{
+					r = this.Math.rand(1, 5);
+				}
+
+				if (r == 1)
+				{
+					items.equip(this.new("scripts/items/armor/ragged_surcoat"));
+				}
+				else if (r == 2)
+				{
+					items.equip(this.new("scripts/items/armor/blotched_gambeson"));
+				}
+				else if (r == 3)
+				{
+					items.equip(this.new("scripts/items/armor/padded_leather"));
+				}
+				else if (r == 4)
+				{
+					items.equip(this.new("scripts/items/armor/patched_mail_shirt"));
+				}
+				else if (r == 5)
+				{
+					items.equip(this.new("scripts/items/armor/worn_mail_shirt"));
+				}
+				else if (r == 6)
+				{
+					items.equip(this.new("scripts/items/armor/barbarians/thick_furs_armor"));
+				}
+				else if (r == 7)
+				{
+					items.equip(this.new("scripts/items/armor/barbarians/animal_hide_armor"));
+				}
+				else if (r == 8)
+				{
+					items.equip(this.new("scripts/items/armor/barbarians/reinforced_animal_hide_armor"));
+				}
+				else if (r == 9)
+				{
+					items.equip(this.new("scripts/items/armor/barbarians/scrap_metal_armor"));
+				}
+				else if (r == 10)
+				{
+					items.equip(this.new("scripts/items/armor/barbarians/hide_and_bone_armor"));
+				}
+			}
+			else
+			{
+				onAddEquipment();
 			}
 		}
 
@@ -235,69 +447,102 @@
 			}
 		}
 	});
-
-
+*///
 	///// arrays holding Descriptions of various settlements, part of the process to separate Beastmaster and Houndmaster drafting locations
-	local BeastmasterSettlementsLarge = [
+//	local BeastmasterSettlementsLarge = [
 		// citadels
-		"This massive citadel guards a warport and the surrounding trade routes. It is a seat of power for nobility and home to a large garrison.",
-		"A massive citadel towering over the open plains surrounding it. A seat of power to nobles, and housing large armed forces for a firm grip on the region.",
-		"This citadel towers high over the surrounding forests and dominates the region.",
-		"This massive stone citadel is built into the steep mountains. A large number of men are stationed here to hold a firm grip on the land.",
-		"This large citadel looks wide over the endless snow and is a stronghold against anything that may come down from the far north. As people flocked to its protection over the years, the many houses and workshops in its vicinity now also grant shelter and supply to travelers, mercenaries and adventurers in the area.",
-		"This mighty citadel towers high above the surrounding steppe and is the seat of power in the region. It houses a large garrison and offers all kinds of services valuable to travellers and mercenaries.",
-		"A large citadel towering high over the surrounding tundra and securing the large and open region. Many come here to resupply, make repairs and rest until venturing on.",
+//		"This massive citadel guards a warport and the surrounding trade routes. It is a seat of power for nobility and home to a large garrison.",
+//		"A massive citadel towering over the open plains surrounding it. A seat of power to nobles, and housing large armed forces for a firm grip on the region.",
+//		"This citadel towers high over the surrounding forests and dominates the region.",
+//		"This massive stone citadel is built into the steep mountains. A large number of men are stationed here to hold a firm grip on the land.",
+//		"This large citadel looks wide over the endless snow and is a stronghold against anything that may come down from the far north. As people flocked to its protection over the years, the many houses and workshops in its vicinity now also grant shelter and supply to travelers, mercenaries and adventurers in the area.",
+//		"This mighty citadel towers high above the surrounding steppe and is the seat of power in the region. It houses a large garrison and offers all kinds of services valuable to travellers and mercenaries.",
+//		"A large citadel towering high over the surrounding tundra and securing the large and open region. Many come here to resupply, make repairs and rest until venturing on.",
 
 		// cities
-		"A large city surrounded by lush green meadows, orchards and fields. Food stocks are usually filled to the brim.",
-		"A big harbor city relying on trade and fishing, and an important hub for travellers arriving or leaving by ship.",
-		"A prospering city located close to the forest with its main produce being valuable timber and venison.",
-		"A large city far up north. Traders, travelers and adventurers come here for shelter from snow and storms.",
-		"A large city thriving in the southern steppe by trading and producing valuable goods and fine arts.",
-		"A collection of many smaller settlements spread out over dry spots in the swampy area to form one modestly sized city.",
-		"Surrounded by barren tundra, this large city has lasted as an important trading hub and home to thinkers and fine arts."
-	];
-	local BeastmasterSettlementsMedium = [
-		// keeps
-		"This mighty stone keep surrounded by forest acts as a base of operations in the area.",
-		"A stone keep that is towering high over the surrounding mountains. Lookouts on the towers can see approaching troops from miles away.",
-		"A stone keep controlling routes through and access to the surrounding swamps and marshes.",
+//		"A large city surrounded by lush green meadows, orchards and fields. Food stocks are usually filled to the brim.",
+//		"A big harbor city relying on trade and fishing, and an important hub for travellers arriving or leaving by ship.",
+//		"A prospering city located close to the forest with its main produce being valuable timber and venison.",
+//		"A large city far up north. Traders, travelers and adventurers come here for shelter from snow and storms.",
+//		"A large city thriving in the southern steppe by trading and producing valuable goods and fine arts.",
+//		"A collection of many smaller settlements spread out over dry spots in the swampy area to form one modestly sized city.",
+//		"Surrounded by barren tundra, this large city has lasted as an important trading hub and home to thinkers and fine arts."
+//	];
+//	local BeastmasterSettlementsMedium = [
+//		// keeps
+//		"This mighty stone keep surrounded by forest acts as a base of operations in the area.",
+//		"A stone keep that is towering high over the surrounding mountains. Lookouts on the towers can see approaching troops from miles away.",
+//		"A stone keep controlling routes through and access to the surrounding swamps and marshes.",
 
 		// villages
-		"An established village close to the forest living mainly from lumber cutting and game.",
-		"A stretched out settlement nestled into the surrounding mountains. The hammering of pickaxes against stone can be heard from a distance.",
-		"A somewhat larger settlement spread out across various dry and firm spots in the swamp."
-	];
-	local HoundmasterSettlementsSmall = [
+//		"An established village close to the forest living mainly from lumber cutting and game.",
+//		"A stretched out settlement nestled into the surrounding mountains. The hammering of pickaxes against stone can be heard from a distance.",
+//		"A somewhat larger settlement spread out across various dry and firm spots in the swamp."
+//	];
+//	local HoundmasterSettlementsSmall = [
 		// hamlets
-		"A village living off of lumber and everything the forest offers.",
-		"A small settlement in a swampy area. The people living here sure know hardship."
-	];
+//		"A village living off of lumber and everything the forest offers.",
+//		"A small settlement in a swampy area. The people living here sure know hardship."
+//	];
 
 
 	///// add drafts to select settlements, part of the process to separate Beastmaster and Houndmaster drafting locations
-	::mods_hookBaseClass("entity/world/settlement", function(o)
-	{
-		while(!("updateRoster" in o)) o = o[o.SuperName];
-		local updateRoster = o.updateRoster;
-		o.updateRoster = function(_force = false)
-		{
-			if (!this.m.DraftList.find("houndmaster_background"))
-			{
-				if (BeastmasterSettlementsLarge.find(this.m.Description))
-				{
-					this.m.DraftList.append("houndmaster_background");
-					this.m.DraftList.append("houndmaster_background");
-				}
-				else if (BeastmasterSettlementsMedium.find(this.m.Description) || HoundmasterSettlementsSmall.find(this.m.Description))
-				{
-					this.m.DraftList.append("houndmaster_background");
-				}
-			}
+//	::mods_hookBaseClass("entity/world/settlement", function(o)
+//	{
+//		while(!("updateRoster" in o)) o = o[o.SuperName];
+//		local updateRoster = o.updateRoster;
+//		o.updateRoster = function(_force = false)
+//		{
+//			if (!this.m.DraftList.find("houndmaster_background"))
+//		{
+//				if (BeastmasterSettlementsLarge.find(this.m.Description))
+//				{
+//					this.m.DraftList.append("houndmaster_background");
+//					this.m.DraftList.append("houndmaster_background");
+//				}
+//				else if (BeastmasterSettlementsMedium.find(this.m.Description) || HoundmasterSettlementsSmall.find(this.m.Description))
+//				{
+//					this.m.DraftList.append("houndmaster_background");
+//				}
+//			}
 
-			updateRoster(_force);
-		}
-	});
+//			updateRoster(_force);
+//		}
+//	});
+
+	////  Couln't get the default ac method to work for Legends (but that might not be saying much), so instead, decided to have it depend on arena, alchemist shop, and kennel presence
+	::mods_hookNewObject("entity/world/settlements/buildings/kennel_building", function(building)
+    {
+        local old_onUpdateDraftList = building.onUpdateDraftList  // here, we save the old function of that object in  a local variable
+        building.onUpdateDraftList = function(_list, _gender) {         
+       _list.push("companions_beastmaster_background");
+       _list.push("companions_beastmaster_background");
+
+   
+        old_onUpdateDraftList(_list, _gender) //here, we call the old function we saved
+       }
+    });
+
+::mods_hookNewObject("entity/world/settlements/buildings/alchemist_building", function(alcbuilding)
+    {
+        local old_onUpdateDraftList = alcbuilding.onUpdateDraftList  // here, we save the old function of that object in  a local variable
+        alcbuilding.onUpdateDraftList = function(_list, _gender) {         
+       _list.push("companions_beastmaster_background");
+   
+        old_onUpdateDraftList(_list, _gender) //here, we call the old function we saved
+       }
+    });
+
+::mods_hookNewObject("entity/world/settlements/buildings/arena_building", function(arebuilding)
+    {
+        local old_onUpdateDraftList = arebuilding.onUpdateDraftList  // here, we save the old function of that object in  a local variable
+        arebuilding.onUpdateDraftList = function(_list, _gender) {         
+       _list.push("companions_beastmaster_background");
+ 
+   
+        old_onUpdateDraftList(_list, _gender) //here, we call the old function we saved
+       }
+    });
 
 
 	///// give players the ability to tame beasts
@@ -427,20 +672,27 @@
 			}
 		}
 
-		local setStartValuesEx = o.setStartValuesEx;
-		o.setStartValuesEx = function( _backgrounds, _addTraits = true, _gender = -1, _addEquipment = true )
+/*		local setStartValuesEx = o.setStartValuesEx;
+		o.setStartValuesEx = function(_backgrounds, _addTraits = true)
 		{
-			setStartValuesEx( _backgrounds, _addTraits = true, _gender = -1, _addEquipment = true );
+			setStartValuesEx(_backgrounds, _addTraits);
 			if (this.m.Background.m.ID == "background.houndmaster" && this.World.State.getCurrentTown() != null && (BeastmasterSettlementsLarge.find(this.World.State.getCurrentTown().m.Description) || BeastmasterSettlementsMedium.find(this.World.State.getCurrentTown().m.Description)))
 			{
 				this.m.Background = null;
 				this.m.Title = "";
 				this.m.Talents = [];
+				this.m.Items.clear();
 
 				local remove = this.m.Skills.query(this.Const.SkillType.Background);
 				foreach(r in remove)
 				{
-					if (r.getID() != "special.mood_check")
+					if (r.getID() != "special.mood_check" && r.getID() != "special.VA11") // prevents removal of the "Mood Check" skill and mod_VA11's skill
+						this.m.Skills.removeByID(r.getID());
+				}
+				remove = this.m.Skills.query(this.Const.SkillType.Trait);
+				foreach(r in remove)
+				{
+					if (r.getID() != "special.mood_check" && r.getID() != "special.VA11") // prevents removal of the "Mood Check" skill and mod_VA11's skill
 						this.m.Skills.removeByID(r.getID());
 				}
 
@@ -466,11 +718,50 @@
 				
 				background.buildDescription();
 
-				if (_addEquipment)
+				if (_addTraits)
 				{
-					background.addEquipment();
+					local maxTraits = this.Math.rand(this.Math.rand(0, 1) == 0 ? 0 : 1, 2);
+					local traits = [
+						background
+					];
+
+					for( local i = 0; i < maxTraits; i = ++i )
+					{
+						for( local j = 0; j < 10; j = ++j )
+						{
+							local trait = this.Const.CharacterTraits[this.Math.rand(0, this.Const.CharacterTraits.len() - 1)];
+							local nextTrait = false;
+
+							for( local k = 0; k < traits.len(); k = ++k )
+							{
+								if (traits[k].getID() == trait[0] || traits[k].isExcluded(trait[0]))
+								{
+									nextTrait = true;
+									break;
+								}
+							}
+
+							if (!nextTrait)
+							{
+								traits.push(this.new(trait[1]));
+								break;
+							}
+						}
+					}
+
+					for( local i = 1; i < traits.len(); i = ++i )
+					{
+						this.m.Skills.add(traits[i]);
+
+						if (traits[i].getContainer() != null)
+						{
+							traits[i].addTitle();
+						}
+					}
 				}
-				
+
+				background.addEquipment();
+				background.setAppearance();
 				background.buildDescription(true);
 				this.m.Skills.update();
 				local p = this.m.CurrentProperties;
@@ -478,11 +769,11 @@
 
 				if (_addTraits)
 				{
-					this.fillTalentValues(3);
+					this.fillTalentValues();
 					this.fillAttributeLevelUpValues(this.Const.XP.MaxLevelWithPerkpoints - 1);
 				}
 			}
-		}
+		} */
 	});
 
 
@@ -665,6 +956,7 @@
 			new_dog.setVariant(dog.getVariant());
 			new_dog.setLevel(dog.getLevel());
 			new_dog.setXP(dog.getXP());
+			new_dog.setWounds(dog.getWounds());
 			new_dog.setAttributes(dog.getAttributes());
 			new_dog.setQuirks(dog.getQuirks());
 			new_dog.setEntity(dog.getEntity());
@@ -708,6 +1000,7 @@
 			new_dog.setVariant(dog.getVariant());
 			new_dog.setLevel(dog.getLevel());
 			new_dog.setXP(dog.getXP());
+			new_dog.setWounds(dog.getWounds());
 			new_dog.setAttributes(dog.getAttributes());
 			new_dog.setQuirks(dog.getQuirks());
 			new_dog.setEntity(dog.getEntity());
@@ -759,46 +1052,46 @@
 					this.m.ID = "accessory.wardog";
 					this.setType(this.Const.Companions.TypeList.Wardog);
 				}
-				else if (this.isKindOf(this, "armored_wardog_item"))
+				if (this.isKindOf(this, "armored_wardog_item"))
 				{
 					this.m.ID = "accessory.armored_wardog";
 					this.setType(this.Const.Companions.TypeList.WardogArmor);
 				}
-				else if (this.isKindOf(this, "heavily_armored_wardog_item"))
+				if (this.isKindOf(this, "heavily_armored_wardog_item"))
 				{
 					this.m.ID = "accessory.heavily_armored_wardog";
 					this.setType(this.Const.Companions.TypeList.WardogArmorHeavy);
 				}
-				else if (this.isKindOf(this, "warhound_item"))
+				if (this.isKindOf(this, "warhound_item"))
 				{
 					this.m.ID = "accessory.warhound";
 					this.setType(this.Const.Companions.TypeList.Warhound);
 				}
-				else if (this.isKindOf(this, "armored_warhound_item"))
+				if (this.isKindOf(this, "armored_warhound_item"))
 				{
 					this.m.ID = "accessory.armored_warhound";
 					this.setType(this.Const.Companions.TypeList.WarhoundArmor);
 				}
-				else if (this.isKindOf(this, "heavily_armored_warhound_item"))
+				if (this.isKindOf(this, "heavily_armored_warhound_item"))
 				{
 					this.m.ID = "accessory.heavily_armored_warhound";
 					this.setType(this.Const.Companions.TypeList.WarhoundArmorHeavy);
 				}
-				else if (this.isKindOf(this, "wolf_item"))
+				if (this.isKindOf(this, "wolf_item"))
 				{
 					this.m.ID = "accessory.warwolf";
 					this.setType(this.Const.Companions.TypeList.Warwolf);
 				}
-				else if (this.isKindOf(this, "legend_warbear_item"))
+				if (this.isKindOf(this, "legend_warbear_item"))
 				{
 					this.m.ID = "accessory.legend_warbear";
 					this.setType(this.Const.Companions.TypeList.Warbear);
 				}
-				else if (this.isKindOf(this, "legend_white_wolf_item"))
+				if (this.isKindOf(this, "legend_white_wolf_item"))
 				{
 					this.m.ID = "accessory.legend_white_warwolf";
 					this.setType(this.Const.Companions.TypeList.Whitewolf);
-				}				
+				}
 			}
 
 			o.getType <- function()
@@ -1287,13 +1580,39 @@
 					{
 						_xp = _xp * (1.15 + (actor.getLevel() / 66.667));
 					}
+
+	                else if (actor.getSkills().hasSkill("background.legend_commander_druid"))      
+                    {                 
+						_xp = _xp * (1.20 + (actor.getLevel() / 60.0));
+					}
+
+	                else if (actor.getSkills().hasSkill("background.legend_druid")) // Druid
+				    {                 
+						_xp = _xp * (1.15 + (actor.getLevel() / 66.667));
+					}
+
+	                else if (actor.getSkills().hasSkill("background.legend_commander_ranger")) // Ranger Commander
+					{
+						_xp = _xp * (1.15 + (actor.getLevel() / 66.667));
+					}
+
+	                else if (actor.getSkills().hasSkill("background.legend_ranger")) // Ranger
+					{
+						_xp = _xp * (1.1 + (actor.getLevel() / 100.0));
+					}
+
 					else if (actor.getSkills().hasSkill("background.houndmaster"))
+					{
+						_xp = _xp * (1.1 + (actor.getLevel() / 100.0));
+					}
+
+					else if (actor.getSkills().hasSkill("background.legend_muladi"))
 					{
 						_xp = _xp * (1.1 + (actor.getLevel() / 100.0));
 					}
 				}
 
-				if (this.m.Level >= 11)
+				if (this.m.Level >= 12)
 				{
 					_xp = _xp * this.Const.Combat.GlobalXPVeteranLevelMult;
 				}
@@ -1315,7 +1634,7 @@
 				{
 					local attributeMin = this.Const.AttributesLevelUp[attribute].Min;
 					local attributeMax = this.Const.AttributesLevelUp[attribute].Max;
-					local attributeValue = this.m.Level <= 11 ? this.Math.rand(attributeMin, attributeMax) : 1;
+					local attributeValue = this.m.Level <= 12 ? this.Math.rand(attributeMin, attributeMax) : 1;
 					switch (attribute)
 					{
 						case 0:
@@ -1348,6 +1667,17 @@
 				local availableQuirks = [];
 				foreach(quirk in this.Const.Companions.AttainableQuirks)
 				{
+					if (quirk == "scripts/skills/perks/perk_lone_wolf" && this.m.Type == this.Const.Companions.TypeList.Noodle)
+						continue;
+
+					if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
+						availableQuirks.push(quirk);
+				}
+				foreach(quirk in this.Const.Companions.AttainableQuirksBeasts)
+				{
+					if (this.m.Type == this.Const.Companions.TypeList.TomeReanimation)
+						continue;
+
 					if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
 						availableQuirks.push(quirk);
 				}
@@ -1375,14 +1705,6 @@
 							availableQuirks.push(quirk);
 					}
 				}
-				if (this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
-				{
-					foreach(quirk in this.Const.Companions.AttainableQuirksBeasts)
-					{
-						if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
-							availableQuirks.push(quirk);
-					}
-				}
 
 				while (this.m.Level < this.Const.LevelXP.len() && this.m.XP >= this.Const.LevelXP[this.m.Level])
 				{
@@ -1400,13 +1722,16 @@
 						attributeArray.remove(randomAttribute);
 						++bonusesSpent;
 					}
-					if (availableQuirks.len() != 0 && this.m.Level <= 11)
+					if (this.m.Level <= 12)
 					{
-						local rng = this.Math.rand(0, availableQuirks.len() - 1);
-						this.m.Quirks.push(availableQuirks[rng]);
-						availableQuirks.remove(rng);
+						if (availableQuirks.len() != 0)
+						{
+							local rng = this.Math.rand(0, availableQuirks.len() - 1);
+							this.m.Quirks.push(availableQuirks[rng]);
+							availableQuirks.remove(rng);
+						}
 
-						if (this.m.Level == 11 && this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
+						if (this.m.Level == 12 && this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
 						{
 							this.m.Quirks.push("scripts/companions/quirks/companions_good_boy");
 						}
