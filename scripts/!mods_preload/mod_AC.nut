@@ -1,11 +1,6 @@
 ::mods_registerMod("mod_AC", 1.26, "Accessory Companions");
 ::mods_queue("mod_AC", null, function()
 {
-	///// extends maximum tooltip height in order to fit companion details and makes sure long tooltips don't go outside of the window
-//	::mods_registerCSS("companions_tooltip.css");
-//	::mods_registerJS("companions_tooltip.js");
-
-
 	///// make companions heal their wounds at the same time as brothers heal theirs
 	::mods_hookNewObject("states/world/asset_manager", function(o)
 	{
@@ -44,512 +39,28 @@
 		}
 	});
 
-
-	///// hide the Beastmaster background within the Houndmaster background
-/*	::mods_hookNewObject("skills/backgrounds/houndmaster_background", function(o)
+	local buildings = [
+		"kennel_building",
+		"alchemist_building",
+		"arena_building"
+	];
+	
+	foreach(building in buildings)
 	{
-		o.applyBeastmasterModification <- function()
-		{
-			this.m.ID = "background.companions_beastmaster";
-			this.m.Name = "Beastmaster";
-			this.m.Icon = "ui/backgrounds/background_beastmaster_ac.png";
-			this.m.BackgroundDescription = "Beastmasters are used to handle various beasts.";
-			this.m.GoodEnding = "Beasts were not simply \'beasts\' to %name%, despite his title as \'beastmaster.\' To him, they were the most loyal friends of his life. After leaving the company, he discovered an ingenious way to breed the animals specifically tailored to the desires of the nobility. Wanted a brutish beast for a guard? He could do it. Wanted something small and cuddly for the children? He could do that, too. The former mercenary now earns an incredible earning doing what he loves - working with beasts.";
-			this.m.BadEnding = "What\'s merely a beast to one man is a loyal companion to %name%. After leaving the company, the beastmaster went out to work for the nobility. Unfortunately, he refused to let hundreds of his beasts be used as a battle vanguard to be thrown away for some short-lived tactical advantage. He was hanged for his \'traitorous ideals\'.";
-			this.m.HiringCost = 100;
-			this.m.DailyCost = 21;
-			this.m.Excluded = [
-				"trait.fear_beasts",
-				"trait.hate_beasts",
-				"trait.craven",
-				"trait.dastard",
-				"trait.fainthearted",
-				"trait.insecure",
-				"trait.ailing",
-				"trait.bleeder",
-				"trait.tiny",
-				"trait.fragile",
-				"trait.asthmatic",
-				"trait.clubfooted",
-				"trait.clumsy",
-				"trait.cocky"
-			];
-			this.m.ExcludedTalents = [
-				this.Const.Attributes.RangedSkill,
-				this.Const.Attributes.RangedDefense
-			];
-			this.m.Titles = [
-				"the Beastmaster",
-				"the Tamer"
-			];
-			this.m.Faces = this.Const.Faces.AllMale;
-			this.m.Hairs = this.Const.Hair.UntidyMale;
-			this.m.HairColors = this.Const.HairColors.All;
-			this.m.Beards = this.Const.Beards.Untidy;
-			this.m.Bodies = this.Const.Bodies.AllMale;
-			this.m.IsLowborn = false;
-			this.m.Level = this.Math.rand(1, 3);
-		}
-
-		local getTooltip = o.getTooltip;
-		o.getTooltip = function()
-		{
-			local tooltip = getTooltip();
-			if (tooltip.len() >= 3)
-			{
-				if (tooltip[0].text == this.getName() && tooltip[1].text == this.getDescription() && tooltip[2].id == 14)
-				{
-					tooltip[2].text = "Beasts unleashed by this character will start at confident morale.";
-					tooltip.insert(3, { id = 4, type = "text", icon = "ui/icons/xp_received.png", text = "Beasts handled by this character gain more experience." });
-
-					if (this.m.ID == "background.companions_beastmaster")
-					{
-						tooltip.insert(4, { id = 5, type = "text", icon = "ui/icons/special.png", text = "Higher chance of success when taming beasts." });
-					}
-				}
-				else
-				{
-					this.logInfo("mod_AC: Houndmaster default tooltip indexes already modified or moved to other index positions by another mod?");
-				}
-			}
-			else
-			{
-				this.logInfo("mod_AC: Houndmaster default tooltip reduced below default length by another mod?");
-			}
-
-			return tooltip;
-		}
-
-		local onBuildDescription = o.onBuildDescription;
-		o.onBuildDescription = function()
-		{
-			if (this.m.ID == "background.companions_beastmaster")
-			{
-				return "{%name%\'s affection for beasts started after his father won a serpent in a shooting contest. | When a direwolf saved him from a bear, %name% dedicated his life to beasts of all sorts. | Seeing a webknecht stave off a would-be robber, %name%\'s fondness for beasts only grew. | A young, bird-hunting %name% quickly saw the honor, loyalty, and workmanship of a trained beast. | Once bitten by a wild hyena, %name% confronted his fear of beasts by learning to train them.} {The beastmaster spent many years working for a local lord. He gave up the post after the liege struck one of his post-ferals down just for sport. | Quick with training the wildlife, the beastmaster put his post-ferals into a lucrative traveling tradeshow. | The man made a great deal of money on the beast-fighting circuits, his post-ferals renowned for their easily commanded - and unleashed - ferocity. | Employed by lawmen, the beastmaster used his strong-nosed post-ferals to hunt down many a criminal element. | Used by a local lord, many of the beastmaster\'s post-ferals found their way onto the battlefield. | For many years, the beastmaster used his post-ferals to help lift the spirits of orphaned children and the crippled.} {Now, though, %name% seeks a change of vocation. | When he heard word of a mercenary\'s pay, %name% decided to try his hand at being a sellsword. | Approached by a sellsword to buy one of his creatures, %name% became more interested in the prospect of he, himself, becoming a mercenary. | Tired of training creatures for this purpose or that, %name% seeks to train himself for... well, this purpose or that. | An interesting prospect, you can only hope %name% is as loyal as the creatures he once commanded.}";
-			}
-			else
-			{
-				return onBuildDescription();
-			}
-		}
-
-		local onChangeAttributes = o.onChangeAttributes;
-		o.onChangeAttributes = function()
-		{
-			if (this.m.ID == "background.companions_beastmaster")
-			{
-				local c = {
-					Hitpoints = [10, 5],
-					Bravery = [10, 10],
-					Stamina = [10, 5],
-					MeleeSkill = [0, 0],
-					RangedSkill = [0, 0],
-					MeleeDefense = [6, 6],
-					RangedDefense = [0, 0],
-					Initiative = [10, 5]
-				};
-				return c;
-			}
-			else
-			{
-				return onChangeAttributes();
-			}
-		}
-
-		local onAddEquipment = o.onAddEquipment;
-		o.onAddEquipment = function()
-		{
-			if (this.m.ID == "background.companions_beastmaster")
-			{
-				local items = this.getContainer().getActor().getItems();
-
-				///// mainhand
-				local r = this.Math.rand(1, 3);
-				if (r == 1)
-				{
-					local rr;
-					if (this.Const.DLC.Wildmen)
-					{
-						rr = this.Math.rand(1, 2);
-					}
-					else
-					{
-						rr = this.Math.rand(1, 1);
-					}
-
-					if (rr == 1)
-					{
-						items.equip(this.new("scripts/items/weapons/battle_whip"));
-					}
-					else if (rr == 2)
-					{
-						items.equip(this.new("scripts/items/weapons/barbarians/thorned_whip"));
-					}
-				}
-				else
-				{
-					local rr;
-					if (this.Const.DLC.Wildmen)
-					{
-						rr = this.Math.rand(1, 20);
-					}
-					else
-					{
-						rr = this.Math.rand(1, 15);
-					}
-
-					if (rr == 1)
-					{
-						items.equip(this.new("scripts/items/weapons/dagger"));
-					}
-					else if (rr == 2)
-					{	
-						items.equip(this.new("scripts/items/weapons/shortsword"));
-					}
-					else if (rr == 3)
-					{
-						items.equip(this.new("scripts/items/weapons/falchion"));
-					}
-					else if (rr == 4)
-					{
-						items.equip(this.new("scripts/items/weapons/bludgeon"));
-					}
-					else if (rr == 5)
-					{
-						items.equip(this.new("scripts/items/weapons/morning_star"));
-					}
-					else if (rr == 6)
-					{
-						items.equip(this.new("scripts/items/weapons/militia_spear"));
-					}
-					else if (rr == 7)
-					{
-						items.equip(this.new("scripts/items/weapons/boar_spear"));
-					}
-					else if (rr == 8)
-					{
-						items.equip(this.new("scripts/items/weapons/hatchet"));
-					}
-					else if (rr == 9)
-					{
-						items.equip(this.new("scripts/items/weapons/hand_axe"));
-					}
-					else if (rr == 10)
-					{
-						items.equip(this.new("scripts/items/weapons/reinforced_wooden_flail"));
-					}
-					else if (rr == 11)
-					{
-						items.equip(this.new("scripts/items/weapons/flail"));
-					}
-					else if (rr == 12)
-					{
-						items.equip(this.new("scripts/items/weapons/butchers_cleaver"));
-					}
-					else if (rr == 13)
-					{
-						items.equip(this.new("scripts/items/weapons/scramasax"));
-					}
-					else if (rr == 14)
-					{
-						items.equip(this.new("scripts/items/weapons/pickaxe"));
-					}
-					else if (rr == 15)
-					{
-						items.equip(this.new("scripts/items/weapons/military_pick"));
-					}
-					else if (rr == 16)
-					{
-						items.equip(this.new("scripts/items/weapons/barbarians/claw_club"));
-					}
-					else if (rr == 17)
-					{
-						items.equip(this.new("scripts/items/weapons/barbarians/crude_axe"));
-					}
-					else if (rr == 18)
-					{
-						items.equip(this.new("scripts/items/weapons/barbarians/axehammer"));
-					}
-					else if (rr == 19)
-					{
-						items.equip(this.new("scripts/items/weapons/barbarians/antler_cleaver"));
-					}
-					else if (rr == 20)
-					{
-						items.equip(this.new("scripts/items/weapons/barbarians/blunt_cleaver"));
-					}
-				}
-
-				///// offhand
-				r = this.Math.rand(1, 3);
-				if (r == 1)
-				{
-					items.equip(this.new("scripts/items/tools/throwing_net"));
-				}
-				else
-				{
-					local rr = this.Math.rand(1, 2);
-					if (rr == 1)
-					{
-						items.equip(this.new("scripts/items/shields/buckler_shield"));
-					}
-					else if (rr == 2)
-					{
-						items.equip(this.new("scripts/items/shields/wooden_shield"));
-					}
-				}
-
-				///// helmet
-				if (this.Const.DLC.Wildmen)
-				{
-					r = this.Math.rand(1, 6);
-				}
-				else
-				{
-					r = this.Math.rand(1, 4);
-				}
-
-				if (r == 1)
-				{
-					items.equip(this.new("scripts/items/helmets/mouth_piece"));
-				}
-				else if (r == 2)
-				{
-					items.equip(this.new("scripts/items/helmets/open_leather_cap"));
-				}
-				else if (r == 3)
-				{
-					items.equip(this.new("scripts/items/helmets/full_leather_cap"));
-				}
-				else if (r == 4)
-				{
-					items.equip(this.new("scripts/items/helmets/rusty_mail_coif"));
-				}
-				else if (r == 5)
-				{
-					items.equip(this.new("scripts/items/helmets/barbarians/leather_headband"));
-				}
-				else if (r == 6)
-				{
-					items.equip(this.new("scripts/items/helmets/barbarians/bear_headpiece"));
-				}
-
-				///// armor
-				if (this.Const.DLC.Wildmen)
-				{
-					r = this.Math.rand(1, 10);
-				}
-				else
-				{
-					r = this.Math.rand(1, 5);
-				}
-
-				if (r == 1)
-				{
-					items.equip(this.new("scripts/items/armor/ragged_surcoat"));
-				}
-				else if (r == 2)
-				{
-					items.equip(this.new("scripts/items/armor/blotched_gambeson"));
-				}
-				else if (r == 3)
-				{
-					items.equip(this.new("scripts/items/armor/padded_leather"));
-				}
-				else if (r == 4)
-				{
-					items.equip(this.new("scripts/items/armor/patched_mail_shirt"));
-				}
-				else if (r == 5)
-				{
-					items.equip(this.new("scripts/items/armor/worn_mail_shirt"));
-				}
-				else if (r == 6)
-				{
-					items.equip(this.new("scripts/items/armor/barbarians/thick_furs_armor"));
-				}
-				else if (r == 7)
-				{
-					items.equip(this.new("scripts/items/armor/barbarians/animal_hide_armor"));
-				}
-				else if (r == 8)
-				{
-					items.equip(this.new("scripts/items/armor/barbarians/reinforced_animal_hide_armor"));
-				}
-				else if (r == 9)
-				{
-					items.equip(this.new("scripts/items/armor/barbarians/scrap_metal_armor"));
-				}
-				else if (r == 10)
-				{
-					items.equip(this.new("scripts/items/armor/barbarians/hide_and_bone_armor"));
-				}
-			}
-			else
-			{
-				onAddEquipment();
-			}
-		}
-
-		o.serializeRawDescription <- function()
-		{
-			if (this.m.ID == "background.companions_beastmaster")
-			{
-				local cloneRawDescription = this.m.RawDescription;
-				local serializedRawDescription = cloneRawDescription + "\nmod_AC=Beastmaster";
-				return serializedRawDescription;
-			}
-
-			return this.m.RawDescription;
-		}
-
-		o.deserializeRawDescription <- function(_rd)
-		{
-			local nameMod = "\nmod_AC=Beastmaster";
-			local findMod = _rd.find(nameMod);
-			if (findMod != null)
-			{
-				local slicedRaw = _rd.slice(0, findMod);
-				this.m.RawDescription = slicedRaw;
-				this.applyBeastmasterModification();
-			}
-			else
-			{
-				this.m.RawDescription = _rd;
-			}
-		}
-
-		o.onSerialize <- function(_out)
-		{
-			this.skill.onSerialize(_out);
-			_out.writeString(this.m.Description);
-			_out.writeString(this.serializeRawDescription());
-			_out.writeU8(this.m.Level);
-			_out.writeBool(this.m.IsNew);
-			_out.writeF32(this.m.DailyCostMult);
-		}
-
-		o.onDeserialize <- function(_in )
-		{
-			this.skill.onDeserialize(_in);
-			this.m.Description = _in.readString();
-			this.deserializeRawDescription(_in.readString());
-			this.m.Level = _in.readU8();
-			this.m.IsNew = _in.readBool();
-
-			if (_in.getMetaData().getVersion() >= 39)
-			{
-				this.m.DailyCostMult = _in.readF32();
-			}
-			else
-			{
-				this.m.DailyCostMult = 1.0;
-			}
-		}
-	});
-*///
-	///// arrays holding Descriptions of various settlements, part of the process to separate Beastmaster and Houndmaster drafting locations
-//	local BeastmasterSettlementsLarge = [
-		// citadels
-//		"This massive citadel guards a warport and the surrounding trade routes. It is a seat of power for nobility and home to a large garrison.",
-//		"A massive citadel towering over the open plains surrounding it. A seat of power to nobles, and housing large armed forces for a firm grip on the region.",
-//		"This citadel towers high over the surrounding forests and dominates the region.",
-//		"This massive stone citadel is built into the steep mountains. A large number of men are stationed here to hold a firm grip on the land.",
-//		"This large citadel looks wide over the endless snow and is a stronghold against anything that may come down from the far north. As people flocked to its protection over the years, the many houses and workshops in its vicinity now also grant shelter and supply to travelers, mercenaries and adventurers in the area.",
-//		"This mighty citadel towers high above the surrounding steppe and is the seat of power in the region. It houses a large garrison and offers all kinds of services valuable to travellers and mercenaries.",
-//		"A large citadel towering high over the surrounding tundra and securing the large and open region. Many come here to resupply, make repairs and rest until venturing on.",
-
-		// cities
-//		"A large city surrounded by lush green meadows, orchards and fields. Food stocks are usually filled to the brim.",
-//		"A big harbor city relying on trade and fishing, and an important hub for travellers arriving or leaving by ship.",
-//		"A prospering city located close to the forest with its main produce being valuable timber and venison.",
-//		"A large city far up north. Traders, travelers and adventurers come here for shelter from snow and storms.",
-//		"A large city thriving in the southern steppe by trading and producing valuable goods and fine arts.",
-//		"A collection of many smaller settlements spread out over dry spots in the swampy area to form one modestly sized city.",
-//		"Surrounded by barren tundra, this large city has lasted as an important trading hub and home to thinkers and fine arts."
-//	];
-//	local BeastmasterSettlementsMedium = [
-//		// keeps
-//		"This mighty stone keep surrounded by forest acts as a base of operations in the area.",
-//		"A stone keep that is towering high over the surrounding mountains. Lookouts on the towers can see approaching troops from miles away.",
-//		"A stone keep controlling routes through and access to the surrounding swamps and marshes.",
-
-		// villages
-//		"An established village close to the forest living mainly from lumber cutting and game.",
-//		"A stretched out settlement nestled into the surrounding mountains. The hammering of pickaxes against stone can be heard from a distance.",
-//		"A somewhat larger settlement spread out across various dry and firm spots in the swamp."
-//	];
-//	local HoundmasterSettlementsSmall = [
-		// hamlets
-//		"A village living off of lumber and everything the forest offers.",
-//		"A small settlement in a swampy area. The people living here sure know hardship."
-//	];
-
-
-	///// add drafts to select settlements, part of the process to separate Beastmaster and Houndmaster drafting locations
-//	::mods_hookBaseClass("entity/world/settlement", function(o)
-//	{
-//		while(!("updateRoster" in o)) o = o[o.SuperName];
-//		local updateRoster = o.updateRoster;
-//		o.updateRoster = function(_force = false)
-//		{
-//			if (!this.m.DraftList.find("houndmaster_background"))
-//		{
-//				if (BeastmasterSettlementsLarge.find(this.m.Description))
-//				{
-//					this.m.DraftList.append("houndmaster_background");
-//					this.m.DraftList.append("houndmaster_background");
-//				}
-//				else if (BeastmasterSettlementsMedium.find(this.m.Description) || HoundmasterSettlementsSmall.find(this.m.Description))
-//				{
-//					this.m.DraftList.append("houndmaster_background");
-//				}
-//			}
-
-//			updateRoster(_force);
-//		}
-//	});
-
-	////  Couln't get the default ac method to work for Legends (but that might not be saying much), so instead, decided to have it depend on arena, alchemist shop, and kennel presence
-	::mods_hookNewObject("entity/world/settlements/buildings/kennel_building", function(building)
-    {
-        local old_onUpdateDraftList = building.onUpdateDraftList  // here, we save the old function of that object in  a local variable
-        building.onUpdateDraftList = function(_list, _gender) {         
-       _list.push("companions_beastmaster_background");
-       _list.push("companions_beastmaster_background");
-
-   
-        old_onUpdateDraftList(_list, _gender) //here, we call the old function we saved
-       }
-    });
-
-::mods_hookNewObject("entity/world/settlements/buildings/alchemist_building", function(alcbuilding)
-    {
-        local old_onUpdateDraftList = alcbuilding.onUpdateDraftList  // here, we save the old function of that object in  a local variable
-        alcbuilding.onUpdateDraftList = function(_list, _gender) {         
-       _list.push("companions_beastmaster_background");
-   
-        old_onUpdateDraftList(_list, _gender) //here, we call the old function we saved
-       }
-    });
-
-::mods_hookNewObject("entity/world/settlements/buildings/arena_building", function(arebuilding)
-    {
-        local old_onUpdateDraftList = arebuilding.onUpdateDraftList  // here, we save the old function of that object in  a local variable
-        arebuilding.onUpdateDraftList = function(_list, _gender) {         
-       _list.push("companions_beastmaster_background");
- 
-   
-        old_onUpdateDraftList(_list, _gender) //here, we call the old function we saved
-       }
-    });
-
+		::mods_hookExactClass("entity/world/settlements/buildings/" + building, function(o) {
+			local onUpdateDraftList = ::mods_getMember(o, "onUpdateDraftList");
+			o.onUpdateDraftList = function(_list, _gender) {
+				_list.push("companions_beastmaster_background");
+				_list.push("companions_beastmaster_background");
+				onUpdateDraftList(_list, _gender);
+			}		
+		});
+	}	
 
 	///// give players the ability to tame beasts
 	::mods_hookBaseClass("entity/tactical/human", function(o)
 	{
-		while(!("onInit" in o)) o = o[o.SuperName];
-		local onInit = o.onInit;
+		local onInit = ::mods_getMember(o, "onInit");
 		o.onInit = function()
 		{
 			onInit();
@@ -557,7 +68,6 @@
 				this.m.Skills.add(this.new("scripts/companions/player/companions_tame"));
 		}
 	});
-
 
 	///// necromancers have a chance to drop the Tome of Reanimation when killed, webknecht eggs have a chance to drop a webknecht companion when killed
 	::mods_hookBaseClass("entity/tactical/actor", function(o)
@@ -639,8 +149,7 @@
 		}
 	});
 
-
-	///// give companions experience when the player kills something, turn a newly drafted Houndmaster into a Beastmaster if drafted settlement is of "Beastmaster-type"
+	///// give companions experience when the player kills something
 	::mods_hookNewObject("entity/tactical/player", function(o)
 	{
 		if (!("mod_AC" in o))
@@ -671,228 +180,74 @@
 				}
 			}
 		}
+	});
 
-/*		local setStartValuesEx = o.setStartValuesEx;
-		o.setStartValuesEx = function(_backgrounds, _addTraits = true)
+	local undead = [
+		"zombie",
+		"skeleton"
+	]
+	
+	///// make reanimated zombies and skeletons grant the company experience when they kill something
+	foreach(ud in undead)
+	{	
+		::mods_hookBaseClass("entity/tactical/enemies/" + ud, function(o)
 		{
-			setStartValuesEx(_backgrounds, _addTraits);
-			if (this.m.Background.m.ID == "background.houndmaster" && this.World.State.getCurrentTown() != null && (BeastmasterSettlementsLarge.find(this.World.State.getCurrentTown().m.Description) || BeastmasterSettlementsMedium.find(this.World.State.getCurrentTown().m.Description)))
+			if (!("mod_AC" in o))
 			{
-				this.m.Background = null;
-				this.m.Title = "";
-				this.m.Talents = [];
-				this.m.Items.clear();
-
-				local remove = this.m.Skills.query(this.Const.SkillType.Background);
-				foreach(r in remove)
+				o.mod_AC <- true;
+				if ("onActorKilled" in o)
 				{
-					if (r.getID() != "special.mood_check" && r.getID() != "special.VA11") // prevents removal of the "Mood Check" skill and mod_VA11's skill
-						this.m.Skills.removeByID(r.getID());
-				}
-				remove = this.m.Skills.query(this.Const.SkillType.Trait);
-				foreach(r in remove)
-				{
-					if (r.getID() != "special.mood_check" && r.getID() != "special.VA11") // prevents removal of the "Mood Check" skill and mod_VA11's skill
-						this.m.Skills.removeByID(r.getID());
-				}
-
-				local background = this.new("scripts/skills/backgrounds/houndmaster_background");
-				background.applyBeastmasterModification();
-				this.m.Skills.add(background);
-				this.m.Background = background;
-				this.m.Ethnicity = this.m.Background.getEthnicity();
-				
-				local attributes = background.buildPerkTree();
-				if (this.getFlags().has("PlayerZombie"))
-				{
-					this.m.StarWeights = background.buildAttributes("zombie", attributes);
-				}
-				else if (this.getFlags().has("PlayerSkeleton"))
-				{
-					this.m.StarWeights = background.buildAttributes("skeleton", attributes);
+					local onActorKilled = o.onActorKilled;
+					o.onActorKilled <- function(_actor, _tile, _skill)
+					{
+						if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
+						{
+							local XPgroup = _actor.getXPValue();
+							local brothers = this.Tactical.Entities.getInstancesOfFaction(this.Const.Faction.Player);
+							foreach( bro in brothers )
+							{
+								bro.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
+	
+								local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
+								if (acc != null && "setType" in acc)
+								{
+									if (acc.getType() != null)
+										acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
+								}
+							}
+						}
+						onActorKilled(_actor, _tile, _skill);
+					}
 				}
 				else
 				{
-					this.m.StarWeights = background.buildAttributes(null, attributes);
-				}
-				
-				background.buildDescription();
-
-				if (_addTraits)
-				{
-					local maxTraits = this.Math.rand(this.Math.rand(0, 1) == 0 ? 0 : 1, 2);
-					local traits = [
-						background
-					];
-
-					for( local i = 0; i < maxTraits; i = ++i )
+					o.onActorKilled <- function(_actor, _tile, _skill)
 					{
-						for( local j = 0; j < 10; j = ++j )
+						if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
 						{
-							local trait = this.Const.CharacterTraits[this.Math.rand(0, this.Const.CharacterTraits.len() - 1)];
-							local nextTrait = false;
-
-							for( local k = 0; k < traits.len(); k = ++k )
+							local XPgroup = _actor.getXPValue();
+							local brothers = this.Tactical.Entities.getInstancesOfFaction(this.Const.Faction.Player);
+							foreach( bro in brothers )
 							{
-								if (traits[k].getID() == trait[0] || traits[k].isExcluded(trait[0]))
+								bro.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
+	
+								local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
+								if (acc != null && "setType" in acc)
 								{
-									nextTrait = true;
-									break;
+									if (acc.getType() != null)
+										acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
 								}
 							}
-
-							if (!nextTrait)
-							{
-								traits.push(this.new(trait[1]));
-								break;
-							}
 						}
+						this.actor.onActorKilled(_actor, _tile, _skill);
 					}
-
-					for( local i = 1; i < traits.len(); i = ++i )
-					{
-						this.m.Skills.add(traits[i]);
-
-						if (traits[i].getContainer() != null)
-						{
-							traits[i].addTitle();
-						}
-					}
-				}
-
-				background.addEquipment();
-				background.setAppearance();
-				background.buildDescription(true);
-				this.m.Skills.update();
-				local p = this.m.CurrentProperties;
-				this.m.Hitpoints = p.Hitpoints;
-
-				if (_addTraits)
-				{
-					this.fillTalentValues();
-					this.fillAttributeLevelUpValues(this.Const.XP.MaxLevelWithPerkpoints - 1);
 				}
 			}
-		} */
-	});
-
-
-	///// make reanimated zombies grant the company experience when they kill something
-	::mods_hookBaseClass("entity/tactical/enemies/zombie", function(o)
-	{
-		if (!("mod_AC" in o))
-		{
-			o.mod_AC <- true;
-			if ("onActorKilled" in o)
-			{
-				local onActorKilled = o.onActorKilled;
-				o.onActorKilled <- function(_actor, _tile, _skill)
-				{
-					if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
-					{
-						local XPgroup = _actor.getXPValue();
-						local brothers = this.Tactical.Entities.getInstancesOfFaction(this.Const.Faction.Player);
-						foreach( bro in brothers )
-						{
-							bro.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-
-							local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
-							if (acc != null && "setType" in acc)
-							{
-								if (acc.getType() != null)
-									acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-							}
-						}
-					}
-					onActorKilled(_actor, _tile, _skill);
-				}
-			}
-			else
-			{
-				o.onActorKilled <- function(_actor, _tile, _skill)
-				{
-					if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
-					{
-						local XPgroup = _actor.getXPValue();
-						local brothers = this.Tactical.Entities.getInstancesOfFaction(this.Const.Faction.Player);
-						foreach( bro in brothers )
-						{
-							bro.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-
-							local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
-							if (acc != null && "setType" in acc)
-							{
-								if (acc.getType() != null)
-									acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-							}
-						}
-					}
-					this.actor.onActorKilled(_actor, _tile, _skill);
-				}
-			}
-		}
-	});
-
-
-	///// make reanimated skeletons grant the company experience when they kill something
-	::mods_hookBaseClass("entity/tactical/skeleton", function(o)
-	{
-		if (!("mod_AC" in o))
-		{
-			o.mod_AC <- true;
-			if ("onActorKilled" in o)
-			{
-				local onActorKilled = o.onActorKilled;
-				o.onActorKilled <- function(_actor, _tile, _skill)
-				{
-					if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
-					{
-						local XPgroup = _actor.getXPValue();
-						local brothers = this.Tactical.Entities.getInstancesOfFaction(this.Const.Faction.Player);
-						foreach( bro in brothers )
-						{
-							bro.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-
-							local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
-							if (acc != null && "setType" in acc)
-							{
-								if (acc.getType() != null)
-									acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-							}
-						}
-					}
-					onActorKilled(_actor, _tile, _skill);
-				}
-			}
-			else
-			{
-				o.onActorKilled <- function(_actor, _tile, _skill)
-				{
-					if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
-					{
-						local XPgroup = _actor.getXPValue();
-						local brothers = this.Tactical.Entities.getInstancesOfFaction(this.Const.Faction.Player);
-						foreach( bro in brothers )
-						{
-							bro.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-
-							local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
-							if (acc != null && "setType" in acc)
-							{
-								if (acc.getType() != null)
-									acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-							}
-						}
-					}
-					this.actor.onActorKilled(_actor, _tile, _skill);
-				}
-			}
-		}
-	});
-
+		});
+	}
 
 	///// equipped companions add to player party strength
-	::mods_hookNewObject("entity/world/player_party", function(o)
+	::mods_hookExactClass("entity/world/player_party", function(o)
 	{
 		if (!("mod_AC" in o))
 		{
@@ -923,7 +278,6 @@
 			}
 		}
 	});
-
 
 	///// wardogs and warhounds retain their name, variant, level, XP, attributes and quirks after an armor upgrade
 	::mods_hookNewObject("items/misc/wardog_armor_upgrade_item", function(o)
@@ -968,7 +322,6 @@
 		}
 	});
 
-
 	///// wardogs and warhounds retain their name, variant, level, XP, attributes and quirks after an armor upgrade
 	::mods_hookNewObject("items/misc/wardog_heavy_armor_upgrade_item", function(o)
 	{
@@ -1011,7 +364,6 @@
 			return true;
 		}
 	});
-
 
 	///// all the good stuff
 	local mod_AC_foundation = function(o)
@@ -1888,9 +1240,5 @@
 		}
 	}
 
-
-	::mods_hookBaseClass("items/accessory/accessory", mod_AC_foundation);
-	::mods_hookBaseClass("items/accessory/accessory_dog", mod_AC_foundation);
-	::mods_hookBaseClass("items/accessory/wardog_item", mod_AC_foundation);
-	::mods_hookBaseClass("items/accessory/warhound_item", mod_AC_foundation);
+	::mods_hookDescendants("items/accessory/accessory", mod_AC_foundation);
 });

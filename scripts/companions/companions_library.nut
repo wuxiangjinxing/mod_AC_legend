@@ -133,7 +133,7 @@ gt.Const.Companions.Library <- [
 		IconUnleashed = "tools/dog_01_leash_70x70.png",
 		Value = 600,
 		PartyStrength = 6,
-		MaxPerCompany = 35,
+		MaxPerCompany = 36,
 		Variant = function() { return this.Math.rand(1, 4); },
 		BasicQuirks = ["scripts/skills/perks/perk_pathfinder", "scripts/skills/perks/perk_steel_brow"],
 		BasicAttributes = { Hitpoints = 50, Stamina = 130, Bravery = 40, Initiative = 130, MeleeSkill = 50, RangedSkill = 0, MeleeDefense = 20, RangedDefense = 25 },
