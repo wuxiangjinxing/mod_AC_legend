@@ -11,7 +11,7 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 		this.m.IsStacking = false;
 		this.m.IsAttack = false;
 		this.m.IsTargetingActor = true;
-		this.m.IsUsingHitchance = false;
+		this.m.IsUsingHitchance = true;
 
 		this.m.ActionPointCost = 4;
 		this.m.FatigueCost = 30;
@@ -74,6 +74,7 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 		this.m.IsHidden = this.isHidden();
 	}
 
+/*
 	function getHitchance(_targetEntity)
 	{
 		local tameDefault = this.Const.Companions.TameChance.Default / 1.0;
@@ -91,83 +92,7 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 
 		return chance;
 	}
-
-	function hasMaxTamed(check)
-	{
-		local type = this.Const.Companions.Library[check].Type;
-		local matchNum = 0;
-		local size = this.Tactical.getMapSize();
-		for( local x = 0; x < size.X; x = ++x )
-		{
-			for( local y = 0; y < size.Y; y = ++y )
-			{
-				local tile = this.Tactical.getTileSquare(x, y);
-				if (tile.IsContainingItems)
-				{
-					foreach( item in tile.Items )
-					{
-						if (item != null && item.getItemType() == this.Const.Items.ItemType.Accessory && "setType" in item)
-						{
-							if (type == this.Const.Companions.TypeList.Unhold || type == this.Const.Companions.TypeList.UnholdArmor)
-							{
-								if (item.getType() == this.Const.Companions.TypeList.Unhold || item.getType() == this.Const.Companions.TypeList.UnholdArmor)
-									++matchNum;
-							}
-							else
-							{
-								if (item.getType() == type)
-									++matchNum;
-							}
-						}
-					}
-				}
-			}
-		}
-
-		local stash = this.World.Assets.getStash().getItems();
-		foreach(item in stash)
-		{
-			if (item != null && item.getItemType() == this.Const.Items.ItemType.Accessory && "setType" in item)
-			{
-				if (type == this.Const.Companions.TypeList.Unhold || type == this.Const.Companions.TypeList.UnholdArmor)
-				{
-					if (item.getType() == this.Const.Companions.TypeList.Unhold || item.getType() == this.Const.Companions.TypeList.UnholdArmor)
-						++matchNum;
-				}
-				else
-				{
-					if (item.getType() == type)
-						++matchNum;
-				}
-			}
-		}
-
-		local brothers = this.World.getPlayerRoster().getAll();
-		foreach(bro in brothers)
-		{
-			local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
-			if (acc != null && "setType" in acc)
-			{
-				if (type == this.Const.Companions.TypeList.Unhold || type == this.Const.Companions.TypeList.UnholdArmor)
-				{
-					if (acc.getType() == this.Const.Companions.TypeList.Unhold || acc.getType() == this.Const.Companions.TypeList.UnholdArmor)
-						++matchNum;
-				}
-				else
-				{
-					if (acc.getType() == type)
-						++matchNum;
-				}
-			}
-		}
-
-		if (matchNum >= this.Const.Companions.Library[type].MaxPerCompany)
-		{
-			return true;
-		}
-
-		return false;
-	}
+*/
 
 	function onVerifyTarget(_originTile, _targetTile)
 	{
@@ -208,32 +133,16 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 		{
 			return false;
 		}
-		if (tamable != null && hasMaxTamed(tamable))
-		{
-			return false;
-		}
 
 		return this.skill.onVerifyTarget(_originTile, _targetTile);
 	}
 
 	function onUse(_user, _targetTile)
 	{
-		local tameDefault = this.Const.Companions.TameChance.Default;
-		local tameBeastmaster = this.Const.Companions.TameChance.Beastmaster;
 		local actor = this.getContainer().getActor();
 		local target = _targetTile.getEntity();
-		local chance = actor.getSkills().hasSkill("background.companions_beastmaster") 
-		? 
-		(1.0 - target.getHitpointsPct()) * tameBeastmaster 
-		: 
-		(1.0 - target.getHitpointsPct()) * tameDefault;
 
-		if (target.getCurrentProperties().IsRooted)
-		{
-			chance *= 1.25;
-		}
-
-		if (this.Math.rand(1, 100) <= chance)
+		if (this.Math.rand(1, 100) <= this.getHitchance(target))
 		{
 			this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(actor) + " successfully tamed " + this.Const.UI.getColorizedEntityName(target));
 			local loot = this.new("scripts/items/accessory/wardog_item");

@@ -70,81 +70,19 @@
 	});
 
 	///// necromancers have a chance to drop the Tome of Reanimation when killed, webknecht eggs have a chance to drop a webknecht companion when killed
-	::mods_hookBaseClass("entity/tactical/actor", function(o)
+	///// Doing this in a different way
+	::mods_hookExactClass("entity/tactical/enemies/necromancer", function(o)
 	{
-		while(!("onDeath" in o)) o = o[o.SuperName];
-		local onDeath = o.onDeath;
-		o.onDeath = function(_killer, _skill, _tile, _fatalityType)
+		local assignRandomEquipment = ::mods_getMember(o, "assignRandomEquipment");
+		o.assignRandomEquipment = function()
 		{
-			onDeath(_killer, _skill, _tile, _fatalityType);
-			if ((this.m.Type == this.Const.EntityType.Necromancer || this.m.Type == this.Const.EntityType.SpiderEggs) && (_killer == null || _killer.getFaction() == this.Const.Faction.Player || _killer.getFaction() == this.Const.Faction.PlayerAnimals))
+			assignRandomEquipment();
+			if (this.Math.rand(0, 5) == 1)
 			{
-				if (this.Math.rand(1, 1000) <= this.Const.Companions.TameChance.Default)
-				{
-					local type;
-					if (this.m.Type == this.Const.EntityType.Necromancer)
-					{
-						type = this.Const.Companions.TypeList.TomeReanimation;
-					}
-					else if (this.m.Type == this.Const.EntityType.SpiderEggs)
-					{
-						type = this.Const.Companions.TypeList.Spider;
-					}
-					else
-					{
-						type = this.Const.Companions.TypeList.Wardog;
-					}
-
-					local matchNum = 0;
-					local size = this.Tactical.getMapSize();
-					for( local x = 0; x < size.X; x = ++x )
-					{
-						for( local y = 0; y < size.Y; y = ++y )
-						{
-							local tile = this.Tactical.getTileSquare(x, y);
-							if (tile.IsContainingItems)
-							{
-								foreach( item in tile.Items )
-								{
-									if (item != null && item.getItemType() == this.Const.Items.ItemType.Accessory && "setType" in item)
-									{
-										if (item.getType() == type)
-											++matchNum;
-									}
-								}
-							}
-						}
-					}
-
-					local stash = this.World.Assets.getStash().getItems();
-					foreach(item in stash)
-					{
-						if (item != null && item.getItemType() == this.Const.Items.ItemType.Accessory && "setType" in item)
-						{
-							if (item.getType() == type)
-								++matchNum;
-						}
-					}
-
-					local brothers = this.World.getPlayerRoster().getAll();
-					foreach(bro in brothers)
-					{
-						local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
-						if (acc != null && "setType" in acc)
-						{
-							if (acc.getType() == type)
-								++matchNum;
-						}
-					}
-
-					if (matchNum < this.Const.Companions.Library[type].MaxPerCompany)
-					{
-						local loot = this.new("scripts/items/accessory/wardog_item");
-						loot.setType(type);
-						loot.updateCompanion();
-						loot.drop(_tile);
-					}
-				}
+				local loot = this.new("scripts/items/accessory/wardog_item");
+				loot.setType(this.Const.Companions.TypeList.TomeReanimation);
+				loot.updateCompanion();
+				this.m.Items.equip(loot);
 			}
 		}
 	});
