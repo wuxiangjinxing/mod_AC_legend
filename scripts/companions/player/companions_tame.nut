@@ -74,25 +74,23 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 		this.m.IsHidden = this.isHidden();
 	}
 
-/*
-	function getHitchance(_targetEntity)
+	function onAnySkillUsed( _skill, _targetEntity, _properties )
 	{
-		local tameDefault = this.Const.Companions.TameChance.Default / 1.0;
-		local tameBeastmaster = this.Const.Companions.TameChance.Beastmaster / 1.0;
-		local chance = this.getContainer().getActor().getSkills().hasSkill("background.companions_beastmaster") 
-		? 
-		(1.0 - _targetEntity.getHitpointsPct()) * tameBeastmaster 
-		: 
-		(1.0 - _targetEntity.getHitpointsPct()) * tameDefault;
-
-		if (_targetEntity.getCurrentProperties().IsRooted)
+		local tameDefault = this.Const.Companions.TameChance.Default;
+		local tameBeastmaster = this.Const.Companions.TameChance.Beastmaster;
+		if (_skill == this)
 		{
-			chance *= 1.25;
+			if (this.getContainer().getActor().getSkills().hasSkill("background.companions_beastmaster"))
+			{
+				_properties.MeleeSkill += ((1.0 - _targetEntity.getHitpointsPct()) * tameBeastmaster);
+			}
+			else
+			{
+				_properties.MeleeSkill += ((1.0 - _targetEntity.getHitpointsPct()) * tameDefault);
+			}
+			_properties.MeleeSkill -= 50;
 		}
-
-		return chance;
 	}
-*/
 
 	function onVerifyTarget(_originTile, _targetTile)
 	{
