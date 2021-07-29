@@ -1098,81 +1098,56 @@
 				this.m.Wounds = _w;
 			}
 
-			o.serializeCompanionName <- function()
-			{
-				local nameCopy = this.m.Name;
-				local serializedName = nameCopy += "\nmod_AC=" + this.m.Type + "," + this.m.Level + "," + this.m.XP + "," + this.m.Wounds + ",A=" + this.m.Attributes.Hitpoints + "," + this.m.Attributes.Stamina + "," + this.m.Attributes.Bravery + "," + this.m.Attributes.Initiative + "," + this.m.Attributes.MeleeSkill + "," + this.m.Attributes.RangedSkill + "," + this.m.Attributes.MeleeDefense + "," + this.m.Attributes.RangedDefense + ",Q=";
-
-				foreach(i, quirk in this.m.Quirks)
-				{
-					local getQuirk = this.new(quirk);
-					serializedName += this.Const.Companions.SerializeQuirks.find(getQuirk.m.ID);
-					if (i < this.m.Quirks.len() - 1) serializedName += ",";
-				}
-
-				return serializedName;
-			}
-
-			o.deserializeCompanionName <- function(_cn)
-			{
-				local nameMod = "\nmod_AC=";
-				local findMod = _cn.find(nameMod);
-
-				if (findMod != null)
-				{
-					local slicedName = _cn.slice(0, findMod);
-					local slicedDetails = _cn.slice(findMod + nameMod.len());
-					local nameAttributes = "A=";
-					local findAttributes = slicedDetails.find(nameAttributes);
-					local slicedBasics = slicedDetails.slice(0, findAttributes - 1);
-					local arrayBasics = split(slicedBasics, ",");
-					this.m.Type = arrayBasics[0].tointeger();
-					this.m.Level = arrayBasics[1].tointeger();
-					this.m.XP = arrayBasics[2].tointeger();
-
-					if (arrayBasics.len() == 4)
-						this.m.Wounds = arrayBasics[3].tointeger();
-
-					slicedDetails = slicedDetails.slice(findAttributes + nameAttributes.len());
-					local nameQuirks = "Q=";
-					local findQuirks = slicedDetails.find(nameQuirks);
-					local slicedAttributes = slicedDetails.slice(0, findQuirks - 1);
-					local arrayAttributes = split(slicedAttributes, ",");
-					this.m.Attributes.Hitpoints = arrayAttributes[0].tointeger();
-					this.m.Attributes.Stamina = arrayAttributes[1].tointeger();
-					this.m.Attributes.Bravery = arrayAttributes[2].tointeger();
-					this.m.Attributes.Initiative = arrayAttributes[3].tointeger();
-					this.m.Attributes.MeleeSkill = arrayAttributes[4].tointeger();
-					this.m.Attributes.RangedSkill = arrayAttributes[5].tointeger();
-					this.m.Attributes.MeleeDefense = arrayAttributes[6].tointeger();
-					this.m.Attributes.RangedDefense = arrayAttributes[7].tointeger();
-			
-					slicedDetails = slicedDetails.slice(findQuirks + nameQuirks.len());
-					local arrayQuirks = split(slicedDetails, ",");
-					this.m.Quirks.resize(arrayQuirks.len());
-					foreach(i, quirk in this.m.Quirks)
-					{
-						this.m.Quirks[i] = this.Const.Companions.DeserializeQuirks[arrayQuirks[i].tointeger()];
-					}
-
-					this.m.Name = slicedName;
-				}
-				else
-				{
-					this.m.Name = _cn;
-				}
-			}
-
 			o.onSerialize <- function(_out)
 			{
 				this.accessory.onSerialize(_out);
-				_out.writeString(this.serializeCompanionName());
+				_out.writeString(this.m.Name);
+				_out.writeU32(this.m.Type);
+				_out.writeU32(this.m.Level);
+				_out.writeI32(this.m.XP);
+				_out.writeI32(this.m.Wounds);
+			
+				foreach ( att in this.m.Attributes )
+				{
+					_out.writeI16(att);
+				}
+			
+				_out.writeU16(this.m.Quirks.len());
+			
+				foreach ( quirk in this.m.Quirks )
+				{
+					local getQuirk = this.new(quirk);
+					_out.writeI32(getQuirk.ClassNameHash);
+				}
 			}
-
+			
 			o.onDeserialize <- function(_in)
 			{
 				this.accessory.onDeserialize(_in);
-				this.deserializeCompanionName(_in.readString());
+				this.m.Name = _in.readString();
+				this.m.Type = _in.readU32();
+				this.m.Level = _in.readU32();
+				this.m.XP = _in.readI32();
+				this.m.Wounds = _in.readI32();
+			
+				foreach ( att in this.m.Attributes )
+				{
+					att = _in.readI16();
+				}
+			
+				local num = _in.readU16();
+				this.m.Quirks = [];
+			
+				for ( local i = 0 ; i < num ; ++i )
+				{
+					local script = this.IO.scriptFilenameByHash(_in.readI32());
+			
+					if (script != null)
+					{
+						this.m.Quirks.push(script);
+					}			
+				}
+			
 				this.updateCompanion();
 			}
 		}
