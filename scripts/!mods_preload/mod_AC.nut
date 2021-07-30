@@ -1154,4 +1154,11 @@
 	}
 
 	::mods_hookDescendants("items/accessory/accessory", mod_AC_foundation);
+	
+	::mods_hookExactClass("entity/tactical/actor", function(o) {
+		o.isPlayerControlled = function()
+		{
+			return this.getFaction() <= this.Const.Faction.PlayerAnimals && this.m.IsControlledByPlayer;
+		}
+	});	
 });

@@ -149,6 +149,13 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 		entity.setVariant(this.m.Item.getVariant());
 		entity.setFaction(this.Const.Faction.PlayerAnimals);
 		entity.applyCompanionScaling();
+		entity.m.IsSummoned = true;
+		if (entity.getSkills().hasSkill("quirk.good_boy"))
+		{
+			entity.m.IsControlledByPlayer = true;
+			entity.setAIAgent(this.new("scripts/ai/tactical/player_agent"));
+			entity.m.AIAgent.setActor(entity);
+		}
 		this.m.Item.setEntity(entity);
 
 		if (this.getContainer().getActor().getSkills().hasSkill("perk.legend_dogwhisperer"))
@@ -167,11 +174,6 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 		if (this.getContainer().hasSkill("background.houndmaster") || this.getContainer().hasSkill("background.companions_beastmaster"))
 		{
 			entity.setMoraleState(this.Const.MoraleState.Confident);
-		}
-
-		if (!this.World.getTime().IsDaytime)
-		{
-			entity.getSkills().add(this.new("scripts/skills/special/night_effect"));
 		}
 
 		local healthPercentage = (100.0 - this.m.Item.m.Wounds) / 100.0;
