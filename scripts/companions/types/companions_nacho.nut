@@ -442,8 +442,9 @@ this.companions_nacho <- this.inherit("scripts/entity/tactical/actor", {
 		this.setSpriteOffset("status_rooted", this.createVec(-4, 7));
 		this.m.Skills.add(this.new("scripts/skills/actives/ghoul_claws"));
 		this.m.Skills.add(this.new("scripts/skills/actives/gruesome_feast"));
+		this.m.Skills.add(this.new("scripts/skills/actives/swallow_whole_skill"));
 		this.m.Skills.add(this.new("scripts/skills/effects/gruesome_feast_effect"));
-		this.m.Skills.add(this.new("scripts/companions/skills/companions_swallow_whole")); // modified version of the original that ignores bosses and special entities
+	//	this.m.Skills.add(this.new("scripts/companions/skills/companions_swallow_whole")); // modified version of the original that ignores bosses and special entities
 	//	this.m.Skills.add(this.new("scripts/skills/traits/delz_darkvision_trait"));
 	}
 

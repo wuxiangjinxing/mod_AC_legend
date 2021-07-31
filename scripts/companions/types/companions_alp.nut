@@ -349,7 +349,8 @@ this.companions_alp <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.Skills.add(this.new("scripts/skills/racial/alp_racial"));
 		this.m.Skills.add(this.new("scripts/skills/actives/alp_teleport_skill"));
 		this.m.Skills.add(this.new("scripts/skills/actives/sleep_skill"));
-		this.m.Skills.add(this.new("scripts/companions/skills/companions_nightmare_skill")); // modified version of the original that scales damage with Good Boy
+		this.m.Skills.add(this.new("scripts/skills/actives/nightmare_skill"));
+	//	this.m.Skills.add(this.new("scripts/companions/skills/companions_nightmare_skill")); // modified version of the original that scales damage with Good Boy
 	//	this.m.Skills.add(this.new("scripts/skills/traits/delz_darkvision_trait"));
 	//	this.m.Skills.add(this.new("scripts/skills/perks/perk_stalwart"));
 	//	this.m.Skills.add(this.new("scripts/skills/perks/perk_legend_poison_immunity"));
