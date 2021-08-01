@@ -1106,11 +1106,15 @@
 				_out.writeU32(this.m.Level);
 				_out.writeI32(this.m.XP);
 				_out.writeI32(this.m.Wounds);
-			
-				foreach ( att in this.m.Attributes )
-				{
-					_out.writeI16(att);
-				}
+				
+				_out.writeI16(this.m.Attributes.Hitpoints);
+				_out.writeI16(this.m.Attributes.Stamina);
+				_out.writeI16(this.m.Attributes.Bravery);
+				_out.writeI16(this.m.Attributes.Initiative);
+				_out.writeI16(this.m.Attributes.MeleeSkill);
+				_out.writeI16(this.m.Attributes.RangedSkill);
+				_out.writeI16(this.m.Attributes.MeleeDefense);
+				_out.writeI16(this.m.Attributes.RangedDefense);
 			
 				_out.writeU16(this.m.Quirks.len());
 			
@@ -1129,12 +1133,16 @@
 				this.m.Level = _in.readU32();
 				this.m.XP = _in.readI32();
 				this.m.Wounds = _in.readI32();
-			
-				foreach ( att in this.m.Attributes )
-				{
-					att = _in.readI16();
-				}
-			
+				
+				this.m.Attributes.Hitpoints = _in.readI16();
+				this.m.Attributes.Stamina = _in.readI16();
+				this.m.Attributes.Bravery = _in.readI16();
+				this.m.Attributes.Initiative = _in.readI16();
+				this.m.Attributes.MeleeSkill = _in.readI16();
+				this.m.Attributes.RangedSkill = _in.readI16();
+				this.m.Attributes.MeleeDefense = _in.readI16();
+				this.m.Attributes.RangedDefense = _in.readI16();
+							
 				local num = _in.readU16();
 				this.m.Quirks = [];
 			
