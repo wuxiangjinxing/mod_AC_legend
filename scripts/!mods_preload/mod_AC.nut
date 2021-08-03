@@ -58,7 +58,7 @@
 	}	
 
 	///// give players the ability to tame beasts
-	::mods_hookBaseClass("entity/tactical/human", function(o)
+	::mods_hookExactClass("entity/tactical/player", function(o)
 	{
 		local onInit = ::mods_getMember(o, "onInit");
 		o.onInit = function()
@@ -68,6 +68,20 @@
 				this.m.Skills.add(this.new("scripts/companions/player/companions_tame"));
 		}
 	});
+
+	if (::mods_getRegisteredMod("mod_mage_trio_hexe_origin") != null)
+	{
+		::mods_hookExactClass("entity/tactical/player_goblin", function(o)
+		{
+			local onInit = ::mods_getMember(o, "onInit");
+			o.onInit = function()
+			{
+				onInit();
+				if (this.m.IsControlledByPlayer && !this.getSkills().hasSkill("actives.companions_tame"))
+					this.m.Skills.add(this.new("scripts/companions/player/companions_tame"));
+			}
+		});	
+	}
 
 	///// necromancers have a chance to drop the Tome of Reanimation when killed, webknecht eggs have a chance to drop a webknecht companion when killed
 	///// Doing this in a different way
