@@ -87,17 +87,14 @@
 	///// Doing this in a different way
 	::mods_hookExactClass("entity/tactical/enemies/necromancer", function(o)
 	{
-		local assignRandomEquipment = ::mods_getMember(o, "assignRandomEquipment");
-		o.assignRandomEquipment = function()
+		local makeMiniboss = ::mods_getMember(o, "makeMiniboss");
+		o.makeMiniboss = function()
 		{
-			assignRandomEquipment();
-			if (this.Math.rand(0, 5) == 1)
-			{
-				local loot = this.new("scripts/items/accessory/wardog_item");
-				loot.setType(this.Const.Companions.TypeList.TomeReanimation);
-				loot.updateCompanion();
-				this.m.Items.equip(loot);
-			}
+			makeMiniboss();
+			local loot = this.new("scripts/items/accessory/wardog_item");
+			loot.setType(this.Const.Companions.TypeList.TomeReanimation);
+			loot.updateCompanion();
+			this.m.Items.equip(loot);
 		}
 	});
 

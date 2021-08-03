@@ -287,8 +287,7 @@ gt.Const.Companions.Library <- [
 		Variant = function() { return this.Math.rand(1, 3); },
 		BasicQuirks = ["scripts/skills/perks/perk_coup_de_grace", 
 		"scripts/skills/perks/perk_berserk", 
-		"scripts/skills/perks/perk_pathfinder",
-		"scripts/skills/traits/delz_darkvision_trait"
+		"scripts/skills/perks/perk_pathfinder"
 		],
 		BasicAttributes = { Hitpoints = 130, Stamina = 180, Bravery = 50, Initiative = 150, MeleeSkill = 60, RangedSkill = 0, MeleeDefense = 10, RangedDefense = 10 },
 		PreferredAttribute = this.Const.Attributes.MeleeSkill,
@@ -323,8 +322,7 @@ gt.Const.Companions.Library <- [
 		"scripts/skills/perks/perk_berserk", 
 		"scripts/skills/perks/perk_pathfinder", 
 		"scripts/skills/perks/perk_overwhelm", 
-		"scripts/skills/perks/perk_relentless",
-		"scripts/skills/traits/delz_darkvision_trait"
+		"scripts/skills/perks/perk_relentless"
 		],
 		BasicAttributes = { Hitpoints = 150, Stamina = 180, Bravery = 70, Initiative = 150, MeleeSkill = 65, RangedSkill = 0, MeleeDefense = 10, RangedDefense = 10 },
 		PreferredAttribute = this.Const.Attributes.MeleeSkill,
@@ -357,8 +355,7 @@ gt.Const.Companions.Library <- [
 		Variant = function() { return this.Math.rand(1, 3); },
 		BasicQuirks = ["scripts/skills/perks/perk_coup_de_grace", 
 		"scripts/skills/perks/perk_backstabber", 
-		"scripts/skills/perks/perk_pathfinder",
-		"scripts/skills/traits/delz_darkvision_trait"
+		"scripts/skills/perks/perk_pathfinder"
 		],
 		BasicAttributes = { Hitpoints = 120, Stamina = 180, Bravery = 50, Initiative = 90, MeleeSkill = 60, RangedSkill = 0, MeleeDefense = 10, RangedDefense = 10 },
 		PreferredAttribute = this.Const.Attributes.MeleeSkill,
@@ -391,11 +388,10 @@ gt.Const.Companions.Library <- [
 		Variant = function() { return this.Math.rand(4, 6); },
 		BasicQuirks = ["scripts/skills/perks/perk_coup_de_grace", 
 		"scripts/skills/perks/perk_backstabber",
-		 "scripts/skills/perks/perk_pathfinder",
-		  "scripts/skills/perks/perk_overwhelm", 
-		  "scripts/skills/perks/perk_relentless",
-		  "scripts/skills/traits/delz_darkvision_trait"
-		  ],
+		"scripts/skills/perks/perk_pathfinder",
+		"scripts/skills/perks/perk_overwhelm", 
+		"scripts/skills/perks/perk_relentless"
+		],
 		BasicAttributes = { Hitpoints = 140, Stamina = 180, Bravery = 70, Initiative = 130, MeleeSkill = 65, RangedSkill = 0, MeleeDefense = 10, RangedDefense = 10 },
 		PreferredAttribute = this.Const.Attributes.MeleeSkill,
 		Script = "scripts/companions/types/companions_hyena_frenzied",
@@ -429,7 +425,6 @@ gt.Const.Companions.Library <- [
 		"scripts/skills/perks/perk_backstabber", 
 		"scripts/skills/perks/perk_fast_adaption", 
 		"scripts/skills/perks/perk_footwork",
-		"scripts/skills/traits/delz_darkvision_trait",
 		"scripts/skills/perks/perk_legend_poison_immunity"
 		],
 		BasicAttributes = { Hitpoints = 60, Stamina = 130, Bravery = 45, Initiative = 150, MeleeSkill = 60, RangedSkill = 0, MeleeDefense = 10, RangedDefense = 20 },
@@ -463,8 +458,7 @@ gt.Const.Companions.Library <- [
 		Variant = function() { return this.Math.rand(1, 4); },
 		BasicQuirks = ["scripts/skills/perks/perk_pathfinder", 
 		"scripts/skills/perks/perk_backstabber", 
-		"scripts/skills/perks/perk_relentless",
-		"scripts/skills/traits/delz_darkvision_trait"
+		"scripts/skills/perks/perk_relentless"
 		],
 		BasicAttributes = { Hitpoints = 130, Stamina = 110, Bravery = 100, Initiative = 50, MeleeSkill = 65, RangedSkill = 0, MeleeDefense = 10, RangedDefense = 25 },
 		PreferredAttribute = this.Const.Attributes.MeleeSkill,
@@ -495,8 +489,7 @@ gt.Const.Companions.Library <- [
 		PartyStrength = 23,
 		MaxPerCompany = 4,
 		Variant = function() { return this.Math.rand(1, 3); },
-		BasicQuirks = ["scripts/skills/perks/perk_pathfinder",
-		"scripts/skills/traits/delz_darkvision_trait"
+		BasicQuirks = ["scripts/skills/perks/perk_pathfinder"
 		],
 		BasicAttributes = { Hitpoints = 80, Stamina = 130, Bravery = 50, Initiative = 125, MeleeSkill = 60, RangedSkill = 0, MeleeDefense = 10, RangedDefense = 15 },
 		PreferredAttribute = this.Const.Attributes.MeleeSkill,
@@ -528,10 +521,8 @@ gt.Const.Companions.Library <- [
 		MaxPerCompany = 2,
 		Variant = function() { return this.Math.rand(1, 3); },
 		BasicQuirks = ["scripts/skills/perks/perk_underdog",
-		"scripts/skills/traits/delz_darkvision_trait",
 		"scripts/skills/perks/perk_stalwart",
 		"scripts/skills/perks/perk_legend_poison_immunity"
-
 		],
 		BasicAttributes = { Hitpoints = 100, Stamina = 100, Bravery = 100, Initiative = 60, MeleeSkill = 0, RangedSkill = 0, MeleeDefense = 10, RangedDefense = 10 },
 		PreferredAttribute = this.Const.Attributes.Hitpoints,
@@ -624,15 +615,13 @@ gt.Const.Companions.Library <- [
 		Variant = function() { return this.Math.rand(1, 2); },
 		BasicQuirks = ["scripts/skills/perks/perk_pathfinder", 
 		"scripts/skills/perks/perk_crippling_strikes",
-		 "scripts/skills/perks/perk_steel_brow", 
-		 "scripts/skills/perks/perk_hold_out",
-         "scripts/skills/perks/perk_stalwart",
-         "scripts/skills/perks/perk_battering_ram",
-         "scripts/skills/traits/delz_darkvision_trait",
-         "scripts/skills/perks/perk_legend_escape_artist",
-         "scripts/skills/perks/perk_legend_poison_immunity"
-
-		 ],
+		"scripts/skills/perks/perk_steel_brow", 
+		"scripts/skills/perks/perk_hold_out",
+        "scripts/skills/perks/perk_stalwart",
+        "scripts/skills/perks/perk_battering_ram",
+        "scripts/skills/perks/perk_legend_escape_artist",
+        "scripts/skills/perks/perk_legend_poison_immunity"
+		],
 		BasicAttributes = { Hitpoints = 600, Stamina = 400, Bravery = 200, Initiative = 60, MeleeSkill = 70, RangedSkill = 0, MeleeDefense = -5, RangedDefense = -5 },
 		PreferredAttribute = this.Const.Attributes.MeleeSkill,
 		Script = "scripts/companions/types/companions_schrat",
@@ -663,16 +652,13 @@ gt.Const.Companions.Library <- [
 		MaxPerCompany = 1,
 		Variant = function() { return 1; },
 		BasicQuirks = ["scripts/skills/perks/perk_pathfinder",
-		 "scripts/skills/perks/perk_hold_out", 
-		 "scripts/skills/perks/perk_reach_advantage", 
-		 "scripts/skills/perks/perk_fearsome", 
-		 "scripts/skills/perks/perk_underdog",
-	     "scripts/skills/traits/delz_darkvision_trait",
-	     "scripts/skills/perks/perk_stalwart",
-	     "scripts/skills/perks/perk_battering_ram"
-
-
-		 ],
+		"scripts/skills/perks/perk_hold_out", 
+		"scripts/skills/perks/perk_reach_advantage", 
+		"scripts/skills/perks/perk_fearsome", 
+		"scripts/skills/perks/perk_underdog",
+	    "scripts/skills/perks/perk_stalwart",
+	    "scripts/skills/perks/perk_battering_ram"
+		],
 		BasicAttributes = { Hitpoints = 1100, Stamina = 400, Bravery = 180, Initiative = 80, MeleeSkill = 75, RangedSkill = 0, MeleeDefense = 10, RangedDefense = -10 },
 		PreferredAttribute = this.Const.Attributes.MeleeSkill,
 		Script = "scripts/companions/types/companions_noodle",
