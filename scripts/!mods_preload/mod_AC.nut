@@ -2,7 +2,7 @@
 ::mods_queue("mod_AC", null, function()
 {
 	///// make companions heal their wounds at the same time as brothers heal theirs
-	::mods_hookNewObject("states/world/asset_manager", function(o)
+	::mods_hookNewObjectOnce("states/world/asset_manager", function(o)
 	{
 		local update = o.update;
 		o.update = function(_worldState)
@@ -99,7 +99,7 @@
 	});
 
 	///// give companions experience when the player kills something
-	::mods_hookNewObject("entity/tactical/player", function(o)
+	::mods_hookExactClass("entity/tactical/player", function(o)
 	{
 		if (!("mod_AC" in o))
 		{
@@ -229,7 +229,7 @@
 	});
 
 	///// wardogs and warhounds retain their name, variant, level, XP, attributes and quirks after an armor upgrade
-	::mods_hookNewObject("items/misc/wardog_armor_upgrade_item", function(o)
+	::mods_hookExactClass("items/misc/wardog_armor_upgrade_item", function(o)
 	{
 		o.onUse = function(_actor, _item = null)
 		{
@@ -272,7 +272,7 @@
 	});
 
 	///// wardogs and warhounds retain their name, variant, level, XP, attributes and quirks after an armor upgrade
-	::mods_hookNewObject("items/misc/wardog_heavy_armor_upgrade_item", function(o)
+	::mods_hookExactClass("items/misc/wardog_heavy_armor_upgrade_item", function(o)
 	{
 		o.onUse = function(_actor, _item = null)
 		{
