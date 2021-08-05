@@ -97,6 +97,19 @@
 			this.m.Items.equip(loot);
 		}
 	});
+	
+	::mods_hookExactClass("entity/tactical/humans/barbarian_chosen", function(o)
+	{
+		local makeMiniboss = ::mods_getMember(o, "makeMiniboss");
+		o.makeMiniboss = function()
+		{
+			makeMiniboss();
+			local loot = this.new("scripts/items/accessory/wardog_item");
+			loot.setType(this.Const.Companions.TypeList.Whitewolf);
+			loot.updateCompanion();
+			this.m.Items.equip(loot);
+		}
+	});	
 
 	///// give companions experience when the player kills something
 	::mods_hookExactClass("entity/tactical/player", function(o)
