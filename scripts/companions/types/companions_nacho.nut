@@ -128,7 +128,7 @@ this.companions_nacho <- this.inherit("scripts/entity/tactical/actor", {
 	function setVariant(_v)
 	{
 		this.m.Head = _v;
-		this.m.Size = 1;
+		this.m.Size = this.m.Item.m.Level >= 7 ? 3 : this.m.Item.m.Level >= 4 ? 2 : 1;
 		if (this.m.Size == 1)
 		{
 			this.getSprite("body").setBrush("bust_ghoul_body_01");
