@@ -199,6 +199,7 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 			target.m.IsDying = true;
 			target.m.IsAlive = false;
 			target.removeFromMap();
+			this.getContainer().getActor().addXP(target.getXPValue());
 //			target.die();
 		}
 		else
