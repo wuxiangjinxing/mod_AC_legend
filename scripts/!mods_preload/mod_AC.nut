@@ -1,5 +1,5 @@
 ::mods_registerMod("mod_AC", 1.26, "Accessory Companions");
-::mods_queue("mod_AC", null, function()
+::mods_queue("mod_AC", ">mod_mage_trio_hexe_origin", function()
 {
 	///// make companions heal their wounds at the same time as brothers heal theirs
 	::mods_hookNewObjectOnce("states/world/asset_manager", function(o)
@@ -71,16 +71,16 @@
 
 	if (::mods_getRegisteredMod("mod_mage_trio_hexe_origin") != null)
 	{
-		::mods_hookExactClass("entity/tactical/player_goblin", function(o)
+		::mods_hookDescendants("entity/tactical/player", function(o)
 		{
 			local onInit = ::mods_getMember(o, "onInit");
 			o.onInit = function()
 			{
 				onInit();
-				if (this.m.IsControlledByPlayer && !this.getSkills().hasSkill("actives.companions_tame"))
+				if (this.m.IsControlledByPlayer && "Mount" in this.m && !this.getSkills().hasSkill("actives.companions_tame"))
 					this.m.Skills.add(this.new("scripts/companions/player/companions_tame"));
 			}
-		});	
+		});
 	}
 
 	///// necromancers have a chance to drop the Tome of Reanimation when killed, webknecht eggs have a chance to drop a webknecht companion when killed
