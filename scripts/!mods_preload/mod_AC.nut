@@ -929,7 +929,7 @@
 					}
 				}
 
-				if (this.m.Level > this.Const.XP.MaxLevelWithPerkpoints)
+				if (this.m.Level >= this.Const.XP.MaxLevelWithPerkpoints)
 				{
 					_xp = _xp * this.Const.Combat.GlobalXPVeteranLevelMult;
 				}
@@ -1021,6 +1021,12 @@
 						if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
 							availableQuirks.push(quirk);
 					}
+				}
+				if (::mods_getRegisteredMod("mod_mage_trio_hexe_origin") != null)
+				{
+					local quirk = "scripts/skills/perks/perk_champion";
+					if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
+						availableQuirks.push(quirk);					
 				}
 
 				while (this.m.Level < this.Const.LevelXP.len() && this.m.XP >= this.Const.LevelXP[this.m.Level])
