@@ -929,7 +929,7 @@
 					}
 				}
 
-				if (this.m.Level >= 12)
+				if (this.m.Level > this.Const.XP.MaxLevelWithPerkpoints)
 				{
 					_xp = _xp * this.Const.Combat.GlobalXPVeteranLevelMult;
 				}
@@ -951,7 +951,7 @@
 				{
 					local attributeMin = this.Const.AttributesLevelUp[attribute].Min;
 					local attributeMax = this.Const.AttributesLevelUp[attribute].Max;
-					local attributeValue = this.m.Level <= 12 ? this.Math.rand(attributeMin, attributeMax) : 1;
+					local attributeValue = this.m.Level <= this.Const.XP.MaxLevelWithPerkpoints ? this.Math.rand(attributeMin, attributeMax) : 1;
 					switch (attribute)
 					{
 						case 0:
@@ -1039,7 +1039,7 @@
 						attributeArray.remove(randomAttribute);
 						++bonusesSpent;
 					}
-					if (this.m.Level <= 12)
+					if (this.m.Level <= this.Const.XP.MaxLevelWithPerkpoints)
 					{
 						if (availableQuirks.len() != 0)
 						{
@@ -1048,7 +1048,7 @@
 							availableQuirks.remove(rng);
 						}
 
-						if (this.m.Level == 12 && this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
+						if (this.m.Level == this.Const.XP.MaxLevelWithPerkpoints && this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
 						{
 							this.m.Quirks.push("scripts/companions/quirks/companions_good_boy");
 						}

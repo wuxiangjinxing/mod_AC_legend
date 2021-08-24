@@ -141,6 +141,7 @@ this.companions_raise <- this.inherit("scripts/skills/skill", {
 		{
 			e.getSprite("socket").setBrush(_user.getSprite("socket").getBrush().Name);
 			e.setFaction(this.Const.Faction.PlayerAnimals);
+			e.m.IsSummoned = true;
 
 			local currentOffhand = e.getItems().getItemAtSlot(this.Const.ItemSlot.Offhand);
 			if (currentOffhand != null) e.getItems().unequip(currentOffhand);
@@ -180,63 +181,73 @@ this.companions_raise <- this.inherit("scripts/skills/skill", {
 					if (hasQuirk == null && getQuirk.m.ID != "quirk.good_boy") e.m.Skills.add(this.new(quirk));
 				}
 			}
-
-			if (e.getFlags().has("zombie_minion"))
+			
+			if (this.m.Item.m.Level >= this.Const.XP.MaxLevelWithPerkpoints)
 			{
-				e.m.AIAgent = this.new("scripts/ai/tactical/agents/zombie_agent");
+				e.m.IsControlledByPlayer = true;
+				e.setAIAgent(this.new("scripts/ai/tactical/player_agent"));
+				e.m.AIAgent.setActor(entity);
+				e.m.Skills.add(this.new("scripts/skills/effects/legend_possession_effect"));
 			}
-			else if (e.getFlags().has("skeleton"))
+			else
 			{
-				if (e.m.Type == this.Const.EntityType.SkeletonPriest)
+				if (e.getFlags().has("zombie_minion"))
 				{
-					e.m.AIAgent = this.new("scripts/ai/tactical/agents/skeleton_priest_agent");
+					e.m.AIAgent = this.new("scripts/ai/tactical/agents/zombie_agent");
 				}
-				else
+				else if (e.getFlags().has("skeleton"))
 				{
-					e.m.AIAgent = this.new("scripts/ai/tactical/agents/skeleton_melee_agent");
+					if (e.m.Type == this.Const.EntityType.SkeletonPriest)
+					{
+						e.m.AIAgent = this.new("scripts/ai/tactical/agents/skeleton_priest_agent");
+					}
+					else
+					{
+						e.m.AIAgent = this.new("scripts/ai/tactical/agents/skeleton_melee_agent");
+					}
 				}
-			}
-			e.m.AIAgent.setActor(e);
-
-			if (e.m.AIAgent.m.Actor.getSkills().hasSkill("perk.adrenaline") && e.m.AIAgent.getBehavior(this.Const.AI.Behavior.ID.Adrenaline) == null)
-			{
-				e.m.AIAgent.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_adrenaline"));
-				e.m.AIAgent.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.Adrenaline] = 0.25;
-			}
-			if (e.m.AIAgent.m.Actor.getSkills().hasSkill("perk.recover") && e.m.AIAgent.getBehavior(this.Const.AI.Behavior.ID.Recover) == null)
-			{
-				e.m.AIAgent.addBehavior(this.new("scripts/companions/behaviors/companions_recover"));
-				e.m.AIAgent.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.Recover] = 0.25;
-			}
-			if (e.m.AIAgent.m.Actor.getSkills().hasSkill("perk.rotation") && e.m.AIAgent.getBehavior(this.Const.AI.Behavior.ID.Rotation) == null)
-			{
-				e.m.AIAgent.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_defend_rotation"));
-				e.m.AIAgent.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.Rotation] = 0.25;
-			}
-			if (e.m.AIAgent.m.Actor.getSkills().hasSkill("perk.rally_the_troops") && e.m.AIAgent.getBehavior(this.Const.AI.Behavior.ID.Rally) == null)
-			{
-				e.m.AIAgent.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_rally"));
-				e.m.AIAgent.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.Rally] = 0.25;
-			}
-			if (e.m.AIAgent.m.Actor.getSkills().hasSkill("perk.footwork") && e.m.AIAgent.getBehavior(this.Const.AI.Behavior.ID.Disengage) == null)
-			{
-				e.m.AIAgent.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_disengage"));
-				e.m.AIAgent.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.Disengage] = 0.25;
-			}
-			if (e.m.AIAgent.m.Actor.getSkills().hasSkill("perk.indomitable") && e.m.AIAgent.getBehavior(this.Const.AI.Behavior.ID.Indomitable) == null)
-			{
-				e.m.AIAgent.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_indomitable"));
-				e.m.AIAgent.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.Indomitable] = 0.25;
-			}
-			if (e.m.AIAgent.m.Actor.getSkills().hasSkill("actives.throw_dirt") && e.m.AIAgent.getBehavior(this.Const.AI.Behavior.ID.Distract) == null)
-			{
-				e.m.AIAgent.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_distract"));
-				e.m.AIAgent.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.Distract] = 0.25;
-			}
-			if (e.m.AIAgent.getBehavior(this.Const.AI.Behavior.ID.PickupWeapon) == null)
-			{
-				e.m.AIAgent.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_pickup_weapon"));
-				e.m.AIAgent.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.PickupWeapon] = 0.25;
+				e.m.AIAgent.setActor(e);
+	
+				if (e.m.AIAgent.m.Actor.getSkills().hasSkill("perk.adrenaline") && e.m.AIAgent.getBehavior(this.Const.AI.Behavior.ID.Adrenaline) == null)
+				{
+					e.m.AIAgent.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_adrenaline"));
+					e.m.AIAgent.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.Adrenaline] = 0.25;
+				}
+				if (e.m.AIAgent.m.Actor.getSkills().hasSkill("perk.recover") && e.m.AIAgent.getBehavior(this.Const.AI.Behavior.ID.Recover) == null)
+				{
+					e.m.AIAgent.addBehavior(this.new("scripts/companions/behaviors/companions_recover"));
+					e.m.AIAgent.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.Recover] = 0.25;
+				}
+				if (e.m.AIAgent.m.Actor.getSkills().hasSkill("perk.rotation") && e.m.AIAgent.getBehavior(this.Const.AI.Behavior.ID.Rotation) == null)
+				{
+					e.m.AIAgent.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_defend_rotation"));
+					e.m.AIAgent.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.Rotation] = 0.25;
+				}
+				if (e.m.AIAgent.m.Actor.getSkills().hasSkill("perk.rally_the_troops") && e.m.AIAgent.getBehavior(this.Const.AI.Behavior.ID.Rally) == null)
+				{
+					e.m.AIAgent.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_rally"));
+					e.m.AIAgent.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.Rally] = 0.25;
+				}
+				if (e.m.AIAgent.m.Actor.getSkills().hasSkill("perk.footwork") && e.m.AIAgent.getBehavior(this.Const.AI.Behavior.ID.Disengage) == null)
+				{
+					e.m.AIAgent.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_disengage"));
+					e.m.AIAgent.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.Disengage] = 0.25;
+				}
+				if (e.m.AIAgent.m.Actor.getSkills().hasSkill("perk.indomitable") && e.m.AIAgent.getBehavior(this.Const.AI.Behavior.ID.Indomitable) == null)
+				{
+					e.m.AIAgent.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_indomitable"));
+					e.m.AIAgent.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.Indomitable] = 0.25;
+				}
+				if (e.m.AIAgent.m.Actor.getSkills().hasSkill("actives.throw_dirt") && e.m.AIAgent.getBehavior(this.Const.AI.Behavior.ID.Distract) == null)
+				{
+					e.m.AIAgent.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_distract"));
+					e.m.AIAgent.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.Distract] = 0.25;
+				}
+				if (e.m.AIAgent.getBehavior(this.Const.AI.Behavior.ID.PickupWeapon) == null)
+				{
+					e.m.AIAgent.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_pickup_weapon"));
+					e.m.AIAgent.m.Properties.BehaviorMult[this.Const.AI.Behavior.ID.PickupWeapon] = 0.25;
+				}
 			}
 
 			this.Tactical.TurnSequenceBar.removeEntity(e);

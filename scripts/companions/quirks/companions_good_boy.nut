@@ -31,8 +31,8 @@ this.companions_good_boy <- this.inherit("scripts/skills/skill", {
 
 	function onUpdate( _properties )
 	{
-		local bonus = this.getContainer().getActor().m.Item.m.Level - 10;
-		_properties.DamageRegularMin += this.Math.floor(0.5 * bonus);
-		_properties.DamageRegularMax += this.Math.floor(1.0 * bonus);
+		local bonus = this.getContainer().getActor().m.Item.m.Level - this.Const.XP.MaxLevelWithPerkpoints;
+		_properties.DamageRegularMin *= (1.0 + 0.01 * bonus);
+		_properties.DamageRegularMax *= (1.0 + 0.01 * bonus);
 	}
 });
