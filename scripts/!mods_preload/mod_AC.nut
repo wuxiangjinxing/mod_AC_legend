@@ -71,14 +71,17 @@
 
 	if (::mods_getRegisteredMod("mod_mage_trio_hexe_origin") != null)
 	{
-		::mods_hookDescendants("entity/tactical/player", function(o)
+		::mods_hookBaseClass("entity/tactical/player", function(o)
 		{
-			local onInit = ::mods_getMember(o, "onInit");
-			o.onInit = function()
+			if ("onInit" in o)
 			{
-				onInit();
-				if (this.m.IsControlledByPlayer && "Mount" in this.m && !this.getSkills().hasSkill("actives.companions_tame"))
-					this.m.Skills.add(this.new("scripts/companions/player/companions_tame"));
+				local onInit = ::mods_getMember(o, "onInit");
+				o.onInit = function()
+				{
+					onInit();
+					if (this.m.IsControlledByPlayer && "Mount" in this.m && !this.getSkills().hasSkill("actives.companions_tame"))
+						this.m.Skills.add(this.new("scripts/companions/player/companions_tame"));
+				}
 			}
 		});
 	}

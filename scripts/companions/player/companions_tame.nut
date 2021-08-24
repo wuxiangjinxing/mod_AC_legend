@@ -139,8 +139,9 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 	{
 		local actor = this.getContainer().getActor();
 		local target = _targetTile.getEntity();
+		local chance = this.getHitchance(target);
 
-		if (this.Math.rand(1, 100) <= this.getHitchance(target))
+		if (this.Math.rand(1, 100) <= chance)
 		{
 			this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(actor) + " successfully tamed " + this.Const.UI.getColorizedEntityName(target));
 			local loot = this.new("scripts/items/accessory/wardog_item");
@@ -205,9 +206,13 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 		else
 		{
 			this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(actor) + " failed to tame " + this.Const.UI.getColorizedEntityName(target));
-			this.spawnIcon("status_effect_111", _targetTile);
-			target.getFlags().add("taming_protection");
-			target.m.Skills.add(this.new("scripts/companions/player/companions_taming_protection"));
+			target.onMissed(this.getContainer().getActor(), this);
+			if (this.Math.rand(1, 100) <= 100 - chance)
+			{
+				this.spawnIcon("status_effect_111", _targetTile);
+				target.getFlags().add("taming_protection");
+				target.m.Skills.add(this.new("scripts/companions/player/companions_taming_protection"));
+			}
 		}
 
 		this.m.IsHidden = this.isHidden();
