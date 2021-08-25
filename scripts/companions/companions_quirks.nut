@@ -44,7 +44,7 @@ gt.Const.Companions.AttainableQuirks <- [
 //	"scripts/skills/perks/perk_mastery_throwing",
 //	"scripts/skills/perks/perk_reach_advantage",
 	"scripts/skills/perks/perk_overwhelm",
-	"scripts/skills/perks/perk_lone_wolf",
+//	"scripts/skills/perks/perk_lone_wolf",
 	"scripts/skills/perks/perk_underdog",
 //	"scripts/skills/perks/perk_footwork",
 	"scripts/skills/perks/perk_berserk",

@@ -984,9 +984,6 @@
 				local availableQuirks = [];
 				foreach(quirk in this.Const.Companions.AttainableQuirks)
 				{
-					if (quirk == "scripts/skills/perks/perk_lone_wolf" && this.m.Type == this.Const.Companions.TypeList.Noodle)
-						continue;
-
 					if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
 						availableQuirks.push(quirk);
 				}
