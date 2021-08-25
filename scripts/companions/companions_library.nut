@@ -29,7 +29,9 @@ gt.Const.Companions.TameList <- [
 	"Lindwurm",
 	"mod_AC_TomeReanimation",
 	"Warbear",
-	"White Wolf"
+	"White Wolf",
+	"Armored Wolf",
+	"mod_AC_WolfArmorHeavy",
 ];
 gt.Const.Companions.TypeList <- {
 	Wardog = 0,
@@ -53,7 +55,9 @@ gt.Const.Companions.TypeList <- {
 	Noodle = 18,
 	TomeReanimation = 19,
 	Warbear = 20,
-	Whitewolf = 21	
+	Whitewolf = 21,
+	WarwolfArmor = 22,
+	WarwolfArmorHeavy = 23,
 
 // Legends? Redback, White Dire Wolf, Rock Unhold, Green Schrat, Demon Alp, Skin Ghoul, Hollenhund(?), Geist(?), Stollwurm, Goblins (???), Indebted (???)
 
@@ -818,5 +822,65 @@ gt.Const.Companions.Library <- [
 			IconDisabled = function( variant ) { return "skills/unleash_white_wolf_bw.png"; },
 			Overlay = "active_83"
 		}
-	}	
+	},
+	{
+		ID = "accessory.armored_wolf",
+		Type = this.Const.Companions.TypeList.WarwolfArmor,
+		Name = function() { return this.Const.Companions.CanineNames[this.Math.rand(0, this.Const.Companions.CanineNames.len() - 1)]; },
+		NameUnleashed = "Wolf Collar",
+		Description = "A strong and wild wolf, tamed to be a loyal companion in battle. Can be unleashed in battle for scouting, tracking or running down routing enemies. This one wears a leather coat for protection against cutting wounds.",
+		DescriptionUnleashed = "The collar of a wolf that has been unleashed onto the battlefield.",
+		IconLeashed = function(variant) { if (variant == 1)	{ return "tools/wolf_02_armor_01_70x70.png"; } else { return "tools/wolf_01_armor_01_70x70.png"; } },
+		IconUnleashed = "tools/hound_01_leash_70x70.png",
+		Value = 1000,
+		PartyStrength = 13,
+		MaxPerCompany = 6,
+		Variant = function() { return this.Math.rand(1, 2); },
+		BasicQuirks = ["scripts/skills/perks/perk_pathfinder", "scripts/skills/perks/perk_steel_brow"],
+		BasicAttributes = { Hitpoints = 90, Stamina = 150, Bravery = 60, Initiative = 135, MeleeSkill = 65, RangedSkill = 0, MeleeDefense = 25, RangedDefense = 25 },
+		PreferredAttribute = this.Const.Attributes.MeleeSkill,
+		Script = "scripts/companions/types/companions_warwolf",
+		ArmorScript = "scripts/items/armor/special/warwolf_armor",
+		UnleashSounds = ["sounds/enemies/wolf_idle_00.wav", "sounds/enemies/wolf_idle_01.wav", "sounds/enemies/wolf_idle_02.wav", "sounds/enemies/wolf_idle_03.wav", "sounds/enemies/wolf_idle_04.wav", "sounds/enemies/wolf_idle_06.wav", "sounds/enemies/wolf_idle_07.wav", "sounds/enemies/wolf_idle_08.wav", "sounds/enemies/wolf_idle_09.wav"],
+		InventorySounds = ["sounds/enemies/wolf_idle_08.wav"],
+		Unleash = {	Script = "scripts/companions/onequip/companions_unleash",
+					Icon = function(variant) { return "skills/wolf_0" + variant + "_ac.png"; },
+					IconDisabled = function(variant) { return "skills/wolf_0" + variant + "_sw_ac.png"; },
+					Overlay = "active_83",
+					onActorDied = true	},
+		Leash = {	Script = "scripts/companions/onequip/companions_leash",
+					Icon = function(variant) { return "skills/wolf_0" + variant + "_ac.png"; },
+					IconDisabled = function(variant) { return "skills/wolf_0" + variant + "_sw_ac.png"; },
+					Overlay = "active_83"	}
+	},
+	{
+		ID = "accessory.heavily_armored_wolf",
+		Type = this.Const.Companions.TypeList.WarwolfArmorHeavy,
+		Name = function() { return this.Const.Companions.CanineNames[this.Math.rand(0, this.Const.Companions.CanineNames.len() - 1)]; },
+		NameUnleashed = "Wolf Collar",
+		Description = "A strong and wild wolf, tamed to be a loyal companion in battle. Can be unleashed in battle for scouting, tracking or running down routing enemies. This one wears a heavy hide coat for protection.",
+		DescriptionUnleashed = "The collar of a wolf that has been unleashed onto the battlefield.",
+		IconLeashed = function(variant) { if (variant == 1)	{ return "tools/wolf_02_armor_02_70x70.png"; } else { return "tools/wolf_01_armor_02_70x70.png"; } },
+		IconUnleashed = "tools/hound_01_leash_70x70.png",
+		Value = 1200,
+		PartyStrength = 13,
+		MaxPerCompany = 6,
+		Variant = function() { return this.Math.rand(1, 2); },
+		BasicQuirks = ["scripts/skills/perks/perk_pathfinder", "scripts/skills/perks/perk_steel_brow"],
+		BasicAttributes = { Hitpoints = 90, Stamina = 150, Bravery = 60, Initiative = 135, MeleeSkill = 65, RangedSkill = 0, MeleeDefense = 25, RangedDefense = 25 },
+		PreferredAttribute = this.Const.Attributes.MeleeSkill,
+		Script = "scripts/companions/types/companions_warwolf",
+		ArmorScript = "scripts/items/armor/special/warwolf_heavy_armor",
+		UnleashSounds = ["sounds/enemies/wolf_idle_00.wav", "sounds/enemies/wolf_idle_01.wav", "sounds/enemies/wolf_idle_02.wav", "sounds/enemies/wolf_idle_03.wav", "sounds/enemies/wolf_idle_04.wav", "sounds/enemies/wolf_idle_06.wav", "sounds/enemies/wolf_idle_07.wav", "sounds/enemies/wolf_idle_08.wav", "sounds/enemies/wolf_idle_09.wav"],
+		InventorySounds = ["sounds/enemies/wolf_idle_08.wav"],
+		Unleash = {	Script = "scripts/companions/onequip/companions_unleash",
+					Icon = function(variant) { return "skills/wolf_0" + variant + "_ac.png"; },
+					IconDisabled = function(variant) { return "skills/wolf_0" + variant + "_sw_ac.png"; },
+					Overlay = "active_83",
+					onActorDied = true	},
+		Leash = {	Script = "scripts/companions/onequip/companions_leash",
+					Icon = function(variant) { return "skills/wolf_0" + variant + "_ac.png"; },
+					IconDisabled = function(variant) { return "skills/wolf_0" + variant + "_sw_ac.png"; },
+					Overlay = "active_83"	}
+	},	
 ];
