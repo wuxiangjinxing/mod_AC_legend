@@ -254,21 +254,27 @@
 			{
 				return false;
 			}
-			if (dog.getType() != this.Const.Companions.TypeList.Wardog && dog.getType() != this.Const.Companions.TypeList.Warhound)
-			{
-				return false;
-			}
 
 			local new_dog;
-			if (dog.getType() == this.Const.Companions.TypeList.Wardog)
+			switch (dog.getType()) 
 			{
-				new_dog = this.new("scripts/items/accessory/armored_wardog_item");
-				new_dog.setType(this.Const.Companions.TypeList.WardogArmor);
-			}
-			else
-			{
-				new_dog = this.new("scripts/items/accessory/armored_warhound_item");
-				new_dog.setType(this.Const.Companions.TypeList.WarhoundArmor);
+			    case this.Const.Companions.TypeList.Wardog:
+			        new_dog = this.new("scripts/items/accessory/armored_wardog_item");
+					new_dog.setType(this.Const.Companions.TypeList.WardogArmor);
+			        break;
+
+			    case this.Const.Companions.TypeList.Warhound:
+			       	new_dog = this.new("scripts/items/accessory/armored_warhound_item");
+					new_dog.setType(this.Const.Companions.TypeList.WarhoundArmor);
+			        break;
+
+			    case this.Const.Companions.TypeList.Warwolf:
+			       	new_dog = this.new("scripts/items/accessory/armored_wolf_item");
+					new_dog.setType(this.Const.Companions.TypeList.WarwolfArmor);
+			        break;
+			
+			    default:
+			    	return false;
 			}
 
 			new_dog.setName(dog.getName());
@@ -297,21 +303,30 @@
 			{
 				return false;
 			}
-			if (dog.getType() != this.Const.Companions.TypeList.Wardog && dog.getType() != this.Const.Companions.TypeList.WardogArmor && dog.getType() != this.Const.Companions.TypeList.Warhound && dog.getType() != this.Const.Companions.TypeList.WarhoundArmor)
-			{
-				return false;
-			}
 
 			local new_dog;
-			if (dog.getType() == this.Const.Companions.TypeList.Wardog || dog.getType() == this.Const.Companions.TypeList.WardogArmor)
+			switch (dog.getType()) 
 			{
-				new_dog = this.new("scripts/items/accessory/heavily_armored_wardog_item");
-				new_dog.setType(this.Const.Companions.TypeList.WardogArmorHeavy);
-			}
-			else
-			{
-				new_dog = this.new("scripts/items/accessory/heavily_armored_warhound_item");
-				new_dog.setType(this.Const.Companions.TypeList.WarhoundArmorHeavy);
+			    case this.Const.Companions.TypeList.Wardog:
+			    case this.Const.Companions.TypeList.WardogArmor:
+			        new_dog = this.new("scripts/items/accessory/heavily_armored_wardog_item");
+					new_dog.setType(this.Const.Companions.TypeList.WardogArmorHeavy);
+			        break;
+
+			    case this.Const.Companions.TypeList.Warhound:
+			    case this.Const.Companions.TypeList.WarhoundArmor:
+			       	new_dog = this.new("scripts/items/accessory/heavily_armored_warhound_item");
+					new_dog.setType(this.Const.Companions.TypeList.WarhoundArmorHeavy);
+			        break;
+
+			    case this.Const.Companions.TypeList.Warwolf:
+			    case this.Const.Companions.TypeList.WarwolfArmor:
+			       	new_dog = this.new("scripts/items/accessory/heavily_armored_wolf_item");
+					new_dog.setType(this.Const.Companions.TypeList.WarwolfArmorHeavy);
+			        break;
+			
+			    default:
+			    	return false;
 			}
 
 			new_dog.setName(dog.getName());
