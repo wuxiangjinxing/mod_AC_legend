@@ -17,8 +17,8 @@ gt.Const.Companions.AttainableQuirks <- [
 	"scripts/skills/perks/perk_coup_de_grace",
 //	"scripts/skills/perks/perk_bullseye",
 	"scripts/skills/perks/perk_dodge",
-	"scripts/skills/perks/perk_fortified_mind",
-	"scripts/skills/perks/perk_hold_out",
+//	"scripts/skills/perks/perk_fortified_mind",
+//	"scripts/skills/perks/perk_hold_out",
 	"scripts/skills/perks/perk_steel_brow",
 //	"scripts/skills/perks/perk_quick_hands",
 //	"scripts/skills/perks/perk_gifted",
@@ -26,7 +26,7 @@ gt.Const.Companions.AttainableQuirks <- [
 	"scripts/skills/perks/perk_anticipation",
 //	"scripts/skills/perks/perk_shield_expert",
 //	"scripts/skills/perks/perk_brawny",
-	"scripts/skills/perks/perk_relentless",
+//	"scripts/skills/perks/perk_relentless",
 //	"scripts/skills/perks/perk_rotation",
 //	"scripts/skills/perks/perk_rally_the_troops",
 //	"scripts/skills/perks/perk_taunt",
@@ -65,14 +65,14 @@ gt.Const.Companions.AttainableQuirks <- [
     "scripts/skills/perks/perk_legend_escape_artist",
     "scripts/skills/perks/perk_legend_terrifying_visage",  
     "scripts/skills/perks/perk_slaughterer",  
-    "scripts/skills/perks/perk_legend_poison_immunity",  // -> Make sure to change properties of creatures to give it as bonus perk instead of unaffected
+//    "scripts/skills/perks/perk_legend_poison_immunity",  // -> Make sure to change properties of creatures to give it as bonus perk instead of unaffected
     "scripts/skills/perks/perk_legend_onslaught",  
-    "scripts/skills/perks/perk_legend_assured_conquest",  
+//    "scripts/skills/perks/perk_legend_assured_conquest",  
     "scripts/skills/perks/perk_legend_alert",
     "scripts/skills/perks/perk_double_strike",  
-    "scripts/skills/perks/perk_legend_second_wind",  
+//    "scripts/skills/perks/perk_legend_second_wind",  
     "scripts/skills/perks/perk_return_favor",  
-    "scripts/skills/perks/perk_feint"
+//    "scripts/skills/perks/perk_feint"
 	// TRAITS
 //	"scripts/skills/traits/huge_trait",   Effectively a nerf, and hurts the high tier stuff less than dogs and such
 //	"scripts/skills/traits/lucky_trait",
@@ -94,6 +94,13 @@ gt.Const.Companions.AttainableQuirksDLCDesert <- [ // Blazing Deserts
 	"scripts/skills/actives/throw_dirt_skill"
 ];
 gt.Const.Companions.AttainableQuirksBeasts <- [ // Beast-specific Quirks
+	"scripts/skills/perks/perk_fortified_mind",
+	"scripts/skills/perks/perk_hold_out",
+	"scripts/skills/perks/perk_relentless",
+	"scripts/skills/perks/perk_legend_poison_immunity",
+	"scripts/skills/perks/perk_legend_assured_conquest",
+	"scripts/skills/perks/perk_legend_second_wind",  
+	"scripts/skills/perks/perk_feint"
 ];
 gt.Const.Companions.SerializeQuirks <- [
 	// PERKS
