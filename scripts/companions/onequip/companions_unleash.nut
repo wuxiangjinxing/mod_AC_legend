@@ -42,7 +42,7 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 		if (this.m.Item == null || this.m.Item.isNull())
 			return;
 		local woundsCalc = 100 - this.m.Item.m.Wounds;
-		this.m.Name = "Unleash " + this.m.Item.m.Name + " ([color=" + this.Const.UI.Color.PositiveValue + "]" + woundsCalc + "%[/color])";
+		this.m.Name = "Unleash " + this.m.Item.m.Name + " LV" + this.m.Item.m.Level + " ([color=" + this.Const.UI.Color.PositiveValue + "]" + woundsCalc + "%[/color])";
 		this.m.Description = "Unleash " + this.m.Item.m.Name + " and have them engage the enemy. Needs a free adjacent tile. Can be used once per battle."
 		if (this.m.Item.m.Type == this.Const.Companions.TypeList.Noodle) this.m.Description = "Unleash " + this.m.Item.m.Name + " and have them engage the enemy. Needs a free adjacent tile (and a free adjacent tile next to that one, for the tail). Can be used once per battle."
 		this.m.Icon = this.Const.Companions.Library[this.m.Item.m.Type].Unleash.Icon(this.m.Item.m.Variant);
