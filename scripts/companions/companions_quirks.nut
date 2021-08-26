@@ -88,7 +88,6 @@ gt.Const.Companions.AttainableQuirks <- [
 	"scripts/skills/perks/perk_legend_heightened_reflexes",
 	"scripts/skills/perks/perk_legend_lacerate",
 	"scripts/skills/perks/perk_legend_lithe",
-	"scripts/skills/perks/perk_legend_tumble",
 
 	// TRAITS
 //	"scripts/skills/traits/huge_trait",   Effectively a nerf, and hurts the high tier stuff less than dogs and such
