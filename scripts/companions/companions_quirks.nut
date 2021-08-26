@@ -61,18 +61,35 @@ gt.Const.Companions.AttainableQuirks <- [
 //	"scripts/skills/perks/perk_steadfast",
 	"scripts/skills/perks/perk_stalwart",
 	"scripts/skills/perks/perk_sundering_strikes",
+	"scripts/skills/perks/perk_devastating_strikes",
+	"scripts/skills/perks/perk_double_strike",
+	"scripts/skills/perks/perk_slaughterer",
+	"scripts/skills/perks/perk_ironside",
+	"scripts/skills/perks/perk_last_stand",
+	"scripts/skills/perks/perk_lookout",
+	"scripts/skills/perks/perk_push_the_advantage",
+	"scripts/skills/perks/perk_trophy_hunter",
+	"scripts/skills/perks/perk_vengeance",
+	
 // PERKS - Legends
-    "scripts/skills/perks/perk_legend_escape_artist",
-    "scripts/skills/perks/perk_legend_terrifying_visage",  
-    "scripts/skills/perks/perk_slaughterer",  
-//    "scripts/skills/perks/perk_legend_poison_immunity",  // -> Make sure to change properties of creatures to give it as bonus perk instead of unaffected
-    "scripts/skills/perks/perk_legend_onslaught",  
-//    "scripts/skills/perks/perk_legend_assured_conquest",  
-    "scripts/skills/perks/perk_legend_alert",
-    "scripts/skills/perks/perk_double_strike",  
-//    "scripts/skills/perks/perk_legend_second_wind",  
-    "scripts/skills/perks/perk_return_favor",  
-//    "scripts/skills/perks/perk_feint"
+    	"scripts/skills/perks/perk_legend_escape_artist",
+    	"scripts/skills/perks/perk_legend_terrifying_visage",   
+//    	"scripts/skills/perks/perk_legend_poison_immunity",  // -> Make sure to change properties of creatures to give it as bonus perk instead of unaffected
+    	"scripts/skills/perks/perk_legend_onslaught",  
+//    	"scripts/skills/perks/perk_legend_assured_conquest",  
+    	"scripts/skills/perks/perk_legend_alert",
+//    	"scripts/skills/perks/perk_legend_second_wind", 
+	"scripts/skills/perks/perk_legend_battleheart",  
+	"scripts/skills/perks/perk_legend_blend_in",
+	"scripts/skills/perks/perk_legend_bloodbath",
+	"scripts/skills/perks/perk_legend_clarity",
+	"scripts/skills/perks/perk_legend_freedom_of_movement",
+	"scripts/skills/perks/perk_legend_hair_splitter",
+	"scripts/skills/perks/perk_legend_heightened_reflexes",
+	"scripts/skills/perks/perk_legend_lacerate",
+	"scripts/skills/perks/perk_legend_lithe",
+	"scripts/skills/perks/perk_legend_tumble",
+
 	// TRAITS
 //	"scripts/skills/traits/huge_trait",   Effectively a nerf, and hurts the high tier stuff less than dogs and such
 //	"scripts/skills/traits/lucky_trait",
@@ -100,7 +117,13 @@ gt.Const.Companions.AttainableQuirksBeasts <- [ // Beast-specific Quirks
 	"scripts/skills/perks/perk_legend_poison_immunity",
 	"scripts/skills/perks/perk_legend_assured_conquest",
 	"scripts/skills/perks/perk_legend_second_wind",  
-	"scripts/skills/perks/perk_feint"
+	"scripts/skills/perks/perk_feint",
+	"scripts/skills/perks/perk_battle_flow",
+	"scripts/skills/perks/perk_rebound",
+	"scripts/skills/perks/perk_steadfast",
+	"scripts/skills/perks/perk_legend_muscularity",
+	"scripts/skills/perks/perk_legend_mind_over_body",
+	"scripts/skills/perks/perk_legend_taste_the_pain",
 ];
 gt.Const.Companions.SerializeQuirks <- [
 	// PERKS
