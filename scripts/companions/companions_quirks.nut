@@ -72,13 +72,13 @@ gt.Const.Companions.AttainableQuirks <- [
 	"scripts/skills/perks/perk_vengeance",
 	
 // PERKS - Legends
-    	"scripts/skills/perks/perk_legend_escape_artist",
-    	"scripts/skills/perks/perk_legend_terrifying_visage",   
-//    	"scripts/skills/perks/perk_legend_poison_immunity",  // -> Make sure to change properties of creatures to give it as bonus perk instead of unaffected
-    	"scripts/skills/perks/perk_legend_onslaught",  
-//    	"scripts/skills/perks/perk_legend_assured_conquest",  
-    	"scripts/skills/perks/perk_legend_alert",
-//    	"scripts/skills/perks/perk_legend_second_wind", 
+    "scripts/skills/perks/perk_legend_escape_artist",
+    "scripts/skills/perks/perk_legend_terrifying_visage",   
+//  "scripts/skills/perks/perk_legend_poison_immunity",  // -> Make sure to change properties of creatures to give it as bonus perk instead of unaffected
+    "scripts/skills/perks/perk_legend_onslaught",  
+//  "scripts/skills/perks/perk_legend_assured_conquest",  
+    "scripts/skills/perks/perk_legend_alert",
+//  "scripts/skills/perks/perk_legend_second_wind", 
 	"scripts/skills/perks/perk_legend_battleheart",  
 	"scripts/skills/perks/perk_legend_blend_in",
 	"scripts/skills/perks/perk_legend_bloodbath",
@@ -120,6 +120,7 @@ gt.Const.Companions.AttainableQuirksBeasts <- [ // Beast-specific Quirks
 	"scripts/skills/perks/perk_battle_flow",
 	"scripts/skills/perks/perk_rebound",
 	"scripts/skills/perks/perk_steadfast",
+	"scripts/skills/perks/perk_legend_back_to_basics"
 	"scripts/skills/perks/perk_legend_muscularity",
 	"scripts/skills/perks/perk_legend_mind_over_body",
 	"scripts/skills/perks/perk_legend_taste_the_pain",

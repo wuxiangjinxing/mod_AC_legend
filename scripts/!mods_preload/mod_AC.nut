@@ -559,7 +559,7 @@
 				local levelText = "Level " + this.m.Level;
 				if (this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
 				{
-					nameText = this.getName() + " ([color=" + (woundsCalc >= 50 ? this.Const.UI.Color.PositiveValue : this.Const.UI.Color.NegativeValue) + "]" + woundsCalc + "%[/color])";
+					nameText += " ([color=" + (woundsCalc >= 50 ? this.Const.UI.Color.PositiveValue : this.Const.UI.Color.NegativeValue) + "]" + woundsCalc + "%[/color])";
 				}
 
 				local result = [
@@ -989,6 +989,12 @@
 
 					if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
 						availableQuirks.push(quirk);
+				}
+				if (this.m.Type >= this.Const.Companions.TypeList.Unhold && this.m.Type <= this.Const.Companions.TypeList.Warbear && this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
+				{
+					local quirk = "scripts/skills/perks/perk_legend_forceful_swing";
+					if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
+						availableQuirks.push(quirk);					
 				}
 				if (this.Const.DLC.Unhold)
 				{
