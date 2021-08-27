@@ -555,12 +555,11 @@
 				if (this.m.Entity != null)
 					woundsCalc = this.Math.floor(this.m.Entity.getHitpointsPct() * 100.0);
 
-				local nameText = this.getName() + " ([color=" + this.Const.UI.Color.PositiveValue + "]" + woundsCalc + "%[/color])";
-				local levelText = "Level " + this.m.Level + ", Health " + woundsCalc + "%"
-				if (this.m.Type == this.Const.Companions.TypeList.TomeReanimation)
+				local nameText = this.getName();
+				local levelText = "Level " + this.m.Level;
+				if (this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
 				{
-					nameText = this.getName();
-					levelText = "Level " + this.m.Level;
+					nameText = this.getName() + " ([color=" + (woundsCalc >= 50 ? this.Const.UI.Color.PositiveValue : this.Const.UI.Color.NegativeValue) + "]" + woundsCalc + "%[/color])";
 				}
 
 				local result = [
@@ -786,7 +785,7 @@
 					result.push({
 						id = 13,
 						type = "text",
-						text = this.m.Type == this.Const.Companions.TypeList.TomeReanimation ? "And its additional effects:" : "And the quirks they possess:"
+						text = this.m.Type == this.Const.Companions.TypeList.TomeReanimation ? "And its additional effects:" : "And the quirks it possesses:"
 					});
 
 					result.push({
@@ -902,45 +901,26 @@
 					return;
 				}
 
-				_xp = _xp * 0.67;
 				_xp = _xp * this.Const.Combat.GlobalXPMult;
 
 				if (this.getContainer() != null && !this.getContainer().isNull() && this.getContainer().getActor() != null && !this.getContainer().getActor().isNull() && this.getContainer().getActor().m.Type == this.Const.EntityType.Player && this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
 				{
 					local actor = this.getContainer().getActor();
-					if (actor.getSkills().hasSkill("background.companions_beastmaster"))
+					local beastmasters = [
+						["background.companions_beastmaster", 0.015],
+						["background.legend_commander_druid", 0.02],
+						["background.legend_druid", 0.015],
+						["background.legend_commander_ranger", 0.015],
+						["background.legend_ranger", 0.01],
+						["background.houndmaster", 0.01],
+						["background.legend_muladi", 0.01],
+					]
+					foreach(beastmaster in beastmasters)
 					{
-						_xp = _xp * (1.15 + (actor.getLevel() / 66.667));
-					}
-
-	                else if (actor.getSkills().hasSkill("background.legend_commander_druid"))      
-                    {                 
-						_xp = _xp * (1.20 + (actor.getLevel() / 60.0));
-					}
-
-	                else if (actor.getSkills().hasSkill("background.legend_druid")) // Druid
-				    {                 
-						_xp = _xp * (1.15 + (actor.getLevel() / 66.667));
-					}
-
-	                else if (actor.getSkills().hasSkill("background.legend_commander_ranger")) // Ranger Commander
-					{
-						_xp = _xp * (1.15 + (actor.getLevel() / 66.667));
-					}
-
-	                else if (actor.getSkills().hasSkill("background.legend_ranger")) // Ranger
-					{
-						_xp = _xp * (1.1 + (actor.getLevel() / 100.0));
-					}
-
-					else if (actor.getSkills().hasSkill("background.houndmaster"))
-					{
-						_xp = _xp * (1.1 + (actor.getLevel() / 100.0));
-					}
-
-					else if (actor.getSkills().hasSkill("background.legend_muladi"))
-					{
-						_xp = _xp * (1.1 + (actor.getLevel() / 100.0));
+						if (actor.getSkills().hasSkill(beastmaster[0]))
+						{
+							_xp = _xp * (1 + beastmaster[1] * (10 + actor.getLevel()));
+						}
 					}
 				}
 
