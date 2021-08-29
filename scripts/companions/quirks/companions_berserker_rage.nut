@@ -47,4 +47,9 @@ this.companions_berserker_rage <- this.inherit("scripts/skills/skill", {
 	{
 		this.addRage(5);
 	}
+	
+	function onCombatFinished()
+	{
+		this.m.RageStacks = 0;
+	}	
 });
