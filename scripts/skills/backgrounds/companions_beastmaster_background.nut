@@ -46,10 +46,8 @@ this.companions_beastmaster_background <- this.inherit("scripts/skills/backgroun
 		this.m.HairColors = this.Const.HairColors.All;
 		this.m.Beards = this.Const.Beards.All;
 		this.m.Bodies = this.Const.Bodies.Skinny;
-		this.m.IsLowborn = false;
+		this.m.BackgroundType = this.Const.BackgroundType.Combat | this.Const.BackgroundType.Druid | this.Const.BackgroundType.Ranger;
 		this.m.Level = this.Math.rand(1, 3);
-		this.m.IsRangerRecruitBackground = true;
-		this.m.IsDruidRecruitBackground = true;
 		this.m.AlignmentMin = this.Const.LegendMod.Alignment.Merciless;
 		this.m.AlignmentMax = this.Const.LegendMod.Alignment.Good;
 		this.m.Modifiers.Hunting = this.Const.LegendMod.ResourceModifiers.Hunting[3];
