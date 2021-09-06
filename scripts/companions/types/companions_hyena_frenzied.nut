@@ -11,8 +11,7 @@ this.companions_hyena_frenzied <- this.inherit("scripts/companions/types/compani
 		this.companions_hyena.onInit();
 		local b = this.m.BaseProperties;
 		b.setValues(this.Const.Tactical.Actor.FrenziedHyena);
-	     b.IsAffectedByNight = false;
-		b.TargetAttractionMult = 0.30;
+	    b.IsAffectedByNight = false;
 		b.IsImmuneToDisarm = true;
 		b.DamageTotalMult = 1.25;
 		this.m.ActionPoints = b.ActionPoints;
@@ -20,10 +19,11 @@ this.companions_hyena_frenzied <- this.inherit("scripts/companions/types/compani
 		this.m.CurrentProperties = clone b;
 		this.m.ActionPointCosts = this.Const.DefaultMovementAPCost;
 		this.m.FatigueCosts = this.Const.DefaultMovementFatigueCost;
-	//	this.m.Skills.add(this.new("scripts/skills/traits/delz_darkvision_trait"));
 		local body = this.getSprite("body");
 		body.setBrush("bust_hyena_0" + this.Math.rand(4, 6));
 		local head = this.getSprite("head");
 		head.setBrush("bust_hyena_0" + this.Math.rand(4, 6) + "_head");
+		this.m.Skills.add(this.new("scripts/skills/perks/perk_overwhelm"));
+		this.m.Skills.add(this.new("scripts/skills/perks/perk_relentless"));		
 	}
 });

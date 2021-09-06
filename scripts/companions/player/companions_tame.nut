@@ -172,6 +172,25 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 			}
 
 			loot.m.Wounds = this.Math.floor((1.0 - target.getHitpointsPct()) * 100.0);
+			
+			local target_perks = target.getSkills().query(this.Const.SkillType.Perk);
+			foreach(perk in target_perks)
+			{
+				local quirk = "";
+				foreach( i, v in this.getroottable().Const.Perks.PerkDefObjects )
+				{
+					if (perk.getID() == v.ID)
+					{
+						quirk = v.Script;
+						break;
+					}
+				}
+				if (quirk != "")
+				{
+					loot.m.Quirks.push(quirk);
+				}			
+			}
+			
 			loot.updateCompanion();
 			actor.getItems().equip(loot);
 

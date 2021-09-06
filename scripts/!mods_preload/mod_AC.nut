@@ -1,5 +1,5 @@
 ::mods_registerMod("mod_AC", 1.26, "Accessory Companions");
-::mods_queue("mod_AC", ">mod_mage_trio_hexe_origin", function()
+::mods_queue("mod_AC", "mod_legends,>mod_mage_trio_hexe_origin,>mod_legends_PTR", function()
 {
 	///// make companions heal their wounds at the same time as brothers heal theirs
 	::mods_hookNewObjectOnce("states/world/asset_manager", function(o)
@@ -445,14 +445,38 @@
 				this.m.Attributes.MeleeDefense = this.Const.Companions.Library[this.m.Type].BasicAttributes.MeleeDefense;
 				this.m.Attributes.RangedDefense = this.Const.Companions.Library[this.m.Type].BasicAttributes.RangedDefense;
 				this.m.Quirks = [];
-				if (this.Const.Companions.Library[this.m.Type].BasicQuirks.len() != 0)
+				if (this.m.Type >= this.Const.Companions.TypeList.Wardog && this.m.Type <= this.Const.Companions.TypeList.Warwolf)
 				{
-					foreach(quirk in this.Const.Companions.Library[this.m.Type].BasicQuirks)
+					this.m.Quirks = ["scripts/skills/perks/perk_pathfinder","scripts/skills/perks/perk_steel_brow"];
+				}
+				else if (this.m.Type == this.Const.Companions.TypeList.WarwolfArmor && this.m.Type == this.Const.Companions.TypeList.WarwolfArmorHeavy)
+				{
+					this.m.Quirks = ["scripts/skills/perks/perk_pathfinder","scripts/skills/perks/perk_steel_brow"];
+				}
+				else if (this.m.Type == this.Const.Companions.TypeList.Warbear)
+				{
+					this.m.Quirks = ["scripts/skills/perks/perk_pathfinder","scripts/skills/perks/perk_hold_out","scripts/skills/perks/perk_berserk"];
+					if("Assets" in this.World && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
 					{
-						if (this.m.Quirks.find(quirk) == null)
-							this.m.Quirks.push(quirk);
+						this.m.Quirks.extend(["scripts/skills/perks/perk_legend_battleheart","scripts/skills/perks/perk_last_stand","scripts/skills/traits/fearless_trait"])
 					}
 				}
+				else if (this.m.Type == this.Const.Companions.TypeList.Whitewolf)
+				{
+					this.m.Quirks = [
+						"scripts/skills/actives/wolf_bite",
+						"scripts/skills/perks/perk_pathfinder",
+						"scripts/skills/perks/perk_steel_brow",
+						"scripts/skills/perks/perk_rotation",
+						"scripts/skills/perks/perk_footwork",
+						"scripts/skills/perks/perk_recover",
+						"scripts/skills/perks/perk_coup_de_grace",
+						"scripts/skills/perks/perk_berserk",
+						"scripts/skills/perks/perk_nimble",
+						"scripts/skills/perks/perk_overwhelm",
+						"scripts/skills/racial/werewolf_racial",						
+					];
+				}				
 				this.updateCompanion();
 			}
 
