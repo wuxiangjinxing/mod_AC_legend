@@ -151,7 +151,12 @@ this.companions_unhold <- this.inherit("scripts/entity/tactical/enemies/unhold",
 
 		foreach(quirk in this.m.Item.m.Quirks)
 		{
-			this.m.Skills.add(this.new(quirk));
+			local perk = this.new(quirk);
+			if ("IsForceEnabled" in perk.m)
+			{
+				perk.m.IsForceEnabled = true;
+			}
+			this.m.Skills.add(perk);
 		}
 		if ((this.m.Item.m.Variant == 1 || this.m.Item.m.Variant == 5) && !this.getSkills().hasSkill("perk.killing_frenzy"))
 		{

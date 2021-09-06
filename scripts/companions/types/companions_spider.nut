@@ -152,7 +152,12 @@ this.companions_spider <- this.inherit("scripts/entity/tactical/enemies/spider",
 
 		foreach(quirk in this.m.Item.m.Quirks)
 		{
-			this.m.Skills.add(this.new(quirk));
+			local perk = this.new(quirk);
+			if ("IsForceEnabled" in perk.m)
+			{
+				perk.m.IsForceEnabled = true;
+			}
+			this.m.Skills.add(perk);
 		}
 
 	}

@@ -118,8 +118,12 @@ this.companions_noodle_tail <- this.inherit("scripts/entity/tactical/enemies/lin
 
 		foreach(quirk in this.m.Item.m.Quirks)
 		{
-			if (quirk != "scripts/skills/perks/perk_adrenalin")
-				this.m.Skills.add(this.new(quirk));
+			local perk = this.new(quirk);
+			if ("IsForceEnabled" in perk.m)
+			{
+				perk.m.IsForceEnabled = true;
+			}
+			this.m.Skills.add(perk);
 		}
 
 	}

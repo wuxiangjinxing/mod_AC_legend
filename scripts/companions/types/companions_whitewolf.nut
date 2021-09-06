@@ -60,7 +60,12 @@ this.companions_whitewolf <- this.inherit("scripts/entity/tactical/legend_white_
 
 		foreach( quirk in this.m.Item.m.Quirks )
 		{
-			this.m.Skills.add(this.new(quirk));
+			local perk = this.new(quirk);
+			if ("IsForceEnabled" in perk.m)
+			{
+				perk.m.IsForceEnabled = true;
+			}
+			this.m.Skills.add(perk);
 		}
 
 	}
