@@ -11,7 +11,7 @@ gt.Const.Companions.AttainableQuirks <- [
 	"scripts/skills/perks/perk_nine_lives",
 //	"scripts/skills/perks/perk_bags_and_belts",
 	"scripts/skills/perks/perk_pathfinder",
-	"scripts/skills/perks/perk_adrenalin",
+//	"scripts/skills/perks/perk_adrenalin",
 //	"scripts/skills/perks/perk_recover",
 //	"scripts/skills/perks/perk_student",
 	"scripts/skills/perks/perk_coup_de_grace",
@@ -94,20 +94,20 @@ gt.Const.Companions.AttainableQuirks <- [
 //	"scripts/skills/traits/lucky_trait",
 //	"scripts/skills/traits/delz_darkvision_trait",
 	// ACTIVES, EFFECTS, QUIRKS
-	"scripts/companions/quirks/companions_berserker_rage", // Berserker
-	"scripts/companions/quirks/companions_poisonous",
-	"scripts/companions/quirks/companions_healthy",
-	"scripts/companions/quirks/companions_soften_blows",
-	"scripts/companions/quirks/companions_regenerative",
-	"scripts/companions/quirks/companions_delz_ferocity",
-	"scripts/companions/quirks/companions_delz_tenacity"
+//	"scripts/companions/quirks/companions_berserker_rage", // Berserker
+//	"scripts/companions/quirks/companions_poisonous",
+//	"scripts/companions/quirks/companions_healthy",
+//	"scripts/companions/quirks/companions_soften_blows",
+//	"scripts/companions/quirks/companions_regenerative",
+//	"scripts/companions/quirks/companions_delz_ferocity",
+//	"scripts/companions/quirks/companions_delz_tenacity"
 ];
 gt.Const.Companions.AttainableQuirksDLCUnhold <- [ // Beasts and Exploration
 ];
 gt.Const.Companions.AttainableQuirksDLCWildmen <- [ // Warriors of the North
 ];
 gt.Const.Companions.AttainableQuirksDLCDesert <- [ // Blazing Deserts
-	"scripts/skills/actives/throw_dirt_skill"
+//	"scripts/skills/actives/throw_dirt_skill"
 ];
 gt.Const.Companions.AttainableQuirksBeasts <- [ // Beast-specific Quirks
 	"scripts/skills/perks/perk_fortified_mind",

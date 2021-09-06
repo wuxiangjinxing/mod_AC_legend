@@ -85,6 +85,14 @@
 			}
 		});
 	}
+	
+	if (::mods_getRegisteredMod("mod_legends_PTR") != null)
+	{
+		local gt = this.getroottable();
+		gt.Const.Companions.AttainableQuirks.extend([
+			
+		])
+	}	
 
 	///// necromancers have a chance to drop the Tome of Reanimation when killed, webknecht eggs have a chance to drop a webknecht companion when killed
 	///// Doing this in a different way
@@ -458,13 +466,12 @@
 					this.m.Quirks = ["scripts/skills/perks/perk_pathfinder","scripts/skills/perks/perk_hold_out","scripts/skills/perks/perk_berserk"];
 					if("Assets" in this.World && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
 					{
-						this.m.Quirks.extend(["scripts/skills/perks/perk_legend_battleheart","scripts/skills/perks/perk_last_stand","scripts/skills/traits/fearless_trait"])
+						this.m.Quirks.extend(["scripts/skills/perks/perk_legend_battleheart","scripts/skills/perks/perk_last_stand"])
 					}
 				}
 				else if (this.m.Type == this.Const.Companions.TypeList.Whitewolf)
 				{
 					this.m.Quirks = [
-						"scripts/skills/actives/wolf_bite",
 						"scripts/skills/perks/perk_pathfinder",
 						"scripts/skills/perks/perk_steel_brow",
 						"scripts/skills/perks/perk_rotation",
