@@ -1,4 +1,4 @@
-::mods_registerMod("mod_AC", 1.26, "Accessory Companions");
+::mods_registerMod("mod_AC", 1.30, "Accessory Companions");
 ::mods_queue("mod_AC", "mod_legends,>mod_mage_trio_hexe_origin,>mod_legends_PTR", function()
 {
 	///// make companions heal their wounds at the same time as brothers heal theirs
@@ -1049,7 +1049,24 @@
 					if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
 						availableQuirks.push(quirk);					
 				}
-
+				if (::mods_getRegisteredMod("mod_legends_PTR") != null)
+				{
+					local quirks = this.Const.Companions.AttainableQuirksPTR;
+					if (this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
+					{
+						quirks.extend(this.Const.Companions.AttainableQuirksBeastsPTR);
+					}
+					if (this.m.Type >= this.Const.Companions.TypeList.Unhold && this.m.Type <= this.Const.Companions.TypeList.Warbear && this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
+					{
+						quirks.extend(["scripts/skills/perks/perk_ptr_bloody_harvest","scripts/skills/perks/perk_ptr_sweeping_strikes"]);					
+					}			
+					foreach(quirk in quirks)
+					{
+						if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
+							availableQuirks.push(quirk);
+					}					
+				}				
+								
 				while (this.m.Level < this.Const.LevelXP.len() && this.m.XP >= this.Const.LevelXP[this.m.Level])
 				{
 					++this.m.Level;
