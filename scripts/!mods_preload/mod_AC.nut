@@ -85,14 +85,6 @@
 			}
 		});
 	}
-	
-	if (::mods_getRegisteredMod("mod_legends_PTR") != null)
-	{
-		local gt = this.getroottable();
-		gt.Const.Companions.AttainableQuirks.extend([
-			
-		])
-	}	
 
 	///// necromancers have a chance to drop the Tome of Reanimation when killed, webknecht eggs have a chance to drop a webknecht companion when killed
 	///// Doing this in a different way
