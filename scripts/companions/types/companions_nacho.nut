@@ -85,7 +85,7 @@ this.companions_nacho <- this.inherit("scripts/entity/tactical/enemies/ghoul", {
 
 	function onFactionChanged()
 	{
-		this.actor.onFactionChanged();
+		this.ghoul.onFactionChanged();
 		local flip = this.isAlliedWithPlayer();
 		this.getSprite("body").setHorizontalFlipping(flip);
 		this.getSprite("body_blood").setHorizontalFlipping(flip);
@@ -109,7 +109,7 @@ this.companions_nacho <- this.inherit("scripts/entity/tactical/enemies/ghoul", {
 
 	function onActorKilled(_actor, _tile, _skill)
 	{
-		this.actor.onActorKilled(_actor, _tile, _skill);
+		this.ghoul.onActorKilled(_actor, _tile, _skill);
 
 		if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
 		{

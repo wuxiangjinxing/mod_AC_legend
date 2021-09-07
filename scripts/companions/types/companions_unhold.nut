@@ -68,7 +68,7 @@ this.companions_unhold <- this.inherit("scripts/entity/tactical/enemies/unhold",
 
 	function onFactionChanged()
 	{
-		this.actor.onFactionChanged();
+		this.unhold.onFactionChanged();
 		local flip = this.isAlliedWithPlayer();
 		this.getSprite("body").setHorizontalFlipping(flip);
 		this.getSprite("armor").setHorizontalFlipping(flip);
@@ -93,7 +93,7 @@ this.companions_unhold <- this.inherit("scripts/entity/tactical/enemies/unhold",
 
 	function onActorKilled(_actor, _tile, _skill)
 	{
-		this.actor.onActorKilled(_actor, _tile, _skill);
+		this.unhold.onActorKilled(_actor, _tile, _skill);
 
 		if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
 		{

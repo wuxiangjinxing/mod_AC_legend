@@ -5,7 +5,7 @@ this.companions_warbear <- this.inherit("scripts/entity/tactical/legend_warbear"
 	},
 	function onActorKilled( _actor, _tile, _skill )
 	{
-		this.actor.onActorKilled(_actor, _tile, _skill);
+		this.legend_warbear.onActorKilled(_actor, _tile, _skill);
 
 		if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
 		{

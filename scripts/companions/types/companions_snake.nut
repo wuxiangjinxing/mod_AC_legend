@@ -80,7 +80,7 @@ this.companions_snake <- this.inherit("scripts/entity/tactical/enemies/serpent",
 
 	function onFactionChanged()
 	{
-		this.actor.onFactionChanged();
+		this.serpent.onFactionChanged();
 		local flip = this.isAlliedWithPlayer();
 		this.getSprite("body").setHorizontalFlipping(flip);
 		this.getSprite("injury").setHorizontalFlipping(flip);
@@ -102,7 +102,7 @@ this.companions_snake <- this.inherit("scripts/entity/tactical/enemies/serpent",
 
 	function onActorKilled(_actor, _tile, _skill)
 	{
-		this.actor.onActorKilled(_actor, _tile, _skill);
+		this.serpent.onActorKilled(_actor, _tile, _skill);
 
 		if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
 		{

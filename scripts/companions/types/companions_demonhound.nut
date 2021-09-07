@@ -70,7 +70,7 @@ this.companions_demonhound <- this.inherit("scripts/entity/tactical/enemies/lege
 
 	function onFactionChanged()
 	{
-		this.actor.onFactionChanged();
+		this.legend_demon_hound.onFactionChanged();
 		local flip = this.isAlliedWithPlayer();
 		this.getSprite("body").setHorizontalFlipping(flip);
 		this.getSprite("head").setHorizontalFlipping(flip);
@@ -94,7 +94,7 @@ this.companions_demonhound <- this.inherit("scripts/entity/tactical/enemies/lege
 
 	function onActorKilled(_actor, _tile, _skill)
 	{
-		this.actor.onActorKilled(_actor, _tile, _skill);
+		this.legend_demon_hound.onActorKilled(_actor, _tile, _skill);
 
 		if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
 		{

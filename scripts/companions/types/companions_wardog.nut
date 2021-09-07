@@ -6,7 +6,7 @@ this.companions_wardog <- this.inherit("scripts/entity/tactical/wardog", {
 
 	function onActorKilled(_actor, _tile, _skill)
 	{
-		this.actor.onActorKilled(_actor, _tile, _skill);
+		this.wardog.onActorKilled(_actor, _tile, _skill);
 
 		if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
 		{

@@ -65,7 +65,7 @@ this.companions_direwolf <- this.inherit("scripts/entity/tactical/enemies/direwo
 
 	function onFactionChanged()
 	{
-		this.actor.onFactionChanged();
+		this.direwolf.onFactionChanged();
 		local flip = this.isAlliedWithPlayer();
 		this.getSprite("body").setHorizontalFlipping(flip);
 		this.getSprite("head_frenzy").setHorizontalFlipping(flip);
@@ -90,7 +90,7 @@ this.companions_direwolf <- this.inherit("scripts/entity/tactical/enemies/direwo
 
 	function onActorKilled(_actor, _tile, _skill)
 	{
-		this.actor.onActorKilled(_actor, _tile, _skill);
+		this.direwolf.onActorKilled(_actor, _tile, _skill);
 
 		if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
 		{

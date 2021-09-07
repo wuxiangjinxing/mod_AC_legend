@@ -65,7 +65,7 @@ this.companions_alp <- this.inherit("scripts/entity/tactical/enemies/alp", {
 
 	function onFactionChanged()
 	{
-		this.actor.onFactionChanged();
+		this.alp.onFactionChanged();
 		local flip = this.isAlliedWithPlayer();
 		this.getSprite("body").setHorizontalFlipping(flip);
 		this.getSprite("head").setHorizontalFlipping(flip);
@@ -88,7 +88,7 @@ this.companions_alp <- this.inherit("scripts/entity/tactical/enemies/alp", {
 
 	function onActorKilled(_actor, _tile, _skill)
 	{
-		this.actor.onActorKilled(_actor, _tile, _skill);
+		this.alp.onActorKilled(_actor, _tile, _skill);
 
 		if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
 		{

@@ -6,7 +6,7 @@ this.companions_whitewolf <- this.inherit("scripts/entity/tactical/legend_white_
 
 	function onActorKilled( _actor, _tile, _skill )
 	{
-		this.actor.onActorKilled(_actor, _tile, _skill);
+		this.legend_white_warwolf.onActorKilled(_actor, _tile, _skill);
 
 		if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
 		{

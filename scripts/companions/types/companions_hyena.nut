@@ -66,7 +66,7 @@ this.companions_hyena <- this.inherit("scripts/entity/tactical/enemies/hyena", {
 
 	function onFactionChanged()
 	{
-		this.actor.onFactionChanged();
+		this.hyena.onFactionChanged();
 		local flip = this.isAlliedWithPlayer();
 		this.getSprite("body").setHorizontalFlipping(flip);
 		this.getSprite("body_blood").setHorizontalFlipping(flip);
@@ -90,7 +90,7 @@ this.companions_hyena <- this.inherit("scripts/entity/tactical/enemies/hyena", {
 
 	function onActorKilled(_actor, _tile, _skill)
 	{
-		this.actor.onActorKilled(_actor, _tile, _skill);
+		this.hyena.onActorKilled(_actor, _tile, _skill);
 
 		if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
 		{

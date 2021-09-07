@@ -63,7 +63,7 @@ this.companions_noodle <- this.inherit("scripts/entity/tactical/enemies/lindwurm
 
 	function onFactionChanged()
 	{
-		this.actor.onFactionChanged();
+		this.lindwurm.onFactionChanged();
 		local flip = this.isAlliedWithPlayer();
 		this.getSprite("body").setHorizontalFlipping(flip);
 		this.getSprite("body_blood").setHorizontalFlipping(flip);
@@ -87,7 +87,7 @@ this.companions_noodle <- this.inherit("scripts/entity/tactical/enemies/lindwurm
 
 	function onActorKilled(_actor, _tile, _skill)
 	{
-		this.actor.onActorKilled(_actor, _tile, _skill);
+		this.lindwurm.onActorKilled(_actor, _tile, _skill);
 
 		if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
 		{

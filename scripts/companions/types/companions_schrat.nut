@@ -64,7 +64,7 @@ this.companions_schrat <- this.inherit("scripts/entity/tactical/enemies/schrat",
 
 	function onFactionChanged()
 	{
-		this.actor.onFactionChanged();
+		this.schrat.onFactionChanged();
 		local flip = this.isAlliedWithPlayer();
 		this.getSprite("body").setHorizontalFlipping(flip);
 		this.getSprite("head").setHorizontalFlipping(flip);
@@ -86,7 +86,7 @@ this.companions_schrat <- this.inherit("scripts/entity/tactical/enemies/schrat",
 
 	function onActorKilled(_actor, _tile, _skill)
 	{
-		this.actor.onActorKilled(_actor, _tile, _skill);
+		this.schrat.onActorKilled(_actor, _tile, _skill);
 
 		if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
 		{

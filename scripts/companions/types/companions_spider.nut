@@ -74,7 +74,7 @@ this.companions_spider <- this.inherit("scripts/entity/tactical/enemies/spider",
 
 	function onFactionChanged()
 	{
-		this.actor.onFactionChanged();
+		this.spider.onFactionChanged();
 		local flip = this.isAlliedWithPlayer();
 		this.getSprite("body").setHorizontalFlipping(flip);
 		this.getSprite("head").setHorizontalFlipping(flip);
@@ -99,7 +99,7 @@ this.companions_spider <- this.inherit("scripts/entity/tactical/enemies/spider",
 
 	function onActorKilled(_actor, _tile, _skill)
 	{
-		this.actor.onActorKilled(_actor, _tile, _skill);
+		this.spider.onActorKilled(_actor, _tile, _skill);
 
 		if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
 		{
