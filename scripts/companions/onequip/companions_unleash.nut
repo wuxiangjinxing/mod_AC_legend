@@ -175,6 +175,16 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 		{
 			entity.setMoraleState(this.Const.MoraleState.Confident);
 		}
+		
+		if (!this.World.getTime().IsDaytime && entity.getCurrentProperties().IsAffectedByNight)
+		{
+			entity.getSkills().add(this.new("scripts/skills/special/night_effect"));
+		}
+
+		if (this.Tactical.getWeather().IsRaining && entity.getCurrentProperties().IsAffectedByRain)
+		{
+			entity.getSkills().add(this.new("scripts/skills/special/legend_rain_effect"));
+		}		
 
 		local healthPercentage = (100.0 - this.m.Item.m.Wounds) / 100.0;
 		entity.setHitpoints(this.Math.max(1, this.Math.floor(healthPercentage * entity.m.Hitpoints)));
