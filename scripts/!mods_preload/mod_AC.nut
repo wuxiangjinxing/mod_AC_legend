@@ -472,8 +472,7 @@
 						"scripts/skills/perks/perk_coup_de_grace",
 						"scripts/skills/perks/perk_berserk",
 						"scripts/skills/perks/perk_nimble",
-						"scripts/skills/perks/perk_overwhelm",
-						"scripts/skills/racial/werewolf_racial",						
+						"scripts/skills/perks/perk_overwhelm",						
 					];
 				}				
 				this.updateCompanion();
