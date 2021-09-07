@@ -1,5 +1,5 @@
 ::mods_registerMod("mod_AC", 1.30, "Accessory Companions");
-::mods_queue("mod_AC", "mod_legends,>mod_mage_trio_hexe_origin,>mod_legends_PTR,>mod_bob", function()
+::mods_queue("mod_AC", "mod_legends,>mod_mage_trio_hexe_origin,>mod_legends_PTR", function()
 {
 	///// make companions heal their wounds at the same time as brothers heal theirs
 	::mods_hookNewObjectOnce("states/world/asset_manager", function(o)
