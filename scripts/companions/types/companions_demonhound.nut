@@ -74,8 +74,8 @@ this.companions_demonhound <- this.inherit("scripts/entity/tactical/enemies/lege
 		local flip = this.isAlliedWithPlayer();
 		this.getSprite("body").setHorizontalFlipping(flip);
 		this.getSprite("head").setHorizontalFlipping(flip);
-		this.getSprite("injury").setHorizontalFlipping(flip);
-		this.getSprite("body_blood").setHorizontalFlipping(flip);
+		this.getSprite("blur_1").setHorizontalFlipping(flip);
+		this.getSprite("blur_2").setHorizontalFlipping(flip);
 
 		if (!this.Tactical.State.isScenarioMode())
 		{
