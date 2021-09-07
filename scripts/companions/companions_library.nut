@@ -674,7 +674,11 @@ gt.Const.Companions.Library <- [
 	{
 		ID = "accessory.legend_white_warwolf",
 		Type = this.Const.Companions.TypeList.Whitewolf,
-		Name = function() { return this.Const.Companions.CanineNames[this.Math.rand(0, this.Const.Companions.CanineNames.len() - 1)]; },
+		Name = function() {
+			local whitewolfnames = this.Const.Companions.CanineNames;
+			whitewolfnames.push("White Wolf Queen")
+			return whitewolfnames[this.Math.rand(0, whitewolfnames.len() - 1)]; 
+		},
 		NameUnleashed = "White wolf Collar",
 		Description = "A White wolf, tamed to be a loyal companion in battle. Can be unleashed in battle for scouting, tracking or running down routing enemies.",
 		DescriptionUnleashed = "The collar of a white wolf that has been unleashed onto the battlefield.",
@@ -787,7 +791,7 @@ gt.Const.Companions.Library <- [
 		NameUnleashed = "Cerberus Collar",
 		Description = "A Cerberus, tamed to be a loyal companion in battle. Can be unleashed in battle for scouting, tracking or running down routing enemies.",
 		DescriptionUnleashed = "The collar of a Cerberus that has been unleashed onto the battlefield.",
-		IconLeashed = function(variant) { return "tools/hound_0" + variant + "_70x70.png"; },
+		IconLeashed = function(variant) { return "tools/demonhound_01_ac.png"; },
 		IconUnleashed = "tools/hound_01_leash_70x70.png",
 		Value = 2500,
 		PartyStrength = 40,
@@ -799,13 +803,13 @@ gt.Const.Companions.Library <- [
 		UnleashSounds = ["sounds/enemies/hollen_hurt_01.wav", "sounds/enemies/hollen_hurt_02.wav", "sounds/enemies/hollen_hurt_03.wav"],
 		InventorySounds = ["sounds/enemies/hollen_hurt_01.wav", "sounds/enemies/hollen_hurt_02.wav", "sounds/enemies/hollen_hurt_03.wav"],
 		Unleash = {	Script = "scripts/companions/onequip/companions_unleash",
-					Icon = function(variant) { return "skills/warhound_0" + variant + "_ac.png"; },
-					IconDisabled = function(variant) { return "skills/warhound_0" + variant + "_sw_ac.png"; },
+					Icon = function(variant) { return "skills/demonhound_01_ac.png"; },
+					IconDisabled = function(variant) { return "skills/demonhound_01_sw_ac.png"; },
 					Overlay = "active_165",
 					onActorDied = true	},
 		Leash = {	Script = "scripts/companions/onequip/companions_leash",
-					Icon = function(variant) { return "skills/warhound_0" + variant + "_ac.png"; },
-					IconDisabled = function(variant) { return "skills/warhound_0" + variant + "_sw_ac.png"; },
+					Icon = function(variant) { return "skills/demonhound_01_ac.png"; },
+					IconDisabled = function(variant) { return "skills/demonhound_01_sw_ac.png"; },
 					Overlay = "active_165"	}
 	},	
 ];

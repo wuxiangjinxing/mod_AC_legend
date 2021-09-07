@@ -474,6 +474,14 @@
 						"scripts/skills/perks/perk_nimble",
 						"scripts/skills/perks/perk_overwhelm",						
 					];
+					if (this.m.Name == "White Wolf Queen")
+					{
+						this.m.Quirks.push("scripts/skills/perks/perk_inspire");
+						if (::mods_getRegisteredMod("mod_mage_trio_hexe_origin") != null)
+						{
+							this.m.Quirks.push("scripts/skills/perks/perk_champion");					
+						}						
+					}
 				}				
 				this.updateCompanion();
 			}
