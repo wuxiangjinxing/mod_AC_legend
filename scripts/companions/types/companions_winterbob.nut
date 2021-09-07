@@ -124,7 +124,6 @@ this.companions_winterbob <- this.inherit("scripts/entity/tactical/enemies/bob_w
 			FatigueEffectMult = 1.0,
 			MoraleEffectMult = 1.0,
 			FatigueRecoveryRate = 25,
-			Vision = 8
 		};
 		local propertiesBase = this.m.BaseProperties;
 		propertiesBase.setValues(propertiesNew);
