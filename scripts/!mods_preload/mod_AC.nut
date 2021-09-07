@@ -1078,18 +1078,29 @@
 				{
 					++this.m.Level;
 					this.updateCompanion();
-					local attributeArray = [0, 1, 2, 3, 4, 5, 6, 7]; // all attributes
-					applyAttributeBonus(this.Const.Companions.Library[this.m.Type].PreferredAttribute);
-					attributeArray.remove(this.Const.Companions.Library[this.m.Type].PreferredAttribute);
-
-					local bonusesSpent = 1;
-					while (bonusesSpent < 3)
+					if (::mods_getRegisteredMod("mod_8skills") != null)
 					{
-						local randomAttribute = this.Math.rand(0, attributeArray.len() - 1);
-						applyAttributeBonus(attributeArray[randomAttribute]);
-						attributeArray.remove(randomAttribute);
-						++bonusesSpent;
+						for ( local i = 0 ; i < 8 ; ++i )
+						{
+							applyAttributeBonus(i);
+						}						
 					}
+					else
+					{
+						local attributeArray = [0, 1, 2, 3, 4, 5, 6, 7]; // all attributes
+						applyAttributeBonus(this.Const.Companions.Library[this.m.Type].PreferredAttribute);
+						attributeArray.remove(this.Const.Companions.Library[this.m.Type].PreferredAttribute);
+	
+						local bonusesSpent = 1;
+						while (bonusesSpent < 3)
+						{
+							local randomAttribute = this.Math.rand(0, attributeArray.len() - 1);
+							applyAttributeBonus(attributeArray[randomAttribute]);
+							attributeArray.remove(randomAttribute);
+							++bonusesSpent;
+						}						
+					}
+
 					if (this.m.Level <= this.Const.XP.MaxLevelWithPerkpoints)
 					{
 						if (availableQuirks.len() != 0)
