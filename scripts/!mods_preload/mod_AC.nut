@@ -1006,7 +1006,7 @@
 				}
 				foreach(quirk in this.Const.Companions.AttainableQuirksBeasts)
 				{
-					if (this.m.Type == this.Const.Companions.TypeList.TomeReanimation)
+					if (this.m.Type == this.Const.Companions.TypeList.TomeReanimation || this.m.Type == this.Const.Companions.TypeList.DemonHound)
 						continue;
 
 					if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
@@ -1051,7 +1051,7 @@
 				if (::mods_getRegisteredMod("mod_legends_PTR") != null)
 				{
 					local quirks = this.Const.Companions.AttainableQuirksPTR;
-					if (this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
+					if (this.m.Type != this.Const.Companions.TypeList.TomeReanimation && this.m.Type != this.Const.Companions.TypeList.DemonHound)
 					{
 						quirks.extend(this.Const.Companions.AttainableQuirksBeastsPTR);
 					}

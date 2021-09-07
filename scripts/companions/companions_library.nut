@@ -28,10 +28,11 @@ gt.Const.Companions.TameList <- [
 	"Schrat",
 	"Lindwurm",
 	"mod_AC_TomeReanimation",
-	"Warbear",
-	"White Wolf",
+	"Bear",
+	"White Warwolf",
 	"Armored Wolf",
 	"mod_AC_WolfArmorHeavy",
+	"Höllenhund"
 ];
 gt.Const.Companions.TypeList <- {
 	Wardog = 0,
@@ -58,13 +59,11 @@ gt.Const.Companions.TypeList <- {
 	Whitewolf = 21,
 	WarwolfArmor = 22,
 	WarwolfArmorHeavy = 23,
+	DemonHound = 24
 
 // Legends? Redback, White Dire Wolf, Rock Unhold, Green Schrat, Demon Alp, Skin Ghoul, Hollenhund(?), Geist(?), Stollwurm, Goblins (???), Indebted (???)
-
-
-
-
 };
+
 gt.Const.Companions.Library <- [
 	{
 		ID = "accessory.wardog",
@@ -633,7 +632,7 @@ gt.Const.Companions.Library <- [
 		NameUnleashed = "Warbear Collar",
 		Description = "A Warbear, tamed to be a loyal companion in battle. Can be unleashed in battle for scouting, tracking or running down routing enemies.",
 		DescriptionUnleashed = "The collar of a warbear that has been unleashed onto the battlefield.",
-		IconLeashed = function( variant ) { return "tools/warbear_01_70x70.png"; },
+		IconLeashed = function(variant) { return "tools/warbear_01_70x70.png"; },
 		IconUnleashed = "tools/dog_01_leash_70x70.png",
 		Value = 2000,
 		PartyStrength = 36,
@@ -679,7 +678,7 @@ gt.Const.Companions.Library <- [
 		NameUnleashed = "White wolf Collar",
 		Description = "A White wolf, tamed to be a loyal companion in battle. Can be unleashed in battle for scouting, tracking or running down routing enemies.",
 		DescriptionUnleashed = "The collar of a white wolf that has been unleashed onto the battlefield.",
-		IconLeashed = function( variant ) { return "tools/legend_white_wolf_01_70x70.png"; },
+		IconLeashed = function(variant) { return "tools/legend_white_wolf_01_70x70.png"; },
 		IconUnleashed = "tools/legend_white_wolf_leash_70x70.png",
 		Value = 6000,
 		PartyStrength = 46,
@@ -780,5 +779,33 @@ gt.Const.Companions.Library <- [
 					Icon = function(variant) { return "skills/wolf_0" + variant + "_ac.png"; },
 					IconDisabled = function(variant) { return "skills/wolf_0" + variant + "_sw_ac.png"; },
 					Overlay = "active_83"	}
+	},
+	{
+		ID = "accessory.demonhound",
+		Type = this.Const.Companions.TypeList.DemonHound,
+		Name = function() { return this.Const.Companions.CanineNames[this.Math.rand(0, this.Const.Companions.CanineNames.len() - 1)]; },
+		NameUnleashed = "Cerberus Collar",
+		Description = "A Cerberus, tamed to be a loyal companion in battle. Can be unleashed in battle for scouting, tracking or running down routing enemies.",
+		DescriptionUnleashed = "The collar of a Cerberus that has been unleashed onto the battlefield.",
+		IconLeashed = function(variant) { return "tools/hound_0" + variant + "_70x70.png"; },
+		IconUnleashed = "tools/hound_01_leash_70x70.png",
+		Value = 2500,
+		PartyStrength = 40,
+		Variant = function() { return 1; },
+		BasicAttributes = { Hitpoints = 125, Stamina = 100, Bravery = 100, Initiative = 100, MeleeSkill = 55, RangedSkill = 0, MeleeDefense = 15, RangedDefense = 25 },
+		PreferredAttribute = this.Const.Attributes.MeleeSkill,
+		Script = "scripts/companions/types/companions_demonhound",
+		ArmorScript = null,
+		UnleashSounds = ["sounds/enemies/hollen_hurt_01.wav", "sounds/enemies/hollen_hurt_02.wav", "sounds/enemies/hollen_hurt_03.wav"],
+		InventorySounds = ["sounds/enemies/hollen_hurt_01.wav", "sounds/enemies/hollen_hurt_02.wav", "sounds/enemies/hollen_hurt_03.wav"],
+		Unleash = {	Script = "scripts/companions/onequip/companions_unleash",
+					Icon = function(variant) { return "skills/warhound_0" + variant + "_ac.png"; },
+					IconDisabled = function(variant) { return "skills/warhound_0" + variant + "_sw_ac.png"; },
+					Overlay = "active_165",
+					onActorDied = true	},
+		Leash = {	Script = "scripts/companions/onequip/companions_leash",
+					Icon = function(variant) { return "skills/warhound_0" + variant + "_ac.png"; },
+					IconDisabled = function(variant) { return "skills/warhound_0" + variant + "_sw_ac.png"; },
+					Overlay = "active_165"	}
 	},	
 ];
