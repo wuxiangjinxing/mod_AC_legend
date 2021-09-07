@@ -1083,7 +1083,7 @@
 					attributeArray.remove(this.Const.Companions.Library[this.m.Type].PreferredAttribute);
 
 					local bonusesSpent = 1;
-					while (bonusesSpent < Constants.Game['MAX_STATS_INCREASE_COUNT'])
+					while (bonusesSpent < 3)
 					{
 						local randomAttribute = this.Math.rand(0, attributeArray.len() - 1);
 						applyAttributeBonus(attributeArray[randomAttribute]);
