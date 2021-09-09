@@ -173,7 +173,10 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 
 		if (this.getContainer().hasSkill("background.houndmaster") || this.getContainer().hasSkill("background.companions_beastmaster"))
 		{
-			entity.setMoraleState(this.Const.MoraleState.Confident);
+			if (entity.m.MoraleState != this.Const.MoraleState.Ignore);
+			{
+				entity.setMoraleState(this.Const.MoraleState.Confident);
+			}
 		}
 		
 		if (!this.World.getTime().IsDaytime && entity.getCurrentProperties().IsAffectedByNight)
