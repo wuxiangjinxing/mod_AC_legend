@@ -1005,74 +1005,117 @@
 							break;
 					}
 				}
+				
+				local hasArmor = function()
+				{
+					if (this.m.Type == this.Const.Companions.TypeList.Nacho || this.m.Type == this.Const.Companions.TypeList.Alp || this.m.Type == this.Const.Companions.TypeList.Schrat || this.m.Type == this.Const.Companions.TypeList.DemonHound )
+					{
+						return false;
+					}
+					if (this.m.Type == this.Const.Companions.TypeList.Unhold || this.m.Type == this.Const.Companions.TypeList.UnholdArmor)
+					{
+						return (this.m.Variant < 2 || this.m.Variant > 3);
+					}
+					return true;
+				}
+				
+				local wearArmor = function()
+				{
+					if ( this.m.Type == this.Const.Companions.TypeList.TomeReanimation )
+					{
+						return true;
+					}
+					if (this.m.Type == this.Const.Companions.TypeList.Unhold || this.m.Type == this.Const.Companions.TypeList.UnholdArmor)
+					{
+						return (this.m.Variant >= 4);
+					}
+					return false;
+				}
+				
+				local hasHeavyArmor = function()
+				{
+					if (this.m.Type == this.Const.Companions.TypeList.Noodle || this.m.Type == this.Const.Companions.TypeList.Whitewolf || this.m.Type == this.Const.Companions.TypeList.TomeReanimation )
+					{
+						return true;
+					}
+					if (this.m.Type == this.Const.Companions.TypeList.Unhold || this.m.Type == this.Const.Companions.TypeList.UnholdArmor)
+					{
+						return (this.m.Variant == 5);
+					}
+					return false;
+				}
 
-				local availableQuirks = [];
-				foreach(quirk in this.Const.Companions.AttainableQuirks)
+				local availableQuirks = this.Const.Companions.AttainableQuirks;
+				if (this.m.Type != this.Const.Companions.TypeList.TomeReanimation && this.m.Type != this.Const.Companions.TypeList.DemonHound)
 				{
-					if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
-						availableQuirks.push(quirk);
+					availableQuirks.extend(this.Const.Companions.AttainableQuirksBeasts);
 				}
-				foreach(quirk in this.Const.Companions.AttainableQuirksBeasts)
+				if (this.m.Type != this.Const.Companions.TypeList.Alp)
 				{
-					if (this.m.Type == this.Const.Companions.TypeList.TomeReanimation || this.m.Type == this.Const.Companions.TypeList.DemonHound)
-						continue;
-
-					if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
-						availableQuirks.push(quirk);
+					availableQuirks.extend(this.Const.Companions.AttainableQuirksPhysical);
 				}
-				if (this.m.Type >= this.Const.Companions.TypeList.Unhold && this.m.Type <= this.Const.Companions.TypeList.Warbear && this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
+				if (this.m.Type == this.Const.Companions.TypeList.Unhold || this.m.Type == this.Const.Companions.TypeList.UnholdArmor || this.m.Type == this.Const.Companions.TypeList.Schrat )
 				{
-					local quirk = "scripts/skills/perks/perk_legend_forceful_swing";
-					if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
-						availableQuirks.push(quirk);					
+					availableQuirks.extend([
+						"scripts/skills/perks/perk_bloody_harvest",
+						"scripts/skills/perks/perk_legend_forceful_swing"]);
 				}
-				if (this.Const.DLC.Unhold)
+				if (this.m.Type != this.Const.Companions.TypeList.Noodle)
 				{
-					foreach(quirk in this.Const.Companions.AttainableQuirksDLCUnhold)
-					{
-						if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
-							availableQuirks.push(quirk);
-					}
-				}
-				if (this.Const.DLC.Wildmen)
+					availableQuirks.push("scripts/skills/perks/perk_lone_wolf");
+				}				
+				if ( wearArmor() )
 				{
-					foreach(quirk in this.Const.Companions.AttainableQuirksDLCWildmen)
-					{
-						if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
-							availableQuirks.push(quirk);
-					}
-				}
-				if (this.Const.DLC.Desert)
+					availableQuirks.extend([
+						"scripts/skills/perks/perk_legend_full_force",
+						"scripts/skills/perks/perk_mar_balance",
+						"scripts/skills/perks/perk_mar_lithe"]);
+				}				
+				if ( hasHeavyArmor() )
 				{
-					foreach(quirk in this.Const.Companions.AttainableQuirksDLCDesert)
-					{
-						if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
-							availableQuirks.push(quirk);
-					}
+					availableQuirks.push("scripts/skills/perks/perk_battle_forged");
 				}
 				if (::mods_getRegisteredMod("mod_mage_trio_hexe_origin") != null)
 				{
-					local quirk = "scripts/skills/perks/perk_champion";
-					if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
-						availableQuirks.push(quirk);					
+					availableQuirks.push("scripts/skills/perks/perk_champion");					
 				}
 				if (::mods_getRegisteredMod("mod_legends_PTR") != null)
 				{
-					local quirks = this.Const.Companions.AttainableQuirksPTR;
+					availableQuirks.extend(this.Const.Companions.AttainableQuirksPTR);
 					if (this.m.Type != this.Const.Companions.TypeList.TomeReanimation && this.m.Type != this.Const.Companions.TypeList.DemonHound)
 					{
-						quirks.extend(this.Const.Companions.AttainableQuirksBeastsPTR);
+						availableQuirks.extend(this.Const.Companions.AttainableQuirksBeastsPTR);
 					}
-					if (this.m.Type >= this.Const.Companions.TypeList.Unhold && this.m.Type <= this.Const.Companions.TypeList.Warbear && this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
+					if (this.m.Type != this.Const.Companions.TypeList.Alp)
 					{
-						quirks.extend(["scripts/skills/perks/perk_ptr_bloody_harvest","scripts/skills/perks/perk_ptr_sweeping_strikes"]);					
-					}			
-					foreach(quirk in quirks)
+						availableQuirks.extend(this.Const.Companions.AttainableQuirksPhysicalPTR);
+						if (this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
+						{
+							availableQuirks.push("scripts/skills/perks/perk_ptr_utilitarian");
+						}						
+					}
+					if (this.m.Type == this.Const.Companions.TypeList.Unhold || this.m.Type == this.Const.Companions.TypeList.UnholdArmor || this.m.Type == this.Const.Companions.TypeList.Schrat )
 					{
-						if (this.m.Quirks.find(quirk) == null && availableQuirks.find(quirk) == null)
-							availableQuirks.push(quirk);
+						availableQuirks.extend([
+							"scripts/skills/perks/perk_ptr_bloody_harvest",
+							"scripts/skills/perks/perk_ptr_rattle",
+							"scripts/skills/perks/perk_ptr_sweeping_strikes"]);
+					}
+					if (this.m.Type == this.Const.Companions.TypeList.Noodle)
+					{
+						availableQuirks.push("scripts/skills/perks/perk_ptr_leverage");
 					}					
-				}				
+					if ( hasArmor() )
+					{
+						availableQuirks.extend([
+							"scripts/skills/perks/perk_ptr_man_of_steel",
+							"scripts/skills/perks/perk_ptr_personal_armor"]);
+						if (this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
+						{
+							availableQuirks.push("scripts/skills/perks/perk_ptr_bulwark");
+						}
+					}
+				}
 								
 				while (this.m.Level < this.Const.LevelXP.len() && this.m.XP >= this.Const.LevelXP[this.m.Level])
 				{
@@ -1105,9 +1148,16 @@
 					{
 						if (availableQuirks.len() != 0)
 						{
-							local rng = this.Math.rand(0, availableQuirks.len() - 1);
-							this.m.Quirks.push(availableQuirks[rng]);
-							availableQuirks.remove(rng);
+							while (true)
+							{
+								local rng = this.Math.rand(0, availableQuirks.len() - 1);
+								local quirk = availableQuirks[rng];
+								if (this.m.Quirks.find(quirk) == null)
+								{
+									this.m.Quirks.push(quirk);
+									break;
+								}
+							}
 						}
 					}
 				}
