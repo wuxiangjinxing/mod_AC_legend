@@ -1006,19 +1006,6 @@
 					}
 				}
 				
-				local hasArmor = function()
-				{
-					if (this.m.Type == this.Const.Companions.TypeList.Nacho || this.m.Type == this.Const.Companions.TypeList.Alp || this.m.Type == this.Const.Companions.TypeList.Schrat || this.m.Type == this.Const.Companions.TypeList.DemonHound )
-					{
-						return false;
-					}
-					if (this.m.Type == this.Const.Companions.TypeList.Unhold || this.m.Type == this.Const.Companions.TypeList.UnholdArmor)
-					{
-						return (this.m.Variant < 2 || this.m.Variant > 3);
-					}
-					return true;
-				}
-				
 				local wearArmor = function()
 				{
 					if ( this.m.Type == this.Const.Companions.TypeList.TomeReanimation )
@@ -1040,7 +1027,7 @@
 					}
 					if (this.m.Type == this.Const.Companions.TypeList.Unhold || this.m.Type == this.Const.Companions.TypeList.UnholdArmor)
 					{
-						return (this.m.Variant == 5);
+						return (this.m.Variant == 1 || this.m.Variant == 5);
 					}
 					return false;
 				}
@@ -1089,7 +1076,7 @@
 					if (this.m.Type != this.Const.Companions.TypeList.Alp)
 					{
 						availableQuirks.extend(this.Const.Companions.AttainableQuirksPhysicalPTR);
-						if (this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
+						if (this.m.Type != this.Const.Companions.TypeList.TomeReanimation && this.m.Type != this.Const.Companions.TypeList.DemonHound)
 						{
 							availableQuirks.push("scripts/skills/perks/perk_ptr_utilitarian");
 						}						
@@ -1101,11 +1088,15 @@
 							"scripts/skills/perks/perk_ptr_rattle",
 							"scripts/skills/perks/perk_ptr_sweeping_strikes"]);
 					}
+					else if (this.m.Type != this.Const.Companions.TypeList.Alp && this.m.Type != this.Const.Companions.TypeList.DemonHound)
+					{
+						availableQuirks.push("scripts/skills/perks/perk_ptr_deep_cuts");
+					}
 					if (this.m.Type == this.Const.Companions.TypeList.Noodle)
 					{
 						availableQuirks.push("scripts/skills/perks/perk_ptr_leverage");
 					}					
-					if ( hasArmor() )
+					if ( hasHeavyArmor() )
 					{
 						availableQuirks.extend([
 							"scripts/skills/perks/perk_ptr_man_of_steel",
@@ -1146,7 +1137,7 @@
 
 					if (this.m.Level <= this.Const.XP.MaxLevelWithPerkpoints || (this.m.Level - 1) % 5 == 0)
 					{
-						if (availableQuirks.len() != 0)
+						if (availableQuirks.len() > 0)
 						{
 							while (true)
 							{
