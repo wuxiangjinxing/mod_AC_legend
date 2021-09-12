@@ -72,6 +72,23 @@ gt.Const.Companions.AttainableQuirksPhysical <- [ //Alp cannot get those perks
 	"scripts/skills/perks/perk_vengeance"
 ];
 
+gt.Const.Companions.AttainableQuirksActive <- [ //Available after lvl 11
+	"scripts/skills/perks/perk_adrenalin",	
+	"scripts/skills/perks/perk_footwork",
+	"scripts/skills/perks/perk_indomitable",
+	"scripts/skills/perks/perk_inspire",
+	"scripts/skills/perks/perk_legend_entice",	
+	"scripts/skills/perks/perk_legend_perfect_focus",
+	"scripts/skills/perks/perk_legend_push",
+	"scripts/skills/perks/perk_legend_relax",	
+	"scripts/skills/perks/perk_legend_throw_sand",
+	"scripts/skills/perks/perk_perfect_focus",
+	"scripts/skills/perks/perk_rally_the_troops",
+	"scripts/skills/perks/perk_return_favor",
+	"scripts/skills/perks/perk_rotation",	
+	"scripts/skills/perks/perk_taunt"
+];
+
 gt.Const.Companions.AttainableQuirksPTR <- [
 	"scripts/skills/perks/perk_ptr_bloodbath",
 	"scripts/skills/perks/perk_ptr_bully",

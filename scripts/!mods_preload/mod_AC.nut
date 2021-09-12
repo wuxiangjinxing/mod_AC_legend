@@ -1045,7 +1045,8 @@
 				{
 					availableQuirks.extend([
 						"scripts/skills/perks/perk_bloody_harvest",
-						"scripts/skills/perks/perk_legend_forceful_swing"]);
+						"scripts/skills/perks/perk_legend_forceful_swing"
+						]);
 				}
 				if (this.m.Type != this.Const.Companions.TypeList.Noodle)
 				{
@@ -1056,15 +1057,108 @@
 					availableQuirks.extend([
 						"scripts/skills/perks/perk_legend_full_force",
 						"scripts/skills/perks/perk_mar_balance",
-						"scripts/skills/perks/perk_mar_lithe"]);
+						"scripts/skills/perks/perk_mar_lithe"
+						]);
 				}				
 				if ( hasHeavyArmor() )
 				{
 					availableQuirks.push("scripts/skills/perks/perk_battle_forged");
 				}
+				if (this.m.Level >= this.Const.XP.MaxLevelWithPerkpoints)
+				{
+					availableQuirks.extend(this.Const.Companions.AttainableQuirksActive);
+					if (this.m.Type != this.Const.Companions.TypeList.TomeReanimation && this.m.Type != this.Const.Companions.TypeList.DemonHound)
+					{
+						availableQuirks.push("scripts/skills/actives/recover_skill");
+					}
+					if (this.m.Type != this.Const.Companions.TypeList.Alp)
+					{
+						availableQuirks.extend([
+							"scripts/skills/perks/perk_debilitate",
+							"scripts/skills/perks/perk_legend_prepare_bleed",
+							"scripts/skills/perks/perk_legend_prepare_graze",
+							"scripts/skills/perks/perk_legend_smackdown"
+						]);
+						if (this.m.Type != this.Const.Companions.TypeList.Unhold && this.m.Type != this.Const.Companions.TypeList.UnholdArmor )
+						{
+							availableQuirks.extend([
+								"scripts/skills/perks/perk_legend_evasion",
+								"scripts/skills/perks/perk_legend_leap",
+								"scripts/skills/perks/perk_sprint"
+							]);							
+						}
+					}
+				}
 				if (::mods_getRegisteredMod("mod_mage_trio_hexe_origin") != null)
 				{
-					availableQuirks.push("scripts/skills/perks/perk_champion");					
+					availableQuirks.push("scripts/skills/perks/perk_champion");
+					if (this.m.Type <= this.Const.Companions.TypeList.HyenaFrenzied || this.m.Type >= this.Const.Companions.TypeList.Whitewolf )
+					{
+						availableQuirks.extend([
+							"scripts/skills/perks/perk_wolf_bite",
+							"scripts/skills/perks/perk_hyena_bite",
+							"scripts/skills/perks/perk_thick_hide",
+							"scripts/skills/perks/perk_enrage_wolf",
+							"scripts/skills/perks/perk_rabies"
+						]);					
+					}
+					if (this.m.Type == this.Const.Companions.TypeList.Spider )
+					{
+						availableQuirks.extend([
+							"scripts/skills/perks/perk_spider_bite",
+							"scripts/skills/perks/perk_spider_venom",
+							"scripts/skills/perks/perk_spider_web"
+						]);						
+					}
+					if (this.m.Type == this.Const.Companions.TypeList.Snake )
+					{
+						availableQuirks.extend([
+							"scripts/skills/perks/perk_giant_serpent",
+							"scripts/skills/perks/perk_serpent_bite",
+							"scripts/skills/perks/perk_serpent_drag",
+							"scripts/skills/perks/perk_snake_venom"
+						]);					
+					}
+					if (this.m.Type == this.Const.Companions.TypeList.Nacho )
+					{
+						availableQuirks.extend([
+							"scripts/skills/perks/perk_frenzy",
+							"scripts/skills/perks/perk_nacho",
+							"scripts/skills/perks/perk_nacho_eat"
+						]);					
+					}
+					if (this.m.Type == this.Const.Companions.TypeList.Alp )
+					{
+						availableQuirks.extend([
+							"scripts/skills/perks/perk_mastery_nightmare",
+							"scripts/skills/perks/perk_mastery_sleep",
+							"scripts/skills/perks/perk_after_wake"
+						]);					
+					}
+					if (this.m.Type == this.Const.Companions.TypeList.Unhold || this.m.Type == this.Const.Companions.TypeList.UnholdArmor )
+					{
+						availableQuirks.extend([
+							"scripts/skills/perks/perk_unhold_fling",
+							"scripts/skills/perks/perk_unhold_hand_to_hand"
+						]);					
+					}					
+					if (this.m.Type == this.Const.Companions.TypeList.Schrat )
+					{
+						availableQuirks.extend([
+							"scripts/skills/perks/perk_grow_shield",
+							"scripts/skills/perks/perk_sapling",
+							"scripts/skills/perks/perk_uproot",
+							"scripts/skills/perks/perk_uproot_aoe"
+						]);					
+					}
+					if (this.m.Type == this.Const.Companions.TypeList.Noodle )
+					{
+						availableQuirks.extend([
+							"scripts/skills/perks/perk_intimidate",
+							"scripts/skills/perks/perk_lindwurm_acid",
+							"scripts/skills/perks/perk_lindwurm_body"
+						]);						
+					}				
 				}
 				if (::mods_getRegisteredMod("mod_legends_PTR") != null)
 				{
@@ -1086,7 +1180,8 @@
 						availableQuirks.extend([
 							"scripts/skills/perks/perk_ptr_bloody_harvest",
 							"scripts/skills/perks/perk_ptr_rattle",
-							"scripts/skills/perks/perk_ptr_sweeping_strikes"]);
+							"scripts/skills/perks/perk_ptr_sweeping_strikes"
+							]);
 					}
 					else if (this.m.Type != this.Const.Companions.TypeList.Alp && this.m.Type != this.Const.Companions.TypeList.DemonHound)
 					{
@@ -1100,12 +1195,13 @@
 					{
 						availableQuirks.extend([
 							"scripts/skills/perks/perk_ptr_man_of_steel",
-							"scripts/skills/perks/perk_ptr_personal_armor"]);
+							"scripts/skills/perks/perk_ptr_personal_armor"
+							]);
 						if (this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
 						{
 							availableQuirks.push("scripts/skills/perks/perk_ptr_bulwark");
 						}
-					}
+					}				
 				}
 								
 				while (this.m.Level < this.Const.LevelXP.len() && this.m.XP >= this.Const.LevelXP[this.m.Level])
