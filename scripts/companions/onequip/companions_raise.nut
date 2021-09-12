@@ -178,7 +178,7 @@ this.companions_raise <- this.inherit("scripts/skills/skill", {
 				{
 					local getQuirk = this.new(quirk);
 					local hasQuirk = e.getSkills().getSkillByID(getQuirk.m.ID);
-					if (hasQuirk == null && getQuirk.m.ID != "quirk.good_boy") e.m.Skills.add(this.new(quirk));
+					if (hasQuirk == null) e.m.Skills.add(this.new(quirk));
 				}
 			}
 			

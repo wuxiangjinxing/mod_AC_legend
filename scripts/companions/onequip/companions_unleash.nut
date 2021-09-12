@@ -150,7 +150,7 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 		entity.setFaction(this.Const.Faction.PlayerAnimals);
 		entity.applyCompanionScaling();
 		entity.m.IsSummoned = true;
-		if (entity.getSkills().hasSkill("quirk.good_boy"))
+		if (this.m.Item.m.Level >= this.Const.XP.MaxLevelWithPerkpoints)
 		{
 			entity.m.IsControlledByPlayer = true;
 			entity.setAIAgent(this.new("scripts/ai/tactical/player_agent"));

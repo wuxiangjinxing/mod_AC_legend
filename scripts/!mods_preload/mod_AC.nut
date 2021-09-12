@@ -1101,18 +1101,13 @@
 						}						
 					}
 
-					if (this.m.Level <= this.Const.XP.MaxLevelWithPerkpoints)
+					if (this.m.Level <= this.Const.XP.MaxLevelWithPerkpoints || (this.m.Level - 1) % 5 == 0)
 					{
 						if (availableQuirks.len() != 0)
 						{
 							local rng = this.Math.rand(0, availableQuirks.len() - 1);
 							this.m.Quirks.push(availableQuirks[rng]);
 							availableQuirks.remove(rng);
-						}
-
-						if (this.m.Level == this.Const.XP.MaxLevelWithPerkpoints && this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
-						{
-							this.m.Quirks.push("scripts/companions/quirks/companions_good_boy");
 						}
 					}
 				}
