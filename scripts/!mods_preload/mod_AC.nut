@@ -1,5 +1,5 @@
 ::mods_registerMod("mod_AC", 1.30, "Accessory Companions");
-::mods_queue("mod_AC", "mod_legends,>mod_mage_trio_hexe_origin,>mod_legends_PTR", function()
+::mods_queue("mod_AC", "mod_legends,>mod_nggh_magic_concept,>mod_legends_PTR", function()
 {
 	///// make companions heal their wounds at the same time as brothers heal theirs
 	::mods_hookNewObjectOnce("states/world/asset_manager", function(o)
@@ -69,7 +69,7 @@
 		}
 	});
 
-	if (::mods_getRegisteredMod("mod_mage_trio_hexe_origin") != null)
+	if (::mods_getRegisteredMod("mod_nggh_magic_concept") != null)
 	{
 		::mods_hookBaseClass("entity/tactical/player", function(o)
 		{
@@ -477,7 +477,7 @@
 					if (this.m.Name == "White Wolf Queen")
 					{
 						this.m.Quirks.push("scripts/skills/perks/perk_inspire");
-						if (::mods_getRegisteredMod("mod_mage_trio_hexe_origin") != null)
+						if (::mods_getRegisteredMod("mod_nggh_magic_concept") != null)
 						{
 							this.m.Quirks.push("scripts/skills/perks/perk_champion");					
 						}						
@@ -1089,7 +1089,7 @@
 						}
 					}
 				}
-				if (::mods_getRegisteredMod("mod_mage_trio_hexe_origin") != null)
+				if (::mods_getRegisteredMod("mod_nggh_magic_concept") != null)
 				{
 					availableQuirks.push("scripts/skills/perks/perk_champion");
 					if (this.m.Type <= this.Const.Companions.TypeList.HyenaFrenzied || this.m.Type >= this.Const.Companions.TypeList.Whitewolf )
