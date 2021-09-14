@@ -1041,7 +1041,7 @@
 				{
 					availableQuirks.extend(this.Const.Companions.AttainableQuirksPhysical);
 				}
-				if (this.m.Type == this.Const.Companions.TypeList.Unhold || this.m.Type == this.Const.Companions.TypeList.UnholdArmor || this.m.Type == this.Const.Companions.TypeList.Schrat )
+				if (this.m.Type == this.Const.Companions.TypeList.Unhold || this.m.Type == this.Const.Companions.TypeList.UnholdArmor || this.m.Type == this.Const.Companions.TypeList.Schrat || this.m.Type == this.Const.Companions.TypeList.Warbear)
 				{
 					availableQuirks.extend([
 						"scripts/skills/perks/perk_bloody_harvest",
@@ -1175,7 +1175,7 @@
 							availableQuirks.push("scripts/skills/perks/perk_ptr_utilitarian");
 						}						
 					}
-					if (this.m.Type == this.Const.Companions.TypeList.Unhold || this.m.Type == this.Const.Companions.TypeList.UnholdArmor || this.m.Type == this.Const.Companions.TypeList.Schrat )
+					if (this.m.Type == this.Const.Companions.TypeList.Unhold || this.m.Type == this.Const.Companions.TypeList.UnholdArmor || this.m.Type == this.Const.Companions.TypeList.Schrat || this.m.Type == this.Const.Companions.TypeList.Warbear )
 					{
 						availableQuirks.extend([
 							"scripts/skills/perks/perk_ptr_bloody_harvest",
