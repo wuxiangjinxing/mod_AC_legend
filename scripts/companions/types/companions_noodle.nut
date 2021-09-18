@@ -110,6 +110,11 @@ this.companions_noodle <- this.inherit("scripts/entity/tactical/enemies/lindwurm
 
 	function onInit()
 	{
+		this.lindwurm.onInit();
+		this.m.Tail.m.IsDying = true;
+		this.m.Tail.m.IsAlive = false;
+		this.m.Tail.removeFromMap();
+		this.m.Tail = null;		
 		if (this.m.Tail == null)
 		{
 			local myTile = this.getTile();
@@ -147,8 +152,7 @@ this.companions_noodle <- this.inherit("scripts/entity/tactical/enemies/lindwurm
 				this.m.Tail.getSprite("body").Color = body.Color;
 				this.m.Tail.getSprite("body").Saturation = body.Saturation;
 			}
-		}
-		this.lindwurm.onInit();
+		}		
 		this.addSprite("socket").setBrush("bust_base_player");
 	}
 

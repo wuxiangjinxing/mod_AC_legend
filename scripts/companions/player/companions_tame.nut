@@ -185,7 +185,7 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 						break;
 					}
 				}
-				if (quirk != "")
+				if (quirk != "" && loot.m.Quirks.find(quirk) == null)
 				{
 					loot.m.Quirks.push(quirk);
 				}			
