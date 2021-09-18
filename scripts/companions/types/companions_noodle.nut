@@ -111,10 +111,11 @@ this.companions_noodle <- this.inherit("scripts/entity/tactical/enemies/lindwurm
 	function onInit()
 	{
 		this.lindwurm.onInit();
-		this.m.Tail.m.IsDying = true;
-		this.m.Tail.m.IsAlive = false;
-		this.m.Tail.removeFromMap();
-		this.m.Tail = null;		
+		if (this.m.Tail != null && !this.m.Tail.isNull() && this.m.Tail.isAlive())
+		{
+			this.m.Tail.die();
+			this.m.Tail = null;
+		}
 		if (this.m.Tail == null)
 		{
 			local myTile = this.getTile();
