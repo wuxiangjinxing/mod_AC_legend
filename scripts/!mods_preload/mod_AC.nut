@@ -856,8 +856,11 @@
 				this.m.Skill = this.WeakTableRef(unleash);
 				this.addSkill(unleash);
 				local leash = this.new(this.Const.Companions.Library[this.m.Type].Leash.Script);
-				leash.setItem(this);
-				leash.applyCompanionModification();
+				if ("setItem" in leash)
+				{
+					leash.setItem(this);
+					leash.applyCompanionModification();
+				}
 				this.addSkill(leash);
 			}
 
@@ -1057,7 +1060,7 @@
 					}
 					else if (this.m.Type >= this.Const.Companions.TypeList.Warbear && this.m.Type <= this.Const.Companions.TypeList.WarwolfArmorHeavy)
 					{
-						return 4;
+						return 1;
 					}
 					else
 					{

@@ -35,31 +35,31 @@ gt.Const.Companions.TameList <- [
 	"Höllenhund"	
 ];
 gt.Const.Companions.TypeList <- {
-	Wardog = 0, //C
+	Wardog = 0,
 	WardogArmor = 1,
 	WardogArmorHeavy = 2,
-	Warhound = 3, //C
+	Warhound = 3,
 	WarhoundArmor = 4,
 	WarhoundArmorHeavy = 5,
-	Warwolf = 6, //C
-	Direwolf = 7, //C + P
+	Warwolf = 6,
+	Direwolf = 7,
 	DirewolfFrenzied = 8,
-	Hyena = 9, //C + P
+	Hyena = 9,
 	HyenaFrenzied = 10,
-	Spider = 11, //N
-	Snake = 12, //P
-	Nacho = 13, //C
-	Alp = 14, //N
-	Unhold = 15, //B
+	Spider = 11,
+	Snake = 12,
+	Nacho = 13,
+	Alp = 14,
+	Unhold = 15,
 	UnholdArmor = 16,
-	Schrat = 17, //P
-	Noodle = 18, //C
+	Schrat = 17,
+	Noodle = 18,
 	TomeReanimation = 19,
-	Warbear = 20, //C
-	Whitewolf = 21, //C
+	Warbear = 20,
+	Whitewolf = 21,
 	WarwolfArmor = 22,
 	WarwolfArmorHeavy = 23,
-	DemonHound = 24 //N
+	DemonHound = 24
 
 // Legends? Redback, White Dire Wolf, Rock Unhold, Green Schrat, Demon Alp, Skin Ghoul, Hollenhund(?), Geist(?), Stollwurm, Goblins (???), Indebted (???)
 };
@@ -620,7 +620,7 @@ gt.Const.Companions.Library <- [
 					IconDisabled = function(variant) { return "skills/tome_01_sw_ac.png"; },
 					Overlay = "",
 					onActorDied = false	},
-		Leash = {	Script = "scripts/companions/onequip/companions_blank",
+		Leash = {	Script = "scripts/skills/actives/legend_possession_skill",
 					Icon = function(variant) { return "skills/tome_01_ac.png"; },
 					IconDisabled = function(variant) { return "skills/tome_01_sw_ac.png"; },
 					Overlay = ""	}
