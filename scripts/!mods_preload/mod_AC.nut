@@ -1031,6 +1031,39 @@
 					}
 					return false;
 				}
+				
+				local DamageType = function()
+				//0: None, 1: Cut, 2: Pierce, 3: Blunt, 4: Cut + Pierce
+				{
+					if (this.m.Type < this.Const.Companions.TypeList.Direwolf)
+					{
+						return 1;
+					}
+					else if (this.m.Type >= this.Const.Companions.TypeList.Direwolf && this.m.Type <= this.Const.Companions.TypeList.HyenaFrenzied)
+					{
+						return 4;
+					}
+					else if (this.m.Type == this.Const.Companions.TypeList.Snake || this.m.Type == this.Const.Companions.TypeList.Schrat)
+					{
+						return 2;
+					}
+					else if (this.m.Type == this.Const.Companions.TypeList.Nacho || this.m.Type == this.Const.Companions.TypeList.Noodle)
+					{
+						return 1;
+					}
+					else if (this.m.Type == this.Const.Companions.TypeList.Unhold || this.m.Type == this.Const.Companions.TypeList.UnholdArmor)
+					{
+						return 3;
+					}
+					else if (this.m.Type >= this.Const.Companions.TypeList.Warbear && this.m.Type <= this.Const.Companions.TypeList.WarwolfArmorHeavy)
+					{
+						return 4;
+					}
+					else
+					{
+						return 0;
+					}
+				}
 
 				local availableQuirks = this.Const.Companions.AttainableQuirks;
 				if (this.m.Type != this.Const.Companions.TypeList.TomeReanimation && this.m.Type != this.Const.Companions.TypeList.DemonHound)
@@ -1179,14 +1212,18 @@
 					{
 						availableQuirks.extend([
 							"scripts/skills/perks/perk_ptr_bloody_harvest",
-							"scripts/skills/perks/perk_ptr_rattle",
 							"scripts/skills/perks/perk_ptr_sweeping_strikes"
 							]);
 					}
-					else if (this.m.Type != this.Const.Companions.TypeList.Alp && this.m.Type != this.Const.Companions.TypeList.DemonHound)
+					if (DamageType() == 1 || DamageType() == 4)
 					{
 						availableQuirks.push("scripts/skills/perks/perk_ptr_deep_cuts");
 					}
+					else if (DamageType() == 3)
+					{
+						availableQuirks.push("scripts/skills/perks/perk_ptr_rattle");
+					}
+
 					if (this.m.Type == this.Const.Companions.TypeList.Noodle)
 					{
 						availableQuirks.push("scripts/skills/perks/perk_ptr_leverage");

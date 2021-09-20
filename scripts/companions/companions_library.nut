@@ -35,31 +35,31 @@ gt.Const.Companions.TameList <- [
 	"Höllenhund"	
 ];
 gt.Const.Companions.TypeList <- {
-	Wardog = 0,
+	Wardog = 0, //C
 	WardogArmor = 1,
 	WardogArmorHeavy = 2,
-	Warhound = 3,
+	Warhound = 3, //C
 	WarhoundArmor = 4,
 	WarhoundArmorHeavy = 5,
-	Warwolf = 6,
-	Direwolf = 7,
+	Warwolf = 6, //C
+	Direwolf = 7, //C + P
 	DirewolfFrenzied = 8,
-	Hyena = 9,
+	Hyena = 9, //C + P
 	HyenaFrenzied = 10,
-	Spider = 11,
-	Snake = 12,
-	Nacho = 13,
-	Alp = 14,
-	Unhold = 15,
+	Spider = 11, //N
+	Snake = 12, //P
+	Nacho = 13, //C
+	Alp = 14, //N
+	Unhold = 15, //B
 	UnholdArmor = 16,
-	Schrat = 17,
-	Noodle = 18,
+	Schrat = 17, //P
+	Noodle = 18, //C
 	TomeReanimation = 19,
-	Warbear = 20,
-	Whitewolf = 21,
+	Warbear = 20, //C
+	Whitewolf = 21, //C
 	WarwolfArmor = 22,
 	WarwolfArmorHeavy = 23,
-	DemonHound = 24
+	DemonHound = 24 //N
 
 // Legends? Redback, White Dire Wolf, Rock Unhold, Green Schrat, Demon Alp, Skin Ghoul, Hollenhund(?), Geist(?), Stollwurm, Goblins (???), Indebted (???)
 };

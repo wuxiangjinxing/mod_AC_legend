@@ -109,7 +109,6 @@ gt.Const.Companions.AttainableQuirksPTR <- [
 gt.Const.Companions.AttainableQuirksBeastsPTR <- [
 	"scripts/skills/perks/perk_ptr_bloodlust",
 	"scripts/skills/perks/perk_ptr_exude_confidence",
-	"scripts/skills/perks/perk_ptr_fluid_weapon",
 	"scripts/skills/perks/perk_ptr_sanguinary",
 	"scripts/skills/perks/perk_ptr_the_rush_of_battle",
 	"scripts/skills/perks/perk_ptr_wears_it_well"
@@ -121,20 +120,25 @@ gt.Const.Companions.AttainableQuirksPhysicalPTR <- [
 	"scripts/skills/perks/perk_ptr_bone_breaker",
 	"scripts/skills/perks/perk_ptr_concussive_strikes",
 	"scripts/skills/perks/perk_ptr_cull",
+	"scripts/skills/perks/perk_ptr_deadly_precision",
 	"scripts/skills/perks/perk_ptr_deep_impact",
 	"scripts/skills/perks/perk_ptr_dent_armor",
 	"scripts/skills/perks/perk_ptr_dismantle",
 	"scripts/skills/perks/perk_ptr_dismemberment",
+	"scripts/skills/perks/perk_ptr_easy_target",
 	"scripts/skills/perks/perk_ptr_exploit_opening",
 	"scripts/skills/perks/perk_ptr_fresh_and_furious",
 	"scripts/skills/perks/perk_ptr_from_all_sides",
 	"scripts/skills/perks/perk_ptr_head_smasher",
+	"scripts/skills/perks/perk_ptr_heavy_strikes",
 	"scripts/skills/perks/perk_ptr_intimidate",
-	"scripts/skills/perks/perk_ptr_king_of_all_weapons",
 	"scripts/skills/perks/perk_ptr_know_their_weakness",
 	"scripts/skills/perks/perk_ptr_mauler",
+	"scripts/skills/perks/perk_ptr_pointy_end",
 	"scripts/skills/perks/perk_ptr_push_it",
 	"scripts/skills/perks/perk_ptr_small_target",
 	"scripts/skills/perks/perk_ptr_soft_metal",
-	"scripts/skills/perks/perk_ptr_unstoppable"
+	"scripts/skills/perks/perk_ptr_through_the_gaps",
+	"scripts/skills/perks/perk_ptr_unstoppable",
+	"scripts/skills/perks/perk_ptr_whack_a_smack"
 ];
