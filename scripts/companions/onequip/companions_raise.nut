@@ -186,7 +186,7 @@ this.companions_raise <- this.inherit("scripts/skills/skill", {
 			{
 				e.m.IsControlledByPlayer = true;
 				e.setAIAgent(this.new("scripts/ai/tactical/player_agent"));
-				e.m.AIAgent.setActor(entity);
+				e.m.AIAgent.setActor(e);
 				e.m.Skills.add(this.new("scripts/skills/effects/legend_possession_effect"));
 			}
 			else
