@@ -190,6 +190,10 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 					loot.m.Quirks.push(quirk);
 				}			
 			}
+			if (target.m.IsMiniboss)
+			{
+				loot.m.Quirks.push("scripts/skills/racial/champion_racial");
+			}
 			
 			loot.updateCompanion();
 			actor.getItems().equip(loot);

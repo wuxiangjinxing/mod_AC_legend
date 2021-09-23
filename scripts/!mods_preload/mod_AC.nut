@@ -477,10 +477,7 @@
 					if (this.m.Name == "White Wolf Queen")
 					{
 						this.m.Quirks.push("scripts/skills/perks/perk_inspire");
-						if (::mods_getRegisteredMod("mod_nggh_magic_concept") != null)
-						{
-							this.m.Quirks.push("scripts/skills/perks/perk_champion");					
-						}						
+						this.m.Quirks.push("scripts/skills/racial/champion_racial");											
 					}
 				}				
 				this.updateCompanion();
@@ -1125,9 +1122,9 @@
 						}
 					}
 				}
+				availableQuirks.push("scripts/skills/racial/champion_racial");
 				if (::mods_getRegisteredMod("mod_nggh_magic_concept") != null)
 				{
-					availableQuirks.push("scripts/skills/perks/perk_champion");
 					if (this.m.Type <= this.Const.Companions.TypeList.HyenaFrenzied || this.m.Type >= this.Const.Companions.TypeList.Whitewolf )
 					{
 						availableQuirks.extend([
