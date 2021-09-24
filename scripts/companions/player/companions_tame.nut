@@ -47,33 +47,6 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 		return ret;
 	}
 
-	function isHidden()
-	{
-		local acc = this.getContainer().getActor().getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
-
-		if (acc == null)
-		{
-			return false;
-		}
-
-		return true;
-	}
-
-	function isUsable()
-	{
-		if (!this.skill.isUsable())
-		{
-			return false;
-		}
-
-		return true;
-	}
-
-	function onUpdate(_properties)
-	{
-		this.m.IsHidden = this.isHidden();
-	}
-
 	function onAnySkillUsed( _skill, _targetEntity, _properties )
 	{
 		local tameDefault = this.Const.Companions.TameChance.Default;
@@ -89,6 +62,18 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 				_properties.MeleeSkill += ((1.0 - _targetEntity.getHitpointsPct()) * tameDefault);
 			}
 			_properties.MeleeSkill -= 50;
+		}
+	}
+	
+	function getHitchance( _targetEntity )
+	{
+		if (this.Tactical.Entities.getHostilesNum() <= 1)
+		{
+			return 0;
+		}
+		else
+		{
+			return this.skill.getHitchance( _targetEntity );
 		}
 	}
 
@@ -194,15 +179,26 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 			{
 				loot.m.Quirks.push("scripts/skills/racial/champion_racial");
 			}
-			
 			loot.updateCompanion();
-			actor.getItems().equip(loot);
-
-			local unleash = this.getContainer().getActor().getSkills().getSkillByID("actives.unleash_companion");
-			if (unleash != null)
+			
+			if (this.getContainer().getActor().getItems().getItemAtSlot(this.Const.ItemSlot.Accessory) == null)
+			{				
+				actor.getItems().equip(loot);
+	
+				local unleash = this.getContainer().getActor().getSkills().getSkillByID("actives.unleash_companion");
+				if (unleash != null)
+				{
+					unleash.m.IsUsed = true;
+					unleash.m.IsHidden = unleash.isUsed();
+				}
+			}
+			else if (this.Tactical.State.getStrategicProperties() != null && this.Tactical.State.getStrategicProperties().IsArenaMode)
 			{
-				unleash.m.IsUsed = true;
-				unleash.m.IsHidden = unleash.isUsed();
+				this.World.Assets.getStash().add(loot);
+			}
+			else
+			{
+				loot.drop(_targetTile);
 			}
 
 			if (target.m.WorldTroop != null && ("Party" in target.m.WorldTroop) && target.m.WorldTroop.Party != null && !target.m.WorldTroop.Party.isNull())
