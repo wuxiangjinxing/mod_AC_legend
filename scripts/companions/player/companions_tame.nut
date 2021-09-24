@@ -157,6 +157,14 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 			}
 
 			loot.m.Wounds = this.Math.floor((1.0 - target.getHitpointsPct()) * 100.0);
+			loot.m.Attributes.Hitpoints = target.m.BaseProperties.Hitpoints;
+			loot.m.Attributes.Stamina = target.m.BaseProperties.Stamina;
+			loot.m.Attributes.Bravery = target.m.BaseProperties.Bravery;
+			loot.m.Attributes.Initiative = target.m.BaseProperties.Initiative;
+			loot.m.Attributes.MeleeSkill = target.m.BaseProperties.MeleeSkill;
+			loot.m.Attributes.RangedSkill = target.m.BaseProperties.RangedSkill;
+			loot.m.Attributes.MeleeDefense = target.m.BaseProperties.MeleeDefense;
+			loot.m.Attributes.RangedDefense = target.m.BaseProperties.RangedDefense;
 			
 			local target_perks = target.getSkills().query(this.Const.SkillType.Perk);
 			foreach(perk in target_perks)
