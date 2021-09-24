@@ -220,7 +220,7 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 				target.m.Tail = null;
 			}
 
-			this.getContainer().getActor().addXP(target.getXPValue());
+			actor.addXP(target.getXPValue());
 			target.die();
 		}
 		else
@@ -235,7 +235,6 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 			}
 		}
 
-		this.m.IsHidden = this.isHidden();
 		return true;
 	}
 });
