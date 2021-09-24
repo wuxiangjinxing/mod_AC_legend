@@ -189,11 +189,11 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 			}
 			loot.updateCompanion();
 			
-			if (this.getContainer().getActor().getItems().getItemAtSlot(this.Const.ItemSlot.Accessory) == null)
+			if (actor.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory) == null)
 			{				
 				actor.getItems().equip(loot);
 	
-				local unleash = this.getContainer().getActor().getSkills().getSkillByID("actives.unleash_companion");
+				local unleash = actor.getSkills().getSkillByID("actives.unleash_companion");
 				if (unleash != null)
 				{
 					unleash.m.IsUsed = true;
