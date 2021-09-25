@@ -13,13 +13,13 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 		this.m.IsTargetingActor = true;
 		this.m.IsUsingHitchance = true;
 
-		this.m.ActionPointCost = 4;
+		this.m.ActionPointCost = 6;
 		this.m.FatigueCost = 30;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 1;
 
 		this.m.Name = "Tame Beast";
-		this.m.Description = "Attempt to tame an adjacent beast. Failing the attempt makes further attempts on the same beast impossible. Succeeding the attempt equips the beast in the brother\'s accessory slot, but it cannot be unleashed in the same battle in which it was tamed.";
+		this.m.Description = "Attempt to tame an adjacent beast. The success rate increases if the target is more wounded. Failing the attempt can make further attempts on the same beast impossible. Succeeding the attempt equips the beast in the brother\'s accessory slot, but it cannot be unleashed in the same battle.";
 		this.m.Icon = "skills/tame_ac.png";
 		this.m.IconDisabled = "skills/tame_sw_ac.png";
 		this.m.SoundOnUse = ["sounds/dice_01.wav", "sounds/dice_02.wav", "sounds/dice_03.wav"];
@@ -42,7 +42,13 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 				id = 3,
 				type = "text",
 				text = this.getCostString()
-			}
+			},
+			{
+				id = 4,
+				type = "text",
+				icon = "ui/icons/special.png",
+				text = "Cannot tame the last enemy on the battlefield"
+			}			
 		];
 		return ret;
 	}
@@ -104,7 +110,11 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 		}
 
 		local actor = this.getContainer().getActor();
-
+		
+		if (this.isKindOf(target, "legend_demon_hound") && !actor.getSkills().hasSkill("perk.legend_raise_undead"))
+		{
+			return false;
+		}
 		if (actor.isAlliedWith(target))
 		{
 			return false;
