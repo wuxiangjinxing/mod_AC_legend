@@ -216,12 +216,16 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 
 			if (this.isKindOf(target, "lindwurm") && target.m.Tail != null && !target.m.Tail.isNull() && target.m.Tail.isAlive())
 			{
-				target.m.Tail.die();
+				target.m.Tail.m.IsDying = true;
+				target.m.Tail.m.IsAlive = false;
+				target.m.Tail.removeFromMap();
 				target.m.Tail = null;
 			}
 
 			actor.addXP(target.getXPValue());
-			target.die();
+			target.m.IsDying = true;
+			target.m.IsAlive = false;
+			target.removeFromMap();
 		}
 		else
 		{
