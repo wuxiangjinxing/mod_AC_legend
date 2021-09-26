@@ -3,10 +3,14 @@ if (!("Companions" in gt.Const))
 {
 	gt.Const.Companions <- {};
 }
-gt.Const.Companions.TameChance <- {
-	Default = 30.00,
-	Beastmaster = 45.00
-};
+gt.Const.Companions.BeastMasters <- [
+	["background.legend_commander_druid", 0.02],
+	["background.legend_druid", 0.015],
+	["background.legend_commander_ranger", 0.015],
+	["background.legend_ranger", 0.01],
+	["background.houndmaster", 0.01],
+	["background.legend_muladi", 0.01]
+];
 gt.Const.Companions.TameList <- [
 	"Wardog",
 	"Armored Wardog",

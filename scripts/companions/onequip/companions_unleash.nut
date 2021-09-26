@@ -158,7 +158,7 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 		}
 		this.m.Item.setEntity(entity);
 
-		if (this.getContainer().getActor().getSkills().hasSkill("perk.legend_dogwhisperer"))
+		if (this.getContainer().hasSkill("perk.legend_dogwhisperer"))
 		{
 			entity.getSkills().add(this.new("scripts/skills/perks/perk_fortified_mind"));
 			entity.getSkills().add(this.new("scripts/skills/perks/perk_colossus"));
@@ -171,11 +171,15 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 			entity.getItems().equip(item);
 		}
 
-		if (this.getContainer().hasSkill("background.houndmaster") || this.getContainer().hasSkill("background.companions_beastmaster"))
+		if (entity.m.MoraleState != this.Const.MoraleState.Ignore);
 		{
-			if (entity.m.MoraleState != this.Const.MoraleState.Ignore);
+			foreach(beastmaster in this.Const.Companions.BeastMasters)
 			{
-				entity.setMoraleState(this.Const.MoraleState.Confident);
+				if (this.getContainer().hasSkill(beastmaster[0]))
+				{
+					entity.setMoraleState(this.Const.MoraleState.Confident);
+				}
+				break;
 			}
 		}
 		

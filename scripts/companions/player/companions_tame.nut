@@ -55,18 +55,17 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 
 	function onAnySkillUsed( _skill, _targetEntity, _properties )
 	{
-		local tameDefault = this.Const.Companions.TameChance.Default;
-		local tameBeastmaster = this.Const.Companions.TameChance.Beastmaster;
+		local tamechanceHP = 30;
+		foreach(beastmaster in this.Const.Companions.BeastMasters)
+		{
+			if (this.getContainer().hasSkill(beastmaster[0]))
+			{
+				tamechanceHP += (beastmaster[1] * 1000);
+			}
+		}		
 		if (_skill == this)
 		{
-			if (this.getContainer().getActor().getSkills().hasSkill("background.companions_beastmaster"))
-			{
-				_properties.MeleeSkill += ((1.0 - _targetEntity.getHitpointsPct()) * tameBeastmaster);
-			}
-			else
-			{
-				_properties.MeleeSkill += ((1.0 - _targetEntity.getHitpointsPct()) * tameDefault);
-			}
+			_properties.MeleeSkill += ((1.0 - _targetEntity.getHitpointsPct()) * tamechanceHP);
 			_properties.MeleeSkill -= 50;
 		}
 	}

@@ -39,24 +39,6 @@
 		}
 	});
 
-	local buildings = [
-		"kennel_building",
-		"alchemist_building",
-		"arena_building"
-	];
-	
-	foreach(building in buildings)
-	{
-		::mods_hookExactClass("entity/world/settlements/buildings/" + building, function(o) {
-			local onUpdateDraftList = ::mods_getMember(o, "onUpdateDraftList");
-			o.onUpdateDraftList = function(_list, _gender) {
-				_list.push("companions_beastmaster_background");
-				_list.push("companions_beastmaster_background");
-				onUpdateDraftList(_list, _gender);
-			}		
-		});
-	}	
-
 	///// give players the ability to tame beasts
 	::mods_hookExactClass("entity/tactical/player", function(o)
 	{
@@ -936,16 +918,7 @@
 				if (this.getContainer() != null && !this.getContainer().isNull() && this.getContainer().getActor() != null && !this.getContainer().getActor().isNull() && this.getContainer().getActor().m.Type == this.Const.EntityType.Player && this.m.Type != this.Const.Companions.TypeList.TomeReanimation)
 				{
 					local actor = this.getContainer().getActor();
-					local beastmasters = [
-						["background.companions_beastmaster", 0.015],
-						["background.legend_commander_druid", 0.02],
-						["background.legend_druid", 0.015],
-						["background.legend_commander_ranger", 0.015],
-						["background.legend_ranger", 0.01],
-						["background.houndmaster", 0.01],
-						["background.legend_muladi", 0.01],
-					]
-					foreach(beastmaster in beastmasters)
+					foreach(beastmaster in this.Const.Companions.BeastMasters)
 					{
 						if (actor.getSkills().hasSkill(beastmaster[0]))
 						{
