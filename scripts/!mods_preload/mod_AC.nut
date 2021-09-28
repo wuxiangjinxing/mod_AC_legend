@@ -95,6 +95,19 @@
 			this.m.Items.equip(loot);
 		}
 	});	
+	
+	::mods_hookExactClass("entity/tactical/enemies/bandit_rabble.nut", function(o) //Temporary testing
+	{
+		local assignRandomEquipment = ::mods_getMember(o, "assignRandomEquipment");
+		o.assignRandomEquipment = function()
+		{
+			assignRandomEquipment();
+			local loot = this.new("scripts/items/accessory/wardog_item");
+			loot.setType(this.Const.Companions.TypeList.Horse);
+			loot.updateCompanion();
+			this.m.Items.equip(loot);
+		}
+	});		
 
 	///// give companions experience when the player kills something
 	::mods_hookExactClass("entity/tactical/player", function(o)

@@ -36,7 +36,8 @@ gt.Const.Companions.TameList <- [
 	"White Warwolf",
 	"Armored Wolf",
 	"mod_AC_WolfArmorHeavy",
-	"Höllenhund"	
+	"Höllenhund",
+	"Horse"
 ];
 gt.Const.Companions.TypeList <- {
 	Wardog = 0,
@@ -63,7 +64,8 @@ gt.Const.Companions.TypeList <- {
 	Whitewolf = 21,
 	WarwolfArmor = 22,
 	WarwolfArmorHeavy = 23,
-	DemonHound = 24
+	DemonHound = 24,
+	Horse = 25
 
 // Legends? Redback, White Dire Wolf, Rock Unhold, Green Schrat, Demon Alp, Skin Ghoul, Hollenhund(?), Geist(?), Stollwurm, Goblins (???), Indebted (???)
 };
@@ -816,4 +818,32 @@ gt.Const.Companions.Library <- [
 					IconDisabled = function(variant) { return "skills/demonhound_01_sw_ac.png"; },
 					Overlay = "active_165"	}
 	},
+	{
+		ID = "accessory.horse",
+		Type = this.Const.Companions.TypeList.Horse,
+		Name = function() { return this.Const.Companions.CanineNames[this.Math.rand(0, this.Const.Companions.CanineNames.len() - 1)]; },
+		NameUnleashed = "Rein",
+		Description = "Horses are used to long and exhausting travels.",
+		DescriptionUnleashed = "The rein of a horse that has been unleashed onto the battlefield.",
+		IconLeashed = function(variant) { return "tools/horse_01_ac.png"; },
+		IconUnleashed = "tools/hound_01_leash_70x70.png",
+		Value = 1000,
+		PartyStrength = 12,
+		Variant = function() { return this.Math.rand(0, 7); },
+		BasicAttributes = { Hitpoints = 200, Stamina = 150, Bravery = 40, Initiative = 100, MeleeSkill = 45, RangedSkill = 0, MeleeDefense = 0, RangedDefense = 0 },
+		PreferredAttribute = this.Const.Attributes.Hitpoints,
+		Script = "scripts/companions/types/companions_horse",
+		ArmorScript = null,
+		UnleashSounds = ["sounds/misc/donkey_hurt_01.wav", "sounds/misc/donkey_hurt_02.wav", "sounds/misc/donkey_hurt_03.wav"],
+		InventorySounds = ["sounds/misc/donkey_hurt_01.wav", "sounds/misc/donkey_hurt_02.wav", "sounds/misc/donkey_hurt_03.wav"],
+		Unleash = {	Script = "scripts/companions/onequip/companions_blank",
+					Icon = function(variant) { return ""; },
+					IconDisabled = function(variant) { return ""; },
+					Overlay = "",
+					onActorDied = false	},
+		Leash = {	Script = "scripts/companions/onequip/companions_blank",
+					Icon = function(variant) { return ""; },
+					IconDisabled = function(variant) { return ""; },
+					Overlay = ""	}
+	},	
 ];
