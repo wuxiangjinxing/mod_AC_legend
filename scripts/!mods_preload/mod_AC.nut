@@ -66,6 +66,35 @@
 				}
 			}
 		});
+		
+		local riders = [
+			"entity/tactical/humans/hedge_knight",
+			"entity/tactical/humans/knight",
+			"entity/tactical/enemies/bandit_rabble" //Just for testing
+		]
+		
+		foreach (rider in riders)
+		{
+			::mods_hookExactClass(rider, function(o)
+			{
+				local create = ::mods_getMember(o, "create");
+				o.create = function()
+				{
+					create();
+					this.m.ExcludedMount.pop();
+				}
+			
+				local assignRandomEquipment = ::mods_getMember(o, "assignRandomEquipment");
+				o.assignRandomEquipment = function()
+				{
+					assignRandomEquipment();
+					local loot = this.new("scripts/items/accessory/wardog_item");
+					loot.setType(this.Const.Companions.TypeList.Horse);
+					loot.updateCompanion();
+					this.m.Items.equip(loot);					
+				}		
+			});
+		}
 	}
 
 	///// necromancers have a chance to drop the Tome of Reanimation when killed, webknecht eggs have a chance to drop a webknecht companion when killed
@@ -96,19 +125,6 @@
 		}
 	});	
 	
-	::mods_hookExactClass("entity/tactical/enemies/bandit_rabble.nut", function(o) //Temporary testing
-	{
-		local assignRandomEquipment = ::mods_getMember(o, "assignRandomEquipment");
-		o.assignRandomEquipment = function()
-		{
-			assignRandomEquipment();
-			local loot = this.new("scripts/items/accessory/wardog_item");
-			loot.setType(this.Const.Companions.TypeList.Horse);
-			loot.updateCompanion();
-			this.m.Items.equip(loot);
-		}
-	});		
-
 	///// give companions experience when the player kills something
 	::mods_hookExactClass("entity/tactical/player", function(o)
 	{
@@ -474,7 +490,11 @@
 						this.m.Quirks.push("scripts/skills/perks/perk_inspire");
 						this.m.Quirks.push("scripts/skills/racial/champion_racial");											
 					}
-				}				
+				}
+				else if (this.m.Type == this.Const.Companions.TypeList.Horse)
+				{
+					this.m.Quirks = ["scripts/skills/perks/perk_legend_horse_movement","scripts/skills/perks/perk_horse_charge","scripts/skills/perks/perk_legend_horse_pirouette"];
+				}
 				this.updateCompanion();
 			}
 
