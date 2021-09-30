@@ -1028,7 +1028,7 @@
 					{
 						return 1;
 					}
-					else if (this.m.Type == this.Const.Companions.TypeList.Unhold || this.m.Type == this.Const.Companions.TypeList.UnholdArmor)
+					else if (this.m.Type == this.Const.Companions.TypeList.Unhold || this.m.Type == this.Const.Companions.TypeList.UnholdArmor || this.m.Type == this.Const.Companions.TypeList.Horse)
 					{
 						return 3;
 					}

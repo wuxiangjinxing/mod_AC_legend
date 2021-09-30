@@ -825,7 +825,7 @@ gt.Const.Companions.Library <- [
 		NameUnleashed = "Rein",
 		Description = "Horses are used to long and exhausting travels.",
 		DescriptionUnleashed = "The rein of a horse that has been unleashed onto the battlefield.",
-		IconLeashed = function(variant) {return "tools/dog_01_0" + variant + "_70x70.png";} //{ return "tools/horse_0" + variant + ".png"; },
+		IconLeashed = function(variant) { return "tools/horse_0" + variant + ".png"; },
 		IconUnleashed = "tools/hound_01_leash_70x70.png",
 		Value = 1000,
 		PartyStrength = 12,
