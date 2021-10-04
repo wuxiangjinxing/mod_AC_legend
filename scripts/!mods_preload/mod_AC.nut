@@ -1140,6 +1140,7 @@
 					if (this.m.Type == this.Const.Companions.TypeList.Alp )
 					{
 						availableQuirks.extend([
+							"scripts/skills/perks/perk_afterimage",
 							"scripts/skills/perks/perk_mastery_nightmare",
 							"scripts/skills/perks/perk_mastery_sleep",
 							"scripts/skills/perks/perk_after_wake"
