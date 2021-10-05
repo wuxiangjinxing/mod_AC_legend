@@ -99,32 +99,28 @@
 	///// give companions experience when the player kills something
 	::mods_hookExactClass("entity/tactical/player", function(o)
 	{
-		if (!("mod_AC" in o))
+		local onActorKilled = o.onActorKilled;
+		o.onActorKilled = function(_actor, _tile, _skill)
 		{
-			o.mod_AC <- true;
-			local onActorKilled = o.onActorKilled;
-			o.onActorKilled = function(_actor, _tile, _skill)
+			onActorKilled(_actor, _tile, _skill);
+			local XPkiller = this.Math.floor(_actor.getXPValue() * this.Const.XP.XPForKillerPct);
+			local XPgroup = _actor.getXPValue() * (1.0 - this.Const.XP.XPForKillerPct);
+			local brothers = this.Tactical.Entities.getInstancesOfFaction(this.Const.Faction.Player);
+			foreach(bro in brothers)
 			{
-				onActorKilled(_actor, _tile, _skill);
-				local XPkiller = this.Math.floor(_actor.getXPValue() * this.Const.XP.XPForKillerPct);
-				local XPgroup = _actor.getXPValue() * (1.0 - this.Const.XP.XPForKillerPct);
-				local brothers = this.Tactical.Entities.getInstancesOfFaction(this.Const.Faction.Player);
-				foreach(bro in brothers)
+				local cAcc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
+				if (cAcc != null && "setType" in cAcc)
 				{
-					local cAcc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
-					if (cAcc != null && "setType" in cAcc)
-					{
-						if (cAcc.getType() != null)
-							cAcc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-					}
+					if (cAcc.getType() != null)
+						cAcc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
 				}
+			}
 
-				local kAcc = this.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
-				if (kAcc != null && "setType" in kAcc)
-				{
-					if (kAcc.getType() != null)
-						kAcc.addXP(XPkiller);
-				}
+			local kAcc = this.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
+			if (kAcc != null && "setType" in kAcc)
+			{
+				if (kAcc.getType() != null)
+					kAcc.addXP(XPkiller);
 			}
 		}
 	});
@@ -139,55 +135,51 @@
 	{	
 		::mods_hookBaseClass("entity/tactical/enemies/" + ud, function(o)
 		{
-			if (!("mod_AC" in o))
+			if ("onActorKilled" in o)
 			{
-				o.mod_AC <- true;
-				if ("onActorKilled" in o)
+				local onActorKilled = o.onActorKilled;
+				o.onActorKilled <- function(_actor, _tile, _skill)
 				{
-					local onActorKilled = o.onActorKilled;
-					o.onActorKilled <- function(_actor, _tile, _skill)
+					if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
 					{
-						if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
+						local XPgroup = _actor.getXPValue();
+						local brothers = this.Tactical.Entities.getInstancesOfFaction(this.Const.Faction.Player);
+						foreach( bro in brothers )
 						{
-							local XPgroup = _actor.getXPValue();
-							local brothers = this.Tactical.Entities.getInstancesOfFaction(this.Const.Faction.Player);
-							foreach( bro in brothers )
-							{
-								bro.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
+							bro.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
 	
-								local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
-								if (acc != null && "setType" in acc)
-								{
-									if (acc.getType() != null)
-										acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-								}
+							local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
+							if (acc != null && "setType" in acc)
+							{
+								if (acc.getType() != null)
+									acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
 							}
 						}
-						onActorKilled(_actor, _tile, _skill);
 					}
+					onActorKilled(_actor, _tile, _skill);
 				}
-				else
+			}
+			else
+			{
+				o.onActorKilled <- function(_actor, _tile, _skill)
 				{
-					o.onActorKilled <- function(_actor, _tile, _skill)
+					if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
 					{
-						if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
+						local XPgroup = _actor.getXPValue();
+						local brothers = this.Tactical.Entities.getInstancesOfFaction(this.Const.Faction.Player);
+						foreach( bro in brothers )
 						{
-							local XPgroup = _actor.getXPValue();
-							local brothers = this.Tactical.Entities.getInstancesOfFaction(this.Const.Faction.Player);
-							foreach( bro in brothers )
-							{
-								bro.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
+							bro.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
 	
-								local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
-								if (acc != null && "setType" in acc)
-								{
-									if (acc.getType() != null)
-										acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-								}
+							local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
+							if (acc != null && "setType" in acc)
+							{
+								if (acc.getType() != null)
+									acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
 							}
 						}
-						this.actor.onActorKilled(_actor, _tile, _skill);
 					}
+					this.actor.onActorKilled(_actor, _tile, _skill);
 				}
 			}
 		});
@@ -196,31 +188,27 @@
 	///// equipped companions add to player party strength
 	::mods_hookExactClass("entity/world/player_party", function(o)
 	{
-		if (!("mod_AC" in o))
+		local updateStrength = o.updateStrength;
+		o.updateStrength = function()
 		{
-			o.mod_AC <- true;
-			local updateStrength = o.updateStrength;
-			o.updateStrength = function()
+			updateStrength();
+			local company = this.World.getPlayerRoster().getAll();
+			if (company.len() > this.World.Assets.getBrothersScaleMax())
 			{
-				updateStrength();
-				local company = this.World.getPlayerRoster().getAll();
-				if (company.len() > this.World.Assets.getBrothersScaleMax())
+				company.sort(this.onLevelCompare);
+			}
+
+			foreach( i, bro in company )
+			{
+				if (i >= this.World.Assets.getBrothersScaleMax())
 				{
-					company.sort(this.onLevelCompare);
+					break;
 				}
 
-				foreach( i, bro in company )
+				local companion = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
+				if (companion != null && "setType" in companion)
 				{
-					if (i >= this.World.Assets.getBrothersScaleMax())
-					{
-						break;
-					}
-
-					local companion = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
-					if (companion != null && "setType" in companion)
-					{
-						this.m.Strength += this.Math.round(companion.m.Level * (this.Const.Companions.Library[companion.getType()].PartyStrength / 8.25));
-					}
+					this.m.Strength += this.Math.round(companion.m.Level * (this.Const.Companions.Library[companion.getType()].PartyStrength / 8.25));
 				}
 			}
 		}
