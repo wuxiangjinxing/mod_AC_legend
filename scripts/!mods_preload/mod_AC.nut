@@ -1188,6 +1188,7 @@
 					else if (DamageType() == 3)
 					{
 						availableQuirks.push("scripts/skills/perks/perk_ptr_rattle");
+						availableQuirks.push("scripts/skills/perks/perk_ptr_internal_hemorrhage");
 					}
 
 					if (this.m.Type == this.Const.Companions.TypeList.Noodle)

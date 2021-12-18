@@ -137,7 +137,6 @@ gt.Const.Companions.AttainableQuirksPhysicalPTR <- [
 	"scripts/skills/perks/perk_ptr_pointy_end",
 	"scripts/skills/perks/perk_ptr_push_it",
 	"scripts/skills/perks/perk_ptr_small_target",
-	"scripts/skills/perks/perk_ptr_soft_metal",
 	"scripts/skills/perks/perk_ptr_through_the_gaps",
 	"scripts/skills/perks/perk_ptr_unstoppable",
 	"scripts/skills/perks/perk_ptr_whack_a_smack"
