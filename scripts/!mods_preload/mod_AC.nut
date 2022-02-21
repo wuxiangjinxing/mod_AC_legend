@@ -1262,8 +1262,8 @@
 				if (day >= 10)
 				{
 					this.m.XP = this.Math.min(15000, this.Math.rand(0, day * day));
+					this.updateLevel();
 				}
-				this.updateLevel();
 			}
 
 			o.getLevel <- function()
