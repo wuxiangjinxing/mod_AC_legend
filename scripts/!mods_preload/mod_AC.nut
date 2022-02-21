@@ -78,6 +78,7 @@
 			makeMiniboss();
 			local loot = this.new("scripts/items/accessory/wardog_item");
 			loot.setType(this.Const.Companions.TypeList.TomeReanimation);
+			loot.giverandXP();
 			loot.updateCompanion();
 			this.m.Items.equip(loot);
 		}
@@ -91,6 +92,7 @@
 			makeMiniboss();
 			local loot = this.new("scripts/items/accessory/wardog_item");
 			loot.setType(this.Const.Companions.TypeList.Whitewolf);
+			loot.giverandXP();
 			loot.updateCompanion();
 			this.m.Items.equip(loot);
 		}
@@ -1252,6 +1254,16 @@
 						}
 					}
 				}
+			}
+
+			o.giverandXP <- function()
+			{
+				local day = this.World.getTime().Days;
+				if (day >= 10)
+				{
+					this.m.XP = this.Math.min(15000, this.Math.rand(0, day * day));
+				}
+				this.updateLevel();
 			}
 
 			o.getLevel <- function()
