@@ -56,7 +56,7 @@ this.companions_beastmaster_background <- this.inherit("scripts/skills/backgroun
 		this.m.Modifiers.Training = this.Const.LegendMod.ResourceModifiers.Training[2];
 		this.m.PerkTreeDynamic = {
 			Weapon = [
-				this.Const.Perks.StavesTree,
+				this.Const.Perks.StaffTree,
 				this.Const.Perks.ThrowingTree,
 				this.Const.Perks.CleaverTree,
 				this.Const.Perks.MaceTree,
