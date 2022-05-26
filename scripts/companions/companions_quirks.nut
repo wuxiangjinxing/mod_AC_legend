@@ -64,7 +64,7 @@ gt.Const.Companions.AttainableQuirksPhysical <- [ //Alp cannot get those perks
 	"scripts/skills/perks/perk_legend_muscularity",
 	"scripts/skills/perks/perk_legend_onslaught",
 	"scripts/skills/perks/perk_legend_slaughter",
-	"scripts/skills/perks/perk_mar_in_the_zone",
+	"scripts/skills/perks/perk_legend_in_the_zone",
 	"scripts/skills/perks/perk_overwhelm",
 	"scripts/skills/perks/perk_push_the_advantage",
 	"scripts/skills/perks/perk_slaughterer",
