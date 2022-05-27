@@ -36,7 +36,7 @@ gt.Const.Companions.AttainableQuirksBeasts <- [ //Undead cannot get those quirks
 	"scripts/skills/perks/perk_legend_assured_conquest",
 	"scripts/skills/perks/perk_legend_back_to_basics",
 	"scripts/skills/perks/perk_legend_bloodbath",
-	"scripts/skills/perks/perk_legend_matching_set",
+//	"scripts/skills/perks/perk_legend_matching_set",
 	"scripts/skills/perks/perk_legend_mind_over_body",
 	"scripts/skills/perks/perk_legend_poison_immunity",
 	"scripts/skills/perks/perk_legend_second_wind",
