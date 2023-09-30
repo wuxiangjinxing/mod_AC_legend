@@ -13,6 +13,11 @@ this.companions_noodle_tail <- this.inherit("scripts/entity/tactical/enemies/lin
 		this.m.ConfidentMoraleBrush = "icon_confident";
 	}
 
+	function isGuest()
+	{
+		return true;
+	}
+
 	function setItem( _i )
 	{
 		if (typeof _i == "instance")
@@ -89,7 +94,7 @@ this.companions_noodle_tail <- this.inherit("scripts/entity/tactical/enemies/lin
 	function onInit()
 	{
 		this.lindwurm_tail.onInit();
-		this.addSprite("socket").setBrush("bust_base_player");
+		//this.addSprite("socket").setBrush("bust_base_player");
 	}
 
 	function applyCompanionScaling()

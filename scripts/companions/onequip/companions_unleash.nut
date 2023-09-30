@@ -44,7 +44,7 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 		local woundsCalc = 100 - this.m.Item.m.Wounds;
 		this.m.Name = "Unleash " + this.m.Item.m.Name + " Lv. " + this.m.Item.m.Level + " ([color=" + (woundsCalc >= 50 ? this.Const.UI.Color.PositiveValue : this.Const.UI.Color.NegativeValue) + "]" + woundsCalc + "%[/color])";
 		this.m.Description = "Unleash " + this.m.Item.m.Name + " and have them engage the enemy. Needs a free adjacent tile. Can be used once per battle."
-		if (this.m.Item.m.Type == this.Const.Companions.TypeList.Noodle) this.m.Description = "Unleash " + this.m.Item.m.Name + " and have them engage the enemy. Needs a free adjacent tile (and a free adjacent tile next to that one, for the tail). Can be used once per battle."
+		if (this.m.Item.m.Type == this.Const.Companions.TypeList.Noodle || this.m.Item.m.Type == this.Const.Companions.TypeList.Stollwurm) this.m.Description = "Unleash " + this.m.Item.m.Name + " and have them engage the enemy. Needs a free adjacent tile (and a free adjacent tile next to that one, for the tail). Can be used once per battle."
 		this.m.Icon = this.Const.Companions.Library[this.m.Item.m.Type].Unleash.Icon(this.m.Item.m.Variant);
 		this.m.IconDisabled = this.Const.Companions.Library[this.m.Item.m.Type].Unleash.IconDisabled(this.m.Item.m.Variant);
 		this.m.Overlay = this.Const.Companions.Library[this.m.Item.m.Type].Unleash.Overlay;
@@ -71,6 +71,28 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 			}
 		];
 		return ret;
+	}
+	
+	function onAdded()
+	{
+		//this.logInfo("onAdded started");
+		//onAdded();
+		//this.logInfo("onAdded default done");
+		local actor = this.getContainer().getActor();
+		if (actor.isPlayerControlled())
+		{
+			return;
+		}
+
+		local agent = actor.getAIAgent();
+
+		//this.logInfo("adding agent");
+		if (agent.findBehavior(this.Const.AI.Behavior.ID.UnleashCompanion) == null)
+		{
+			agent.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_unleash_companion"));
+			agent.finalizeBehaviors();
+		}
+		//this.logInfo("onAdded finished");
 	}
 
 	function isUsed()
@@ -137,6 +159,11 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 		{
 			return false;
 		}
+		
+		if (this.m.Item.m.Type == this.Const.Companions.TypeList.Stollwurm && !this.findTailTile(_targetTile))
+		{
+			return false;
+		}
 
 		return this.skill.onVerifyTarget(_originTile, _targetTile) && _targetTile.IsEmpty;
 	}
@@ -147,10 +174,10 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 		entity.setItem(this.m.Item);
 		entity.setName(this.m.Item.getName());
 		entity.setVariant(this.m.Item.getVariant());
-		entity.setFaction(this.Const.Faction.PlayerAnimals);
+		entity.setFaction(_user.getFaction() == this.Const.Faction.Player ? this.Const.Faction.PlayerAnimals : this.getContainer().getActor().getFaction());
 		entity.applyCompanionScaling();
 		entity.m.IsSummoned = true;
-		if (this.m.Item.m.Level >= this.Const.XP.MaxLevelWithPerkpoints)
+		if ((this.m.Item.m.Level >= ::modAccessoryCompanions.MinimumLevelToBePlayerControlled) && (entity.getFaction() == this.Const.Faction.PlayerAnimals))
 		{
 			entity.m.IsControlledByPlayer = true;
 			entity.setAIAgent(this.new("scripts/ai/tactical/player_agent"));

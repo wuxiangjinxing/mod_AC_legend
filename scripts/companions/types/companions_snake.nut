@@ -11,6 +11,11 @@ this.companions_snake <- this.inherit("scripts/entity/tactical/enemies/serpent",
 		this.m.ConfidentMoraleBrush = "icon_confident";
 	}
 
+	function isGuest()
+	{
+		return true;
+	}
+
 	function setItem(_i)
 	{
 		if (typeof _i == "instance")
@@ -126,7 +131,7 @@ this.companions_snake <- this.inherit("scripts/entity/tactical/enemies/serpent",
 	function onInit()
 	{
 		this.serpent.onInit();
-		this.addSprite("socket").setBrush("bust_base_player");
+		//this.addSprite("socket").setBrush("bust_base_player");
 	}
 
 	function applyCompanionScaling()

@@ -10,6 +10,11 @@ this.companions_unhold <- this.inherit("scripts/entity/tactical/enemies/unhold",
 		this.m.ConfidentMoraleBrush = "icon_confident";
 	}
 
+	function isGuest()
+	{
+		return true;
+	}
+
 	function setItem(_i)
 	{
 		if (typeof _i == "instance")
@@ -117,7 +122,7 @@ this.companions_unhold <- this.inherit("scripts/entity/tactical/enemies/unhold",
 	function onInit()
 	{
 		this.unhold.onInit();
-		this.addSprite("socket").setBrush("bust_base_player");
+		//this.addSprite("socket").setBrush("bust_base_player");
 	}
 	
 	function applyCompanionScaling()

@@ -26,6 +26,11 @@ this.companions_warhound <- this.inherit("scripts/entity/tactical/warhound", {
 			}
 		}
 	}
+	
+	function isGuest()
+	{
+		return true;
+	}
 
 	function applyCompanionScaling()
 	{

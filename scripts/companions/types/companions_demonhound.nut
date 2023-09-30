@@ -19,6 +19,11 @@ this.companions_demonhound <- this.inherit("scripts/entity/tactical/enemies/lege
 		this.m.IsActingImmediately = true;
 	}
 
+	function isGuest()
+	{
+		return true;
+	}
+
 	function setItem(_i)
 	{
 		if (typeof _i == "instance")
@@ -118,7 +123,7 @@ this.companions_demonhound <- this.inherit("scripts/entity/tactical/enemies/lege
 	function onInit()
 	{
 		this.legend_demon_hound.onInit();
-		this.addSprite("socket").setBrush("bust_base_player");
+		//this.addSprite("socket").setBrush("bust_base_player");
 	}
 
 	function applyCompanionScaling()

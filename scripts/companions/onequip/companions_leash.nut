@@ -128,12 +128,31 @@ this.companions_leash <- this.inherit("scripts/skills/skill", {
 	{
 		local entity = _targetTile.getEntity();
 
-		if (this.isKindOf(entity, "companions_noodle") && entity.m.Tail != null && !entity.m.Tail.isNull() && entity.m.Tail.isAlive())
+		if ((this.isKindOf(entity, "companions_noodle") || this.isKindOf(entity, "companions_stollwurm")) && entity.m.Tail != null && !entity.m.Tail.isNull() && entity.m.Tail.isAlive())
 		{
 			entity.m.Tail.removeFromMap();
 		}
 
 		this.m.Item.m.Wounds = this.Math.floor((1.0 - entity.getHitpointsPct()) * 100.0);
+		
+		local target_perks = entity.getSkills().query(this.Const.SkillType.Perk);
+		foreach(perk in target_perks)
+		{
+			local quirk = "";
+			foreach( i, v in this.getroottable().Const.Perks.PerkDefObjects )
+			{
+				if (perk.getID() == v.ID)
+				{
+					quirk = v.Script;
+					break;
+				}
+			}
+			if (quirk != "" && this.m.Item.m.Quirks.find(quirk) == null)
+			{
+				this.m.Item.m.Quirks.push(quirk);
+			}			
+		}
+		
 		entity.removeFromMap();
 		this.m.Item.setEntity(null);
 		this.m.IsHidden = !this.m.Item.isUnleashed();

@@ -19,6 +19,11 @@ this.companions_spider <- this.inherit("scripts/entity/tactical/enemies/spider",
 		this.m.ConfidentMoraleBrush = "icon_confident";
 	}
 
+	function isGuest()
+	{
+		return true;
+	}
+
 	function setItem(_i)
 	{
 		if (typeof _i == "instance")
@@ -123,7 +128,7 @@ this.companions_spider <- this.inherit("scripts/entity/tactical/enemies/spider",
 	function onInit()
 	{
 		this.spider.onInit();
-		this.addSprite("socket").setBrush("bust_base_player");
+		//this.addSprite("socket").setBrush("bust_base_player");
 	}
 
 	function applyCompanionScaling()

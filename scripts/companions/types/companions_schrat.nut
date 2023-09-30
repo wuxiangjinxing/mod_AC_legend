@@ -10,6 +10,11 @@ this.companions_schrat <- this.inherit("scripts/entity/tactical/enemies/schrat",
 		this.m.ConfidentMoraleBrush = "icon_confident";
 	}
 
+	function isGuest()
+	{
+		return true;
+	}
+
 	function setItem(_i)
 	{
 		if (typeof _i == "instance")
@@ -110,7 +115,8 @@ this.companions_schrat <- this.inherit("scripts/entity/tactical/enemies/schrat",
 	function onInit()
 	{
 		this.schrat.onInit();
-		this.addSprite("socket").setBrush("bust_base_player");
+		this.schrat.assignRandomEquipment();
+		//this.addSprite("socket").setBrush("bust_base_player");
 	}
 
 	function applyCompanionScaling()

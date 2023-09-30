@@ -110,7 +110,7 @@ this.companions_horse <- this.inherit("scripts/entity/tactical/enemies/legend_ho
 	function onInit()
 	{
 		this.legend_horse.onInit();
-		this.addSprite("socket").setBrush("bust_base_player");
+		//this.addSprite("socket").setBrush("bust_base_player");
 	}
 
 	function applyCompanionScaling()

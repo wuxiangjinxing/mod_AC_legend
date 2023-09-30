@@ -14,6 +14,11 @@ this.companions_nacho <- this.inherit("scripts/entity/tactical/enemies/ghoul", {
 		this.m.ConfidentMoraleBrush = "icon_confident";
 	}
 
+	function isGuest()
+	{
+		return true;
+	}
+
 	function setItem(_i)
 	{
 		if (typeof _i == "instance")
@@ -39,7 +44,7 @@ this.companions_nacho <- this.inherit("scripts/entity/tactical/enemies/ghoul", {
 	function setVariant(_v)
 	{
 		this.m.Head = _v;
-		this.m.Size = this.m.Item.m.Level >= 7 ? 3 : this.m.Item.m.Level >= 4 ? 2 : 1;
+		this.m.Size = this.m.Item.m.Level >= 9 ? 3 : this.m.Item.m.Level >= 5 ? 2 : 1;
 		if (this.m.Size == 1)
 		{
 			this.getSprite("body").setBrush("bust_ghoul_body_01");
@@ -133,7 +138,7 @@ this.companions_nacho <- this.inherit("scripts/entity/tactical/enemies/ghoul", {
 	function onInit()
 	{
 		this.ghoul.onInit();
-		this.addSprite("socket").setBrush("bust_base_player");
+		//this.addSprite("socket").setBrush("bust_base_player");
 	}
 
 	function applyCompanionScaling()

@@ -11,6 +11,11 @@ this.companions_alp <- this.inherit("scripts/entity/tactical/enemies/alp", {
 		this.m.ConfidentMoraleBrush = "icon_confident";
 	}
 	
+	function isGuest()
+	{
+		return true;
+	}
+	
 	function setItem(_i)
 	{
 		if (typeof _i == "instance")
@@ -112,7 +117,7 @@ this.companions_alp <- this.inherit("scripts/entity/tactical/enemies/alp", {
 	function onInit()
 	{
 		this.alp.onInit();
-		this.addSprite("socket").setBrush("bust_base_player");
+		//this.addSprite("socket").setBrush("bust_base_player");
 	}
 	
 	function applyCompanionScaling()

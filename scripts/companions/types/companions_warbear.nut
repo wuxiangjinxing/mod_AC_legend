@@ -28,6 +28,11 @@ this.companions_warbear <- this.inherit("scripts/entity/tactical/legend_warbear"
 		}
 	}
 
+	function isGuest()
+	{
+		return true;
+	}
+
 	function setVariant( _v )
 	{
 	}

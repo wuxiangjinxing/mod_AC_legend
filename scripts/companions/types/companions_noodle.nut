@@ -12,6 +12,11 @@ this.companions_noodle <- this.inherit("scripts/entity/tactical/enemies/lindwurm
 		this.m.ConfidentMoraleBrush = "icon_confident";
 	}
 	
+	function isGuest()
+	{
+		return true;
+	}
+	
 	function setItem( _i )
 	{
 		if (typeof _i == "instance")
@@ -150,11 +155,11 @@ this.companions_noodle <- this.inherit("scripts/entity/tactical/enemies/lindwurm
 			{
 				this.m.Tail = this.WeakTableRef(this.Tactical.spawnEntity("scripts/companions/types/companions_noodle_tail", spawnTile.Coords.X, spawnTile.Coords.Y, this.getID()));
 				this.m.Tail.m.Body = this.WeakTableRef(this);
-				this.m.Tail.getSprite("body").Color = body.Color;
-				this.m.Tail.getSprite("body").Saturation = body.Saturation;
+				//this.m.Tail.getSprite("body").Color = body.Color;
+				//this.m.Tail.getSprite("body").Saturation = body.Saturation;
 			}
 		}		
-		this.addSprite("socket").setBrush("bust_base_player");
+		//this.addSprite("socket").setBrush("bust_base_player");
 	}
 
 	function applyCompanionScaling()

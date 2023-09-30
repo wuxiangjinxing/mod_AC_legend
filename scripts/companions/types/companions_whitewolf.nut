@@ -28,6 +28,11 @@ this.companions_whitewolf <- this.inherit("scripts/entity/tactical/legend_white_
 			}
 		}
 	}
+	
+	function isGuest()
+	{
+		return true;
+	}
 
 	function setVariant( _v )
 	{

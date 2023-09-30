@@ -45,7 +45,7 @@ this.companions_raise <- this.inherit("scripts/skills/skill", {
 			return;
 
 		this.m.Name = "Reanimate Dead";
-		this.m.Description = "Reanimate the dead and have them engage the enemy. Requires a resurrectable corpse on an empty tile. Can be used twice per battle."
+		this.m.Description = "Reanimate the dead and have them engage the enemy. Requires a resurrectable corpse on an empty tile. Can be used twice per battle plus one usage for every 5 levels of item."
 		this.m.Icon = this.Const.Companions.Library[this.m.Item.m.Type].Unleash.Icon(this.m.Item.m.Variant);
 		this.m.IconDisabled = this.Const.Companions.Library[this.m.Item.m.Type].Unleash.IconDisabled(this.m.Item.m.Variant);
 		this.m.Overlay = this.Const.Companions.Library[this.m.Item.m.Type].Unleash.Overlay;
@@ -82,7 +82,7 @@ this.companions_raise <- this.inherit("scripts/skills/skill", {
 
 	function isUsable()
 	{
-		if (!this.skill.isUsable() || this.m.UseCount >= 2)
+		if (!this.skill.isUsable() || this.m.UseCount >= 2 + this.Math.floor(this.m.Item.m.Level / 5.0))
 		{
 			return false;
 		}
@@ -93,7 +93,7 @@ this.companions_raise <- this.inherit("scripts/skills/skill", {
 	function onUpdate(_properties)
 	{
 		this.applyCompanionModification();
-		this.m.IsHidden = this.m.UseCount >= 2;
+		this.m.IsHidden = this.m.UseCount >= 2 + this.Math.floor(this.m.Item.m.Level / 5.0);
 	}
 
 	function onCombatFinished()
@@ -277,7 +277,7 @@ this.companions_raise <- this.inherit("scripts/skills/skill", {
 
 		this.spawnUndead(_user, _targetTile);
 		this.m.UseCount += 1;
-		this.m.IsHidden = this.m.UseCount >= 2;
+		this.m.IsHidden = this.m.UseCount >= 2 + this.Math.floor(this.m.Item.m.Level / 5.0);
 		return true;
 	}
 });

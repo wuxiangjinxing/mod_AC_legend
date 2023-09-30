@@ -27,6 +27,11 @@ this.companions_wardog <- this.inherit("scripts/entity/tactical/wardog", {
 		}
 	}
 
+	function isGuest()
+	{
+		return true;
+	}
+
 	function applyCompanionScaling()
 	{
 		local propertiesNew =

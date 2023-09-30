@@ -11,6 +11,11 @@ this.companions_direwolf <- this.inherit("scripts/entity/tactical/enemies/direwo
 		this.m.ConfidentMoraleBrush = "icon_confident";
 	}
 
+	function isGuest()
+	{
+		return true;
+	}
+
 	function setItem(_i)
 	{
 		if (typeof _i == "instance")
@@ -114,7 +119,7 @@ this.companions_direwolf <- this.inherit("scripts/entity/tactical/enemies/direwo
 	function onInit()
 	{
 		this.direwolf.onInit();
-		this.addSprite("socket").setBrush("bust_base_player");
+		//this.addSprite("socket").setBrush("bust_base_player");
 	}
 
 	function applyCompanionScaling()
