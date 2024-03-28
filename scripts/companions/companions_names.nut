@@ -1,10 +1,9 @@
-local gt = this.getroottable();
-if (!("Companions" in gt.Const))
+if (!("Companions" in ::Const))
 {
-	gt.Const.Companions <- {};
+	::Const.Companions <- {};
 }
 
-gt.Const.Companions.CanineNames <- [
+::Const.Companions.CanineNames <- [
 	"Bruno", "Hunter", "Smoke", "Outlaw", "Kane", "Digger", "Lightning", "Oracle", "Phantom",
 	"Mudroch", "Hawkeye", "Bullet",	"Loki", "Riggs", "Comet", "Bear", "Lupus", "Echo", "Snow",
 	"Ball",	"Rider", "Dane", "Brutus", "Thunder", "Jax", "Bones", "Riptide", "Hercules",
@@ -19,7 +18,7 @@ gt.Const.Companions.CanineNames <- [
 ];
 this.Const.Companions.CanineNames.extend(this.Const.Strings.WardogNames);
 
-gt.Const.Companions.SlitherachnoNames <- [
+::Const.Companions.SlitherachnoNames <- [
 	"Szeq\'ri", "Ichik\'zol", "Ok\'tur", "Raq\'rud", "Cor\'os", "Zit\'iced", "Qaq\'rivir",
 	"Nair\'eh", "At\'or", "Zachik\'sas", "Khocuk\'zed", "Chian\'qe", "Char\'al", "Qezeet\'ih",
 	"Nash\'ti", "Rhas\'tol", "Yak\'seesil", "Sak\'sieh", "Esit\'iar", "As\'tu",	"Nok\'sul",
@@ -41,7 +40,7 @@ gt.Const.Companions.SlitherachnoNames <- [
 	"Zril\'zax", "Sreek\'terri", "Kais\'za", "Yex\'uq", "Eek\'zucheb", "Khakiq\'zot", "Al\'zix"
 ];
 
-gt.Const.Companions.GutturalNames <- [
+::Const.Companions.GutturalNames <- [
 	"Koq", "Guaq", "Zajoq", "Chatzug", "Butgaq", "Voz", "Jik", "Ubac", "Rubbag", "Rixzok",
 	"Boz", "Vok", "Bax", "Khograk", "Kunaq", "Khaz", "Zujid", "Khok", "Gux", "Kog", "Joqric",
 	"Auskux", "Agzac", "Orgod", "Bod", "Khud", "Uquk", "Onkoz", "Boq", "Vuq", "Vodrut",
@@ -57,7 +56,7 @@ gt.Const.Companions.GutturalNames <- [
 	"Zudrid", "Gonkrid", "Vuzbuk", "Gakzak", "Bingrok", "Akgix", "Chokgog", "Ilgruk", "Vabluz"
 ];
 
-gt.Const.Companions.TreefolkNames <- [
+::Const.Companions.TreefolkNames <- [
 	"Pervalur", "Tralen", "Carnel", "Fenmaris", "Elakas", "Glynmenor", "Waesven", "Genren",
 	"Lutoris", "Qinnorin", "Thelamin", "Heimenor", "Dornan", "Tracan", "Advalur", "Elsalor",
 	"Kelxalim", "Naehorn", "Aexidor", "Raloris", "Fenwarin", "Leolar", "Keanan", "Qidark",
@@ -71,7 +70,7 @@ gt.Const.Companions.TreefolkNames <- [
 	"Fargolor", "Dorlamin", "Vavalur", "Theven", "Ologolor", "Zumzumin", "Waeshice", "Carxalim"
 ];
 
-gt.Const.Companions.SpookNames <- [
+::Const.Companions.SpookNames <- [
 	"Criozhar", "Shelak", "Strigrim", "Krorius", "Dagrim", "Ocraedulus", "Rivok", "Folekai",
 	"Waxor", "Krivok", "Saugan", "Gerow", "Griozhul", "Prokar", "Straqir", "Izexius", "Gemien",
 	"Kedulus", "Staulak", "Beigrim", "Istoughor", "Namien", "Wozhul", "Huthik", "Vuxir",
@@ -85,4 +84,15 @@ gt.Const.Companions.SpookNames <- [
 	"Hezar", "Shozar", "Vraughor", "Paekar", "Vizhul", "Veghor", "Rouxius", "Exakai",
 	"Xaxor", "Achelazar", "Ecedulus", "Igrexius", "Wrurius", "Gazhul", "Greilazar",
 	"Mevok", "Mezor", "Caelekai", "Wramien", "Zemien", "Tacular", "Drulazar", "Kiodum"
+];
+
+::Const.Companions.ChickenNames <- [
+	"Boco", "Choco", "Gysahl", "Coco", "Dango", "Mocha", "Nimbus", "Pudding", "Toffee", "Sunny",
+	"Blaze", "Bolt", "Luna", "Flare", "Sol", "Terra", "Sky", "Dawn", "Aurora", "Amber", "Echo", 
+	"Blaze", "Storm", "Seraph", "Star", "Luna", "Celeste", "Sora", "Raine", "Zephyr", "Nimbus",
+	"Shimmer", "Twilight", "Ember", "Harmony", "Whisper", "Nova", "Phoenix", "Serenity", "Dusk",
+	"Dawn", "Luna", "Starlight", "Breeze", "Radiance", "Crystal", "Aero", "Sable", "Zephyrus", 
+	"Astral", "Feather", "Cluckers", "Nimbus", "Coco", "Doodle", "Boco", "Peepers", "Bolt",
+	"Sunny", "Pudding", "Choco", "Fluffy", "Blaze", "Pippin", "Squawkers", "Sora", "Pecky",
+	"Mocha", "Terra", "Dango", "Aurora", "Cinnamon", "Toffee", "Dawn", "Echo"
 ];

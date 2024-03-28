@@ -13,8 +13,8 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 		this.m.IsTargetingActor = true;
 		this.m.IsUsingHitchance = false;
 
-		this.m.ActionPointCost = 6;
-		this.m.FatigueCost = 30;
+		this.m.ActionPointCost = ::modAccessoryCompanions.ACTameAP;
+		this.m.FatigueCost = ::modAccessoryCompanions.ACTameFat;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 1;
 
@@ -203,7 +203,7 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 		
 		mod = mod * ( 1.612 - this.pow((this.pow(creatureStrength,-1) * 11 + 0.634),-1));
 		
-		chance = chance * mod;
+		chance = this.Math.round(chance * mod * 10) * 0.1;
 		
 		if (chance > 95)
 		{
@@ -350,6 +350,7 @@ this.companions_tame <- this.inherit("scripts/skills/skill", {
 			}
 			if (target.m.IsMiniboss)
 			{
+				loot.setName(target.getName());
 				loot.m.Quirks.push("scripts/skills/racial/champion_racial");
 			}
 			//loot.giverandXP();

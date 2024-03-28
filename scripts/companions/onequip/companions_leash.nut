@@ -134,25 +134,6 @@ this.companions_leash <- this.inherit("scripts/skills/skill", {
 		}
 
 		this.m.Item.m.Wounds = this.Math.floor((1.0 - entity.getHitpointsPct()) * 100.0);
-		
-		local target_perks = entity.getSkills().query(this.Const.SkillType.Perk);
-		foreach(perk in target_perks)
-		{
-			local quirk = "";
-			foreach( i, v in this.getroottable().Const.Perks.PerkDefObjects )
-			{
-				if (perk.getID() == v.ID)
-				{
-					quirk = v.Script;
-					break;
-				}
-			}
-			if (quirk != "" && this.m.Item.m.Quirks.find(quirk) == null)
-			{
-				this.m.Item.m.Quirks.push(quirk);
-			}			
-		}
-		
 		entity.removeFromMap();
 		this.m.Item.setEntity(null);
 		this.m.IsHidden = !this.m.Item.isUnleashed();

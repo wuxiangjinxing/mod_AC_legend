@@ -1,10 +1,9 @@
-local gt = this.getroottable();
-if (!("Companions" in gt.Const))
+if (!("Companions" in ::Const))
 {
-	gt.Const.Companions <- {};
+	::Const.Companions <- {};
 }
 
-gt.Const.Companions.AttainableQuirks <- [
+::Const.Companions.AttainableQuirks <- [
 	"scripts/skills/perks/perk_anticipation",
 	"scripts/skills/perks/perk_battering_ram",
 	"scripts/skills/perks/perk_berserk",
@@ -28,7 +27,7 @@ gt.Const.Companions.AttainableQuirks <- [
 	"scripts/skills/perks/perk_underdog"
 ];
 
-gt.Const.Companions.AttainableQuirksBeasts <- [ //Undead cannot get those quirks
+::Const.Companions.AttainableQuirksBeasts <- [ //Undead cannot get those quirks
 	"scripts/skills/perks/perk_battle_flow",
 	"scripts/skills/perks/perk_feint",
 	"scripts/skills/perks/perk_fortified_mind",
@@ -47,7 +46,7 @@ gt.Const.Companions.AttainableQuirksBeasts <- [ //Undead cannot get those quirks
 	"scripts/skills/perks/perk_steel_brow"
 ];
 
-gt.Const.Companions.AttainableQuirksPhysical <- [ //Alp cannot get those perks
+::Const.Companions.AttainableQuirksPhysical <- [ //Alp cannot get those perks
 	"scripts/skills/perks/perk_backstabber",
 	"scripts/skills/perks/perk_bruiser",
 	"scripts/skills/perks/perk_coup_de_grace",
@@ -72,7 +71,7 @@ gt.Const.Companions.AttainableQuirksPhysical <- [ //Alp cannot get those perks
 	"scripts/skills/perks/perk_vengeance"
 ];
 
-gt.Const.Companions.AttainableQuirksActive <- [ //Available after lvl 11
+::Const.Companions.AttainableQuirksActive <- [ //Available after lvl 11
 	"scripts/skills/perks/perk_adrenalin",	
 	"scripts/skills/perks/perk_footwork",
 	"scripts/skills/perks/perk_indomitable",
@@ -89,7 +88,7 @@ gt.Const.Companions.AttainableQuirksActive <- [ //Available after lvl 11
 	"scripts/skills/perks/perk_taunt"
 ];
 
-gt.Const.Companions.AttainableQuirksPTR <- [
+::Const.Companions.AttainableQuirksPTR <- [
 	"scripts/skills/perks/perk_ptr_bloodbath",
 	"scripts/skills/perks/perk_ptr_bully",
 	"scripts/skills/perks/perk_ptr_dynamic_duo",
@@ -106,7 +105,7 @@ gt.Const.Companions.AttainableQuirksPTR <- [
 	"scripts/skills/perks/perk_ptr_wear_them_down",
 ];
 
-gt.Const.Companions.AttainableQuirksBeastsPTR <- [
+::Const.Companions.AttainableQuirksBeastsPTR <- [
 	"scripts/skills/perks/perk_ptr_bloodlust",
 	"scripts/skills/perks/perk_ptr_exude_confidence",
 	"scripts/skills/perks/perk_ptr_sanguinary",
@@ -114,7 +113,7 @@ gt.Const.Companions.AttainableQuirksBeastsPTR <- [
 	"scripts/skills/perks/perk_ptr_wears_it_well"
 ];
 
-gt.Const.Companions.AttainableQuirksPhysicalPTR <- [
+::Const.Companions.AttainableQuirksPhysicalPTR <- [
 	"scripts/skills/perks/perk_ptr_bear_down",
 	"scripts/skills/perks/perk_ptr_between_the_ribs",
 	"scripts/skills/perks/perk_ptr_bone_breaker",

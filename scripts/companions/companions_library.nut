@@ -1,9 +1,9 @@
-local gt = this.getroottable();
-if (!("Companions" in gt.Const))
+if (!("Companions" in ::Const))
 {
-	gt.Const.Companions <- {};
+	::Const.Companions <- {};
 }
-gt.Const.Companions.BeastMasters <- [
+
+::Const.Companions.BeastMasters <- [
 	["background.legend_commander_druid", 0.02],
 	["background.legend_druid", 0.015],
 	["background.legend_commander_ranger", 0.015],
@@ -11,7 +11,7 @@ gt.Const.Companions.BeastMasters <- [
 	["background.houndmaster", 0.01],
 	["background.legend_muladi", 0.01]
 ];
-gt.Const.Companions.TameListByType <- [
+::Const.Companions.TameListByType <- [
 	this.Const.EntityType.Wardog,
 	this.Const.EntityType.Wardog,
 	this.Const.EntityType.Wardog,
@@ -44,9 +44,10 @@ gt.Const.Companions.TameListByType <- [
 	this.Const.EntityType.LegendSkinGhoul,
 	this.Const.EntityType.LegendStollwurm,
 	this.Const.EntityType.LegendWhiteDirewolf,
-	this.Const.EntityType.LegendDemonAlp
+	this.Const.EntityType.LegendDemonAlp,
+	this.Const.EntityType.LegendBasiliskDrone
 ];
-gt.Const.Companions.TypeList <- {
+::Const.Companions.TypeList <- {
 	Wardog = 0,
 	WardogArmor = 1,
 	WardogArmorHeavy = 2,
@@ -79,10 +80,11 @@ gt.Const.Companions.TypeList <- {
 	SkinGhoul = 29,
 	Stollwurm = 30,
 	WhiteDirewolf = 31,
-	DemonAlp = 32
+	DemonAlp = 32,
+	BasiliskDrone = 33
 };
 
-gt.Const.Companions.Library <- [
+::Const.Companions.Library <- [
 	{
 		ID = "accessory.wardog",
 		Type = this.Const.Companions.TypeList.Wardog,
@@ -1128,7 +1130,7 @@ gt.Const.Companions.Library <- [
 		Leash = {	Script = "scripts/companions/onequip/companions_leash",
 					Icon = function(variant) { return "skills/white_direwolf_01_ac.png"; },						
 					IconDisabled = function(variant) { return "skills/white_direwolf_01_sw_ac.png"; },			
-					Overlay = ""	}
+					Overlay = ""}
 	},
 	{
 		ID = "accessory.demon_alp",
@@ -1169,6 +1171,47 @@ gt.Const.Companions.Library <- [
 		Leash = {	Script = "scripts/companions/onequip/companions_leash",
 					Icon = function(variant) { return "skills/demon_alp_0" + variant + "_ac.png"; },				
 					IconDisabled = function(variant) { return "skills/demon_alp_0" + variant + "_sw_ac.png"; },	
-					Overlay = ""	}
-	},	
+					Overlay = ""}
+	},
+	{
+		ID = "accessory.basilisk_drone",
+		Type = this.Const.Companions.TypeList.BasiliskDrone,
+		Name = function() { return this.Const.Companions.ChickenNames[this.Math.rand(0, this.Const.Companions.ChickenNames.len() - 1)]; },
+		NameUnleashed = "Basilisk Drone Collar",
+		Description = "A basilisk drone, tamed to be a loyal companion in battle. Can be unleashed in battle for scouting, tracking or running down routing enemies.",
+		DescriptionUnleashed = "The collar of an basilisk that has been unleashed onto the battlefield.",
+		IconLeashed = function(variant) { return "tools/basilisk_0" + variant + "_ac.png"; },					
+		IconUnleashed = "tools/hound_01_leash_70x70.png",
+		Value = 2000,
+		PartyStrength = 40.0,
+		Variant = function() { return 1; },
+		BasicQuirks = [
+			"scripts/skills/perks/perk_overwhelm",
+			"scripts/skills/perks/perk_legend_escape_artist"
+		],
+		BasicAttributes = { 
+			Hitpoints = 200,
+			Bravery = 90,
+			Stamina = 200,
+			MeleeSkill = 70,
+			RangedSkill = 0,
+			MeleeDefense = 15,
+			RangedDefense = 10,
+			Initiative = 80
+		},
+		PreferredAttribute = this.Const.Attributes.Hitpoints,
+		Script = "scripts/companions/types/companions_basilisk_drone",
+		ArmorScript = null,
+		UnleashSounds = ["sounds/enemies/Basilisk_hurt01.wav","sounds/enemies/Basilisk_hurt02.wav"],
+		InventorySounds = ["sounds/enemies/Basilisk_hurt01.wav","sounds/enemies/Basilisk_hurt02.wav"],
+		Unleash = {	Script = "scripts/companions/onequip/companions_unleash",
+					Icon = function(variant) { return "skills/basilisk_0" + variant + "_ac.png"; },
+					IconDisabled = function(variant) { return "skills/basilisk_0" + variant + "_sw_ac.png"; },
+					Overlay = "",
+					onActorDied = true	},
+		Leash = {	Script = "scripts/companions/onequip/companions_leash",
+					Icon = function(variant) { return "skills/basilisk_0" + variant + "_ac.png"; },
+					IconDisabled = function(variant) { return "skills/basilisk_0" + variant + "_sw_ac.png"; },
+					Overlay = ""}
+	}
 ];
