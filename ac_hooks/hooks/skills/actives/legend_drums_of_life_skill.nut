@@ -17,7 +17,7 @@
 				continue;
 			}
 	
-			if (a.isAlliedWith(_user))
+			if (a.isAlliedWith(_user) && ::MSU.isKindOf(a, "player") && !::MSU.isNull(a.getBackground()))
 			{
 				a.getSkills().add(this.new("scripts/skills/effects/legend_drums_of_life_effect"));
 			}
