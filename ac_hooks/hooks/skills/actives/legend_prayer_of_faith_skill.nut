@@ -18,7 +18,7 @@
 			}
 	
 	
-			if (a.isAlliedWith(_user))
+			if (a.isAlliedWith(_user) && ::MSU.isKindOf(a, "player") && !::MSU.isNull(a.getBackground()))
 			{
 				if (!a.getBackground().isBackgroundType(this.Const.BackgroundType.ConvertedCultist || this.Const.BackgroundType.Cultist))
 				{
@@ -30,7 +30,8 @@
 	
 			local skills = a.getSkills();
 	
-			if (skills.hasSkill("racial.skeleton") || skills.hasSkill("actives.zombie_bite") || skills.hasSkill("racial.vampire") || skills.hasSkill("racial.ghost"))
+			//if (skills.hasSkill("racial.skeleton") || skills.hasSkill("actives.zombie_bite") || skills.hasSkill("racial.vampire") || skills.hasSkill("racial.ghost"))
+			if (!skills.hasSkill("effects.disintegrating") && a.getFlags().has("undead"))
 			{
 				a.getSkills().add(this.new("scripts/skills/effects/legend_baffled_effect"));
 			}

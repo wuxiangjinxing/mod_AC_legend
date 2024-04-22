@@ -17,7 +17,7 @@
 				continue;
 			}
 	
-			if (a.isAlliedWith(_user))
+			if (a.isAlliedWith(_user) && ::MSU.isKindOf(a, "player") && !::MSU.isNull(a.getBackground()))
 			{
 				if (!a.getBackground().isBackgroundType(this.Const.BackgroundType.ConvertedCultist) && !a.getSkills().hasSkill("effects.legend_prayer_of_life"))
 				{
@@ -29,7 +29,8 @@
 	
 			local skills = a.getSkills();
 	
-			if (skills.hasSkill("racial.skeleton") || skills.hasSkill("actives.zombie_bite") || skills.hasSkill("racial.vampire") || skills.hasSkill("racial.ghost"))
+			//if (skills.hasSkill("racial.skeleton") || skills.hasSkill("actives.zombie_bite") || skills.hasSkill("racial.vampire") || skills.hasSkill("racial.ghost"))
+			if (!skills.hasSkill("effects.disintegrating") && a.getFlags().has("undead"))
 			{
 				if (!skills.hasSkill("effects.disintegrating"))
 				{
