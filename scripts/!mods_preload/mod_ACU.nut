@@ -1,27 +1,27 @@
 ::modAccessoryCompanions <- {
-	ID = "mod_AC",
-	Name = "Accessory Companions Legends (Rotu)",
-	Version = "2.0.0",
-	TameChance = 30,
+	ID = "mod_ACU",
+	Name = "Accessory Companions Updated",
+	Version = "1.2.4",
+	TameChance = 5,
 	MinimumLevelToBePlayerControlled = 11,
 	PlayerCompanionsStrength = 0,
 	EnemyACchanceMult = 10,
 	ACPartyStrengthMultiplier = 10,
 	ACOnlyPartyStrengthMultiplier = 10,
 	scaledCondition = false,
-	isEnableEnemyAC = true,
-	isEnableTamingEnemyAC = true,
+	isEnableEnemyAC = false,
+	isEnableTamingEnemyAC = false,
 	ACTameAP = 6,
 	ACTameFat = 30
 }
 
 ::modAccessoryCompanions.HooksMod <- ::Hooks.register(::modAccessoryCompanions.ID, ::modAccessoryCompanions.Version, ::modAccessoryCompanions.Name);
 ::modAccessoryCompanions.HooksMod.require("mod_msu >= 1.2.6", "mod_legends>= 18.1.0", "mod_modern_hooks>= 0.4.10");
-::modAccessoryCompanions.HooksMod.queue(">mod_legends",">mod_nggh_magic_concept",">mod_legends_PTR",">mod_world_editor_legends",">Chirutiru_balance",">mod_Chirutiru_enemies",">zChirutiru_equipment", function()
+::modAccessoryCompanions.HooksMod.queue(">mod_msu",">mod_legends",">mod_nggh_magic_concept",">mod_legends_PTR",">mod_world_editor_legends",">mod_item_spawner",">mod_sellswords", function()
 {
 	::modAccessoryCompanions.Mod <- ::MSU.Class.Mod(::modAccessoryCompanions.ID, ::modAccessoryCompanions.Version, ::modAccessoryCompanions.Name);
-    ::modAccessoryCompanions.Mod.Debug.setFlag("debug", true)
-	
+	::modAccessoryCompanions.Mod.Debug.setFlag("debug", true)
+
 	local page = ::modAccessoryCompanions.Mod.ModSettings.addPage("General");
 	local settingTameChance = page.addRangeSetting("TameChance", 5, 1, 100, 1.0, "Taming chance", "General chance of taming companion");
 	local settingMinimumLevelToBePlayerControlled = page.addRangeSetting("MinimumLevelToBePlayerControlled", 11, 1, 99, 1.0, "Minimum Level To Be Player Controlled", "Minimum level of companion when in becomes player controllable");
@@ -32,7 +32,7 @@
 	local settingACOnlyPartyStrengthMultiplier = page.addRangeSetting("ACOnlypartyStrengthMultiplier", 10, 0, 100, 1.0, "Multiplier for party strength of enemy AC divided by 10", "Multiplier for party strength of enemy AC divided by 10");
 	local settingACTameAP = page.addRangeSetting("skill_tame_ap", 6, 1, 9, 1, "AP cost of Tame skill");
 	local settingACTameFat = page.addRangeSetting("skill_tame_fat", 30, 1, 50, 1, "Fatigue cost of Tame skill");
-	
+
 	settingIsEnableTamingEnemyAC.addCallback(function(_value) { ::modAccessoryCompanions.isEnableTamingEnemyAC = _value; });
 	settingIsEnableEnemyAC.addCallback(function(_value) { ::modAccessoryCompanions.isEnableEnemyAC = _value; });
 	settingTameChance.addCallback(function(_value) { ::modAccessoryCompanions.TameChance = _value; });
@@ -45,7 +45,9 @@
 
 	if (!("Is_MC_Exist" in this.getroottable())) ::Is_MC_Exist <- ::mods_getRegisteredMod("mod_nggh_magic_concept") != null;
 	if (!("Is_PTR_Exist" in this.getroottable())) ::Is_PTR_Exist <- ::mods_getRegisteredMod("mod_legends_PTR") != null;
-	
+	if (!("Is_Item_Exist" in this.getroottable())) ::Is_Item_Exist <- ::mods_getRegisteredMod("mod_item_spawner") != null;
+
 	// load hook files
 	::include("ac_hooks/load.nut");
+
 }, ::Hooks.QueueBucket.Normal);

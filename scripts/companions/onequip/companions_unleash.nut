@@ -28,13 +28,9 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 	function setItem(_i)
 	{
 		if (typeof _i == "instance")
-		{
 			this.m.Item = _i;
-		}
 		else
-		{
 			this.m.Item = this.WeakTableRef(_i);
-		}
 	}
 
 	function applyCompanionModification()
@@ -80,9 +76,7 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 		//this.logInfo("onAdded default done");
 		local actor = this.getContainer().getActor();
 		if (actor.isPlayerControlled())
-		{
 			return;
-		}
 
 		local agent = actor.getAIAgent();
 
@@ -103,9 +97,7 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 	function isUsable()
 	{
 		if (this.m.Item.isUnleashed() || !this.skill.isUsable() || this.m.Item.getScript() == null || this.m.IsUsed == true)
-		{
 			return false;
-		}
 
 		return true;
 	}
@@ -126,29 +118,17 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 		local myTile = _targetTile;
 
 		if (myTile.hasNextTile(this.Const.Direction.NE) && myTile.getNextTile(this.Const.Direction.NE).IsEmpty)
-		{
 			return true;
-		}
 		else if (myTile.hasNextTile(this.Const.Direction.SE) && myTile.getNextTile(this.Const.Direction.SE).IsEmpty)
-		{
 			return true;
-		}
 		else if (myTile.hasNextTile(this.Const.Direction.N) && myTile.getNextTile(this.Const.Direction.N).IsEmpty)
-		{
 			return true;
-		}
 		else if (myTile.hasNextTile(this.Const.Direction.S) && myTile.getNextTile(this.Const.Direction.S).IsEmpty)
-		{
 			return true;
-		}
 		else if (myTile.hasNextTile(this.Const.Direction.NW) && myTile.getNextTile(this.Const.Direction.NW).IsEmpty)
-		{
 			return true;
-		}
 		else if (myTile.hasNextTile(this.Const.Direction.SW) && myTile.getNextTile(this.Const.Direction.SW).IsEmpty)
-		{
 			return true;
-		}
 
 		return false;
 	}
@@ -156,14 +136,10 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 	function onVerifyTarget(_originTile, _targetTile)
 	{
 		if (this.m.Item.m.Type == this.Const.Companions.TypeList.Noodle && !this.findTailTile(_targetTile))
-		{
 			return false;
-		}
 		
 		if (this.m.Item.m.Type == this.Const.Companions.TypeList.Stollwurm && !this.findTailTile(_targetTile))
-		{
 			return false;
-		}
 
 		return this.skill.onVerifyTarget(_originTile, _targetTile) && _targetTile.IsEmpty;
 	}
@@ -203,22 +179,16 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 			foreach(beastmaster in this.Const.Companions.BeastMasters)
 			{
 				if (this.getContainer().hasSkill(beastmaster[0]))
-				{
 					entity.setMoraleState(this.Const.MoraleState.Confident);
-				}
 				break;
 			}
 		}
 		
 		if (!this.World.getTime().IsDaytime && entity.getCurrentProperties().IsAffectedByNight)
-		{
 			entity.getSkills().add(this.new("scripts/skills/special/night_effect"));
-		}
 
 		if (this.Tactical.getWeather().IsRaining && entity.getCurrentProperties().IsAffectedByRain)
-		{
 			entity.getSkills().add(this.new("scripts/skills/special/legend_rain_effect"));
-		}		
 
 		local healthPercentage = (100.0 - this.m.Item.m.Wounds) / 100.0;
 		entity.setHitpoints(this.Math.max(1, this.Math.floor(healthPercentage * entity.m.Hitpoints)));
@@ -227,7 +197,8 @@ this.companions_unleash <- this.inherit("scripts/skills/skill", {
 		this.m.IsUsed = true;
 		this.m.IsHidden = this.isUsed();
 		local leash = this.getContainer().getActor().getSkills().getSkillByID("actives.leash_companion");
-		if (leash != null) leash.m.IsHidden = !this.m.Item.isUnleashed();
+		if (leash != null)
+			leash.m.IsHidden = !this.m.Item.isUnleashed();
 		return true;
 	}
 });

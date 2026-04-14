@@ -30,13 +30,9 @@ this.companions_raise <- this.inherit("scripts/skills/skill", {
 	function setItem(_i)
 	{
 		if (typeof _i == "instance")
-		{
 			this.m.Item = _i;
-		}
 		else
-		{
 			this.m.Item = this.WeakTableRef(_i);
-		}
 	}
 
 	function applyCompanionModification()
@@ -83,9 +79,7 @@ this.companions_raise <- this.inherit("scripts/skills/skill", {
 	function isUsable()
 	{
 		if (!this.skill.isUsable() || this.m.UseCount >= 2 + this.Math.floor(this.m.Item.m.Level / 5.0))
-		{
 			return false;
-		}
 
 		return true;
 	}
@@ -108,25 +102,15 @@ this.companions_raise <- this.inherit("scripts/skills/skill", {
 		local range = this.Math.min(this.m.MaxRange, this.getContainer().getActor().getCurrentProperties().getVision());
 
 		if (distance > range)
-		{
 			return false;
-		}
 		if (!_targetTile.IsCorpseSpawned)
-		{
 			return false;
-		}
 		if (!_targetTile.Properties.get("Corpse").IsResurrectable)
-		{
 			return false;
-		}
 		if (_targetTile.Properties.get("Corpse").Type == "scripts/entity/tactical/enemies/zombie_betrayer")
-		{
 			return false;
-		}
 		if (_targetTile.Properties.get("Corpse").Type == "scripts/entity/tactical/enemies/skeleton_lich" || _targetTile.Properties.get("Corpse").Type == "scripts/entity/tactical/enemies/skeleton_boss")
-		{
 			return false;
-		}
 
 		return this.skill.onVerifyTarget(_originTile, _targetTile) && _targetTile.IsEmpty;
 	}
@@ -144,9 +128,11 @@ this.companions_raise <- this.inherit("scripts/skills/skill", {
 			e.m.IsSummoned = true;
 
 			local currentOffhand = e.getItems().getItemAtSlot(this.Const.ItemSlot.Offhand);
-			if (currentOffhand != null) e.getItems().unequip(currentOffhand);
 			local currentMainhand = e.getItems().getItemAtSlot(this.Const.ItemSlot.Mainhand);
-			if (currentMainhand != null) e.getItems().unequip(currentMainhand);
+			if (currentOffhand != null) 
+				e.getItems().unequip(currentOffhand);
+			if (currentMainhand != null) 
+				e.getItems().unequip(currentMainhand);
 
 			local propertiesNew =
 			{
@@ -169,8 +155,10 @@ this.companions_raise <- this.inherit("scripts/skills/skill", {
 			e.m.CurrentProperties = propertiesBase;
 			e.m.Hitpoints = propertiesBase.Hitpoints;
 
-			if (currentOffhand != null) e.getItems().equip(currentOffhand);
-			if (currentMainhand != null) e.getItems().equip(currentMainhand);
+			if (currentOffhand != null) 
+				e.getItems().equip(currentOffhand);
+			if (currentMainhand != null) 
+				e.getItems().equip(currentMainhand);
 
 			if (this.m.Item.m.Quirks.len() != 0)
 			{
@@ -178,7 +166,8 @@ this.companions_raise <- this.inherit("scripts/skills/skill", {
 				{
 					local getQuirk = this.new(quirk);
 					local hasQuirk = e.getSkills().getSkillByID(getQuirk.m.ID);
-					if (hasQuirk == null) e.m.Skills.add(this.new(quirk));
+					if (hasQuirk == null) 
+						e.m.Skills.add(this.new(quirk));
 				}
 			}
 			
@@ -192,19 +181,13 @@ this.companions_raise <- this.inherit("scripts/skills/skill", {
 			else
 			{
 				if (e.getFlags().has("zombie_minion"))
-				{
 					e.m.AIAgent = this.new("scripts/ai/tactical/agents/zombie_agent");
-				}
 				else if (e.getFlags().has("skeleton"))
 				{
 					if (e.m.Type == this.Const.EntityType.SkeletonPriest)
-					{
 						e.m.AIAgent = this.new("scripts/ai/tactical/agents/skeleton_priest_agent");
-					}
 					else
-					{
 						e.m.AIAgent = this.new("scripts/ai/tactical/agents/skeleton_melee_agent");
-					}
 				}
 				e.m.AIAgent.setActor(e);
 	
@@ -262,17 +245,11 @@ this.companions_raise <- this.inherit("scripts/skills/skill", {
 		if (_targetTile.IsVisibleForPlayer)
 		{
 			if (this.Const.Tactical.RaiseUndeadParticles.len() != 0)
-			{
 				for( local i = 0; i < this.Const.Tactical.RaiseUndeadParticles.len(); i = ++i )
-				{
 					this.Tactical.spawnParticleEffect(true, this.Const.Tactical.RaiseUndeadParticles[i].Brushes, _targetTile, this.Const.Tactical.RaiseUndeadParticles[i].Delay, this.Const.Tactical.RaiseUndeadParticles[i].Quantity, this.Const.Tactical.RaiseUndeadParticles[i].LifeTimeQuantity, this.Const.Tactical.RaiseUndeadParticles[i].SpawnRate, this.Const.Tactical.RaiseUndeadParticles[i].Stages);
-				}
-			}
 
 			if (_user.isDiscovered() && (!_user.isHiddenToPlayer() || _targetTile.IsVisibleForPlayer))
-			{
 				this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " reanimates the dead");
-			}
 		}
 
 		this.spawnUndead(_user, _targetTile);

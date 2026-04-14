@@ -19,12 +19,8 @@ this.companions_whitewolf <- this.inherit("scripts/entity/tactical/legend_white_
 				local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
 
 				if (acc != null && "setType" in acc)
-				{
 					if (acc.getType() != null)
-					{
 						acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-					}
-				}
 			}
 		}
 	}
@@ -67,13 +63,9 @@ this.companions_whitewolf <- this.inherit("scripts/entity/tactical/legend_white_
 		{
 			local perk = this.new(quirk);
 			if ("IsForceEnabled" in perk.m)
-			{
 				perk.m.IsForceEnabled = true;
-			}
 			this.m.Skills.add(perk);
 		}
-
 	}
 
 });
-

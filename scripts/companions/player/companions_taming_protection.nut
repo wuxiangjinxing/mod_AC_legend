@@ -17,15 +17,9 @@ this.companions_taming_protection <- this.inherit("scripts/skills/skill", {
 	{
 		local entities = this.Tactical.Entities.getAllInstances();
 		foreach(ent in entities)
-		{
 			foreach(e in ent)
-			{
 				if (e.getFlags().has("taming_protection"))
-				{
 					e.getFlags().remove("taming_protection");
-				}
-			}
-		}
 
 		this.removeSelf();
 	}

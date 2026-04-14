@@ -18,13 +18,9 @@ this.companions_greenwood_schrat <- this.inherit("scripts/entity/tactical/enemie
 	function setItem(_i)
 	{
 		if (typeof _i == "instance")
-		{
 			this.m.Item = _i;
-		}
 		else
-		{
 			this.m.Item = this.WeakTableRef(_i);
-		}
 	}
 
 	function setName(_n)
@@ -79,14 +75,10 @@ this.companions_greenwood_schrat <- this.inherit("scripts/entity/tactical/enemie
 			local f = this.World.FactionManager.getFaction(this.getFaction());
 
 			if (f != null)
-			{
 				this.getSprite("socket").setBrush(f.getTacticalBase());
-			}
 		}
 		else
-		{
 			this.getSprite("socket").setBrush(this.Const.FactionBase[this.getFaction()]);
-		}
 	}
 
 	function onActorKilled(_actor, _tile, _skill)
@@ -104,10 +96,8 @@ this.companions_greenwood_schrat <- this.inherit("scripts/entity/tactical/enemie
 
 				local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
 				if (acc != null && "setType" in acc)
-				{
 					if (acc.getType() != null)
 						acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-				}
 			}
 		}
 	}
@@ -142,16 +132,19 @@ this.companions_greenwood_schrat <- this.inherit("scripts/entity/tactical/enemie
 		this.m.CurrentProperties = propertiesBase;
 		this.m.Hitpoints = propertiesBase.Hitpoints;
 
+		if ("Assets" in this.World && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary) 
+		{
+			this.m.Hitpoints = propertiesBase.Hitpoints * 2;
+			propertiesBase.MeleeSkill += 10;
+		}
 
 		foreach(quirk in this.m.Item.m.Quirks)
 		{
 			local perk = this.new(quirk);
 			if ("IsForceEnabled" in perk.m)
-			{
 				perk.m.IsForceEnabled = true;
-			}
 			this.m.Skills.add(perk);
 		}
-
 	}
+
 });

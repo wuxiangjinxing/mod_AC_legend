@@ -1,5 +1,5 @@
-::modAccessoryCompanions.HooksMod.hook("scripts/skills/actives/nightmare_skill", function( q ) 
-{
+::modAccessoryCompanions.HooksMod.hook("scripts/skills/actives/nightmare_skill", function( q ) {
+
 	q.create = @(__original) function()
 	{
 		__original();
@@ -15,7 +15,7 @@
 		this.m.MaxRange = 2;
 		this.m.MaxLevelDifference = 4;
 	}
-	
+
 	q.getTooltip = @(__original) function()
 	{
 		local ret = this.getDefaultTooltip();
@@ -33,27 +33,24 @@
 				text = "Damage is reduced by target\'s [color=" + ::Const.UI.Color.NegativeValue + "]Resolve[/color]"
 			}
 		]);
-		
+
 		return ret;
 	}
-	
+
 	q.isUsable = @(__original) function()
 	{
 		if (this.getContainer().getActor().isPlayerControlled())
-		{
 			return this.skill.isUsable();
-		}
-	
+
 		return __original();
 	}
-	
+
 	q.onVerifyTarget = @(__original) function(_originTile, _targetTile)
 	{
 		if (!this.skill.onVerifyTarget(_originTile, _targetTile))
-		{
 			return false;
-		}
-		
+
 		return _targetTile.getEntity().getSkills().getSkillByID("effects.sleeping") != null;
 	}
+
 });

@@ -18,13 +18,9 @@ this.companions_unhold <- this.inherit("scripts/entity/tactical/enemies/unhold",
 	function setItem(_i)
 	{
 		if (typeof _i == "instance")
-		{
 			this.m.Item = _i;
-		}
 		else
-		{
 			this.m.Item = this.WeakTableRef(_i);
-		}
 	}
 
 	function setName(_n)
@@ -58,13 +54,9 @@ this.companions_unhold <- this.inherit("scripts/entity/tactical/enemies/unhold",
 			if (this.m.Item.getContainer() != null)
 			{
 				if (this.m.Item.getCurrentSlotType() == this.Const.ItemSlot.Bag)
-				{
 					this.m.Item.getContainer().removeFromBag(this.m.Item.get());
-				}
 				else
-				{
 					this.m.Item.getContainer().unequip(this.m.Item.get());
-				}
 			}
 
 			this.m.Item = null;
@@ -86,14 +78,10 @@ this.companions_unhold <- this.inherit("scripts/entity/tactical/enemies/unhold",
 			local f = this.World.FactionManager.getFaction(this.getFaction());
 
 			if (f != null)
-			{
 				this.getSprite("socket").setBrush(f.getTacticalBase());
-			}
 		}
 		else
-		{
 			this.getSprite("socket").setBrush(this.Const.FactionBase[this.getFaction()]);
-		}
 	}
 
 	function onActorKilled(_actor, _tile, _skill)
@@ -111,10 +99,8 @@ this.companions_unhold <- this.inherit("scripts/entity/tactical/enemies/unhold",
 
 				local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
 				if (acc != null && "setType" in acc)
-				{
 					if (acc.getType() != null)
 						acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-				}
 			}
 		}
 	}
@@ -154,19 +140,21 @@ this.companions_unhold <- this.inherit("scripts/entity/tactical/enemies/unhold",
 		this.m.CurrentProperties = propertiesBase;
 		this.m.Hitpoints = propertiesBase.Hitpoints;
 
+		if ("Assets" in this.World && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary) 
+		{
+			this.m.Hitpoints = propertiesBase.Hitpoints * 2;
+			propertiesBase.MeleeSkill += 10;
+		}
+
 		foreach(quirk in this.m.Item.m.Quirks)
 		{
 			local perk = this.new(quirk);
 			if ("IsForceEnabled" in perk.m)
-			{
 				perk.m.IsForceEnabled = true;
-			}
 			this.m.Skills.add(perk);
 		}
 		if ((this.m.Item.m.Variant == 1 || this.m.Item.m.Variant == 5) && !this.getSkills().hasSkill("perk.killing_frenzy"))
-		{
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_killing_frenzy"));
-		}
 
 		if (this.m.Item.m.Variant == 5)
 		{
@@ -179,4 +167,5 @@ this.companions_unhold <- this.inherit("scripts/entity/tactical/enemies/unhold",
 			this.m.Items.equip(this.new("scripts/items/helmets/barbarians/unhold_helmet_light"));
 		}
 	}
+
 });

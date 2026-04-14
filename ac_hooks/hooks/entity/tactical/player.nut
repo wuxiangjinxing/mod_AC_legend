@@ -1,14 +1,25 @@
-::modAccessoryCompanions.HooksMod.hook("scripts/entity/tactical/player", function( q ) 
-{
+::modAccessoryCompanions.HooksMod.hook("scripts/entity/tactical/player", function( q ) {
+
 	q.onInit = @(__original) function()
 	{
 		__original();
-		if(this.m.IsControlledByPlayer && !this.getSkills().hasSkill("actives.companions_tame"))
+
+		if (::Is_MC_Exist)
 		{
-			this.m.Skills.add(this.new("scripts/companions/player/companions_tame"));
+			if (this.m.IsControlledByPlayer && !("Mount" in this.m) && !this.getSkills().hasSkill("actives.companions_tame"))
+			{
+				this.m.Skills.add(this.new("scripts/companions/player/companions_tame"));
+			}
+		}
+		else
+		{
+			if(this.m.IsControlledByPlayer && !this.getSkills().hasSkill("actives.companions_tame"))
+			{
+				this.m.Skills.add(this.new("scripts/companions/player/companions_tame"));
+			}
 		}
 	}
-	
+
 	q.onActorKilled = @(__original) function(_actor, _tile, _skill)
 	{
 		__original(_actor, _tile, _skill);
@@ -19,17 +30,14 @@
 		{
 			local cAcc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
 			if (cAcc != null && "setType" in cAcc)
-			{
 				if (cAcc.getType() != null)
 					cAcc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-			}
 		}
 
 		local kAcc = this.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
 		if (kAcc != null && "setType" in kAcc)
-		{
 			if (kAcc.getType() != null)
 				kAcc.addXP(XPkiller);
-		}
 	}
+
 });

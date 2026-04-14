@@ -25,4 +25,3 @@ this.warwolf_heavy_armor <- this.inherit("scripts/items/armor/armor", {
 	}
 
 });
-

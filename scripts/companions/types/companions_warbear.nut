@@ -20,9 +20,7 @@ this.companions_warbear <- this.inherit("scripts/entity/tactical/legend_warbear"
 				if (acc != null && "setType" in acc)
 				{
 					if (acc.getType() != null)
-					{
 						acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-					}
 				}
 			}
 		}
@@ -66,13 +64,9 @@ this.companions_warbear <- this.inherit("scripts/entity/tactical/legend_warbear"
 		{
 			local perk = this.new(quirk);
 			if ("IsForceEnabled" in perk.m)
-			{
 				perk.m.IsForceEnabled = true;
-			}
 			this.m.Skills.add(perk);
 		}
-
 	}
 
 });
-

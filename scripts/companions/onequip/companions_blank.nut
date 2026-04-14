@@ -21,13 +21,9 @@ this.companions_blank <- this.inherit("scripts/skills/skill", {
 	function setItem(_i)
 	{
 		if (typeof _i == "instance")
-		{
 			this.m.Item = _i;
-		}
 		else
-		{
 			this.m.Item = this.WeakTableRef(_i);
-		}
 	}
 
 	function applyCompanionModification()

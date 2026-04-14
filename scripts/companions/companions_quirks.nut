@@ -10,14 +10,12 @@ if (!("Companions" in ::Const))
 	"scripts/skills/perks/perk_colossus",	
 	"scripts/skills/perks/perk_dodge",
 	"scripts/skills/perks/perk_fearsome",
-	"scripts/skills/perks/perk_ironside",
-	"scripts/skills/perks/perk_last_stand",
+	"scripts/skills/perks/perk_legend_ironside",
+	"scripts/skills/perks/perk_legend_last_stand",
 	"scripts/skills/perks/perk_legend_alert",
-	//"scripts/skills/perks/perk_legend_balance",
 	"scripts/skills/perks/perk_legend_battleheart",
 	"scripts/skills/perks/perk_legend_composure",
 	"scripts/skills/perks/perk_legend_freedom_of_movement",
-	//"scripts/skills/perks/perk_legend_lithe",
 	"scripts/skills/perks/perk_legend_terrifying_visage",	
 	"scripts/skills/perks/perk_nimble",
 	"scripts/skills/perks/perk_nine_lives",
@@ -29,30 +27,28 @@ if (!("Companions" in ::Const))
 
 ::Const.Companions.AttainableQuirksBeasts <- [ //Undead cannot get those quirks
 	"scripts/skills/perks/perk_battle_flow",
-	"scripts/skills/perks/perk_feint",
+	"scripts/skills/perks/perk_legend_feint",
 	"scripts/skills/perks/perk_fortified_mind",
 	"scripts/skills/perks/perk_hold_out",
 	"scripts/skills/perks/perk_legend_assured_conquest",
 	"scripts/skills/perks/perk_legend_back_to_basics",
 	"scripts/skills/perks/perk_legend_bloodbath",
-//	"scripts/skills/perks/perk_legend_matching_set",
 	"scripts/skills/perks/perk_legend_mind_over_body",
 	"scripts/skills/perks/perk_legend_poison_immunity",
 	"scripts/skills/perks/perk_legend_second_wind",
 	"scripts/skills/perks/perk_legend_taste_the_pain",
 	"scripts/skills/perks/perk_legend_true_believer",
-	"scripts/skills/perks/perk_rebound",
+	"scripts/skills/perks/perk_legend_rebound",
 	"scripts/skills/perks/perk_steadfast",
 	"scripts/skills/perks/perk_steel_brow"
 ];
 
 ::Const.Companions.AttainableQuirksPhysical <- [ //Alp cannot get those perks
 	"scripts/skills/perks/perk_backstabber",
-	"scripts/skills/perks/perk_bruiser",
 	"scripts/skills/perks/perk_coup_de_grace",
 	"scripts/skills/perks/perk_crippling_strikes",
 	"scripts/skills/perks/perk_devastating_strikes",
-	"scripts/skills/perks/perk_double_strike",
+	"scripts/skills/perks/perk_legend_double_strike",
 	"scripts/skills/perks/perk_duelist",
 	"scripts/skills/perks/perk_fast_adaption",
 	"scripts/skills/perks/perk_head_hunter",
@@ -62,29 +58,22 @@ if (!("Companions" in ::Const))
 	"scripts/skills/perks/perk_legend_lacerate",
 	"scripts/skills/perks/perk_legend_muscularity",
 	"scripts/skills/perks/perk_legend_onslaught",
-	"scripts/skills/perks/perk_legend_slaughter",
 	"scripts/skills/perks/perk_legend_in_the_zone",
 	"scripts/skills/perks/perk_overwhelm",
-	"scripts/skills/perks/perk_push_the_advantage",
-	"scripts/skills/perks/perk_slaughterer",
+	"scripts/skills/perks/perk_legend_push_the_advantage",
+	"scripts/skills/perks/perk_legend_slaughterer",
 	"scripts/skills/perks/perk_sundering_strikes",
-	"scripts/skills/perks/perk_vengeance"
+	"scripts/skills/perks/perk_legend_vengeance"
 ];
 
 ::Const.Companions.AttainableQuirksActive <- [ //Available after lvl 11
-	"scripts/skills/perks/perk_adrenalin",	
+	"scripts/skills/perks/perk_adrenalin",
 	"scripts/skills/perks/perk_footwork",
 	"scripts/skills/perks/perk_indomitable",
-	"scripts/skills/perks/perk_inspire",
-	"scripts/skills/perks/perk_legend_entice",	
 	"scripts/skills/perks/perk_legend_perfect_focus",
 	"scripts/skills/perks/perk_legend_push",
-	"scripts/skills/perks/perk_legend_relax",	
-	"scripts/skills/perks/perk_legend_throw_sand",
-	"scripts/skills/perks/perk_perfect_focus",
-	"scripts/skills/perks/perk_rally_the_troops",
-	"scripts/skills/perks/perk_return_favor",
-	"scripts/skills/perks/perk_rotation",	
+	"scripts/skills/perks/perk_legend_relax",
+	"scripts/skills/perks/perk_legend_return_favor",
 	"scripts/skills/perks/perk_taunt"
 ];
 

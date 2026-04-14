@@ -1,5 +1,5 @@
-::modAccessoryCompanions.HooksMod.hook("scripts/entity/tactical/human", function( q ) 
-{	
+::modAccessoryCompanions.HooksMod.hook("scripts/entity/tactical/human", function( q ) {
+
 	if ("assignRandomEquipment" in q)
 	{
 		q.assignRandomEquipment = @(__original) function()
@@ -8,12 +8,12 @@
 			{
 				if (::modAccessoryCompanions.isEnableEnemyAC && ::modAccessoryCompanions.scaledCondition && this.getFaction() > this.Const.Faction.PlayerAnimals && ::modAccessoryCompanions.PlayerCompanionsStrength > 0 && !this.isAlliedWithPlayer())
 				{
-					local tierRoll = this.Math.rand(1, 100);			
+					local tierRoll = this.Math.rand(1, 100);
 					local rollType = 0;
 					
 					if (tierRoll > this.Math.min(80, 33.0 * (1.0 + ::modAccessoryCompanions.PlayerCompanionsStrength * 0.002)))
 					{
-						rollType = this.Math.rand(0,8);  				//doggos
+						rollType = this.Math.rand(0,8);  // Dogs
 						if (rollType == 7)
 							rollType = 22;
 						if (rollType == 8)
@@ -26,13 +26,11 @@
 					else if (tierRoll > this.Math.min(10, 1.0 * (1.0 + ::modAccessoryCompanions.PlayerCompanionsStrength * 0.006)))
 					{
 						rollType = this.Math.rand(15,20);
-						while (rollType == 19)							// big ones
-						{
+						while (rollType == 19)
 							rollType = 21;
-						}
 					}
 					else 
-						rollType = this.Math.rand(26,32);				// legendary
+						rollType = this.Math.rand(26,32);  // Legendary
 	
 					local loot = this.new("scripts/items/accessory/wardog_item");
 					loot.setType(rollType);
@@ -41,29 +39,19 @@
 				
 					local lootStr = 0;
 					if (loot.getType() == this.Const.Companions.TypeList.Nacho && loot.m.Level >= 9)
-					{
 						lootStr = (this.Const.Companions.Library[loot.getType()].PartyStrength + 22.0) * this.pow(loot.m.Level, 0.17);
-					}
 					else if (loot.getType() == this.Const.Companions.TypeList.Nacho && loot.m.Level >= 5)
-					{
 						lootStr = (this.Const.Companions.Library[loot.getType()].PartyStrength + 10.0) * this.pow(loot.m.Level, 0.17);
-					}
 					else if (loot.getType() == this.Const.Companions.TypeList.SkinGhoul && loot.m.Level >= 9)
-					{
 						lootStr = (this.Const.Companions.Library[loot.getType()].PartyStrength + 60.0) * this.pow(loot.m.Level, 0.17);
-					}
 					else if (loot.getType() == this.Const.Companions.TypeList.SkinGhoul && loot.m.Level >= 5)
-					{
 						lootStr = (this.Const.Companions.Library[loot.getType()].PartyStrength + 25.0) * this.pow(loot.m.Level, 0.17);
-					}
 					else
-					{
 						lootStr = this.Const.Companions.Library[loot.getType()].PartyStrength * this.pow(loot.m.Level, 0.17);
-					}
 					
 					if (loot.m.Quirks.find("scripts/skills/racial/champion_racial") != null)
 						lootStr *= 2;
-				
+
 					if(::modAccessoryCompanions.PlayerCompanionsStrength - lootStr > 0)
 					{
 						::modAccessoryCompanions.PlayerCompanionsStrength = ::modAccessoryCompanions.PlayerCompanionsStrength - lootStr;
@@ -72,7 +60,6 @@
 				}
 			}
 			__original();
-			
 		}
 	}
 	else
@@ -83,12 +70,12 @@
 			{
 				if (::modAccessoryCompanions.isEnableEnemyAC && ::modAccessoryCompanions.scaledCondition && this.getFaction() > this.Const.Faction.PlayerAnimals && ::modAccessoryCompanions.PlayerCompanionsStrength > 0 && !this.isAlliedWithPlayer())
 				{
-					local tierRoll = this.Math.rand(1, 100);			
+					local tierRoll = this.Math.rand(1, 100);
 					local rollType = 0;
-					
+
 					if (tierRoll > this.Math.min(80, 33.0 * (1.0 + ::modAccessoryCompanions.PlayerCompanionsStrength * 0.002)))
 					{
-						rollType = this.Math.rand(0,8);  				//doggos
+						rollType = this.Math.rand(0,8);  // Dogs
 						if (rollType == 7)
 							rollType = 22;
 						if (rollType == 8)
@@ -101,52 +88,41 @@
 					else if (tierRoll > this.Math.min(10, 1.0 * (1.0 + ::modAccessoryCompanions.PlayerCompanionsStrength * 0.006)))
 					{
 						rollType = this.Math.rand(15,20);
-						while (rollType == 19)							// big ones
-						{
+						while (rollType == 19)
 							rollType = 21;
-						}
 					}
 					else 
-						rollType = this.Math.rand(26,32);				// legendary
-	
+						rollType = this.Math.rand(26,32);  // Legendary
+
 					local loot = this.new("scripts/items/accessory/wardog_item");
 					loot.setType(rollType);
 					loot.giverandXP();
 					loot.updateCompanion();
-				
+
 					local lootStr = 0;
 					if (loot.getType() == this.Const.Companions.TypeList.Nacho && loot.m.Level >= 9)
-					{
 						lootStr = (this.Const.Companions.Library[loot.getType()].PartyStrength + 22.0) * this.pow(loot.m.Level, 0.17);
-					}
 					else if (loot.getType() == this.Const.Companions.TypeList.Nacho && loot.m.Level >= 5)
-					{
 						lootStr = (this.Const.Companions.Library[loot.getType()].PartyStrength + 10.0) * this.pow(loot.m.Level, 0.17);
-					}
 					else if (loot.getType() == this.Const.Companions.TypeList.SkinGhoul && loot.m.Level >= 9)
-					{
 						lootStr = (this.Const.Companions.Library[loot.getType()].PartyStrength + 60.0) * this.pow(loot.m.Level, 0.17);
-					}
 					else if (loot.getType() == this.Const.Companions.TypeList.SkinGhoul && loot.m.Level >= 5)
-					{
 						lootStr = (this.Const.Companions.Library[loot.getType()].PartyStrength + 25.0) * this.pow(loot.m.Level, 0.17);
-					}
 					else
-					{
 						lootStr = this.Const.Companions.Library[loot.getType()].PartyStrength * this.pow(loot.m.Level, 0.17);
-					}
-					
+
 					if (loot.m.Quirks.find("scripts/skills/racial/champion_racial") != null)
 						lootStr *= 2;
-				
+
 					if (::modAccessoryCompanions.PlayerCompanionsStrength - lootStr > 0)
 					{
 						::modAccessoryCompanions.PlayerCompanionsStrength = ::modAccessoryCompanions.PlayerCompanionsStrength - lootStr;
-					this.m.Items.equip(loot);
+						this.m.Items.equip(loot);
 					}
 				}
 			}
 			this.actor.assignRandomEquipment();
 		}
 	}
+
 });	

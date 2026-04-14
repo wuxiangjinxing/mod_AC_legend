@@ -1,5 +1,5 @@
-::modAccessoryCompanions.HooksMod.hook("scripts/entity/tactical/enemies/zombie", function( q ) 
-{
+::modAccessoryCompanions.HooksMod.hook("scripts/entity/tactical/enemies/zombie", function( q ) {
+
 	if ("onActorKilled" in q)
 	{
 		q.onActorKilled = @(__original) function(_actor, _tile, _skill)
@@ -14,10 +14,8 @@
 
 					local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
 					if (acc != null && "setType" in acc)
-					{
 						if (acc.getType() != null)
 							acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-					}
 				}
 			}
 			__original(_actor, _tile, _skill);
@@ -37,13 +35,12 @@
 
 					local acc = bro.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
 					if (acc != null && "setType" in acc)
-					{
 						if (acc.getType() != null)
 							acc.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
-					}
 				}
 			}
 			this.actor.onActorKilled(_actor, _tile, _skill);
 		}
 	}
+
 });

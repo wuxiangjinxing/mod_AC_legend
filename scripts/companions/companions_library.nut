@@ -4,6 +4,7 @@ if (!("Companions" in ::Const))
 }
 
 ::Const.Companions.BeastMasters <- [
+	["background.beast_tamer", 0.03],
 	["background.legend_commander_druid", 0.02],
 	["background.legend_druid", 0.015],
 	["background.legend_commander_ranger", 0.015],
@@ -45,7 +46,9 @@ if (!("Companions" in ::Const))
 	this.Const.EntityType.LegendStollwurm,
 	this.Const.EntityType.LegendWhiteDirewolf,
 	this.Const.EntityType.LegendDemonAlp,
-	this.Const.EntityType.LegendBasiliskDrone
+	this.Const.EntityType.LegendBasiliskDrone,
+	this.Const.EntityType.LegendBasiliskSentry,
+	this.Const.EntityType.SpiderEggs
 ];
 ::Const.Companions.TypeList <- {
 	Wardog = 0,
@@ -81,7 +84,9 @@ if (!("Companions" in ::Const))
 	Stollwurm = 30,
 	WhiteDirewolf = 31,
 	DemonAlp = 32,
-	BasiliskDrone = 33
+	BasiliskDrone = 33,
+	BasiliskSentry = 34,
+	SpiderEggs = 35
 };
 
 ::Const.Companions.Library <- [
@@ -456,7 +461,7 @@ if (!("Companions" in ::Const))
 		NameUnleashed = "Nachzehrer Collar",
 		Description = "A nachzehrer, tamed to be a loyal companion in battle. Can be unleashed in battle for scouting, tracking or running down routing enemies.",
 		DescriptionUnleashed = "The collar of a nachzehrer that has been unleashed onto the battlefield.",
-		IconLeashed = function(variant) { return "tools/nacho_0" + variant + "_ac.png"; },
+		IconLeashed = function(variant) { return "tools/nacho_02_" + variant + "_ac.png"; },
 		IconUnleashed = "tools/hound_01_leash_70x70.png",
 		Value = 950,
 		PartyStrength = 8.0,
@@ -516,7 +521,7 @@ if (!("Companions" in ::Const))
 		IconUnleashed = "tools/hound_01_leash_70x70.png",
 		Value = 2500,
 		PartyStrength = 50.0,
-		Variant = function() { return this.Math.rand(1, 5); },
+		Variant = function() { return this.Math.rand(1, 3); },
 		BasicAttributes = { Hitpoints = 500, Stamina = 400, Bravery = 130, Initiative = 75, MeleeSkill = 70, RangedSkill = 0, MeleeDefense = 10, RangedDefense = 0 },
 		PreferredAttribute = this.Const.Attributes.MeleeSkill,
 		Script = "scripts/companions/types/companions_unhold",
@@ -544,7 +549,7 @@ if (!("Companions" in ::Const))
 		IconUnleashed = "tools/hound_01_leash_70x70.png",
 		Value = 3500,
 		PartyStrength = 74.0,
-		Variant = function() { return this.Math.rand(1, 5); },
+		Variant = function() { return this.Math.rand(4, 5); },
 		BasicAttributes = { Hitpoints = 500, Stamina = 400, Bravery = 130, Initiative = 75, MeleeSkill = 70, RangedSkill = 0, MeleeDefense = 10, RangedDefense = 0 },
 		PreferredAttribute = this.Const.Attributes.MeleeSkill,
 		Script = "scripts/companions/types/companions_unhold",
@@ -1004,10 +1009,10 @@ if (!("Companions" in ::Const))
 		NameUnleashed = "Skin Ghoul Collar",
 		Description = "A skin ghoul, tamed to be a loyal companion in battle. Can be unleashed in battle for scouting, tracking or running down routing enemies.",
 		DescriptionUnleashed = "The collar of a nachzehrer that has been unleashed onto the battlefield.",
-		IconLeashed = function(variant) { return "tools/skin_nacho_0" + variant + "_ac.png"; },							
+		IconLeashed = function(variant) { return "tools/skin_nacho_02_" + variant + "_ac.png"; },
 		IconUnleashed = "tools/hound_01_leash_70x70.png",
-		Value = 7000,																								
-		PartyStrength = 75.0,																						// + 22 and +33 per size																						
+		Value = 7000,
+		PartyStrength = 75.0,
 		Variant = function() { return this.Math.rand(1, 3); },
 		BasicQuirks = [
 			"scripts/skills/perks/perk_pathfinder",
@@ -1180,10 +1185,10 @@ if (!("Companions" in ::Const))
 		NameUnleashed = "Basilisk Drone Collar",
 		Description = "A basilisk drone, tamed to be a loyal companion in battle. Can be unleashed in battle for scouting, tracking or running down routing enemies.",
 		DescriptionUnleashed = "The collar of an basilisk that has been unleashed onto the battlefield.",
-		IconLeashed = function(variant) { return "tools/basilisk_0" + variant + "_ac.png"; },					
+		IconLeashed = function(variant) { return "tools/basilisk_drone_0" + variant + "_ac.png"; },					
 		IconUnleashed = "tools/hound_01_leash_70x70.png",
 		Value = 2000,
-		PartyStrength = 40.0,
+		PartyStrength = 35.0,
 		Variant = function() { return 1; },
 		BasicQuirks = [
 			"scripts/skills/perks/perk_overwhelm",
@@ -1205,13 +1210,83 @@ if (!("Companions" in ::Const))
 		UnleashSounds = ["sounds/enemies/Basilisk_hurt01.wav","sounds/enemies/Basilisk_hurt02.wav"],
 		InventorySounds = ["sounds/enemies/Basilisk_hurt01.wav","sounds/enemies/Basilisk_hurt02.wav"],
 		Unleash = {	Script = "scripts/companions/onequip/companions_unleash",
-					Icon = function(variant) { return "skills/basilisk_0" + variant + "_ac.png"; },
-					IconDisabled = function(variant) { return "skills/basilisk_0" + variant + "_sw_ac.png"; },
+					Icon = function(variant) { return "skills/basilisk_drone_0" + variant + "_ac.png"; },
+					IconDisabled = function(variant) { return "skills/basilisk_drone_0" + variant + "_sw_ac.png"; },
 					Overlay = "",
 					onActorDied = true	},
 		Leash = {	Script = "scripts/companions/onequip/companions_leash",
-					Icon = function(variant) { return "skills/basilisk_0" + variant + "_ac.png"; },
-					IconDisabled = function(variant) { return "skills/basilisk_0" + variant + "_sw_ac.png"; },
+					Icon = function(variant) { return "skills/basilisk_drone_0" + variant + "_ac.png"; },
+					IconDisabled = function(variant) { return "skills/basilisk_drone_0" + variant + "_sw_ac.png"; },
 					Overlay = ""}
+	},
+	{
+		ID = "accessory.basilisk_sentry",
+		Type = this.Const.Companions.TypeList.BasiliskSentry,
+		Name = function() { return this.Const.Companions.ChickenNames[this.Math.rand(0, this.Const.Companions.ChickenNames.len() - 1)]; },
+		NameUnleashed = "Basilisk Sentry Collar",
+		Description = "A basilisk sentry, tamed to be a loyal companion in battle. Can be unleashed in battle for scouting, tracking or running down routing enemies.",
+		DescriptionUnleashed = "The collar of an basilisk that has been unleashed onto the battlefield.",
+		IconLeashed = function(variant) { return "tools/basilisk_sentry_0" + variant + "_ac.png"; },					
+		IconUnleashed = "tools/hound_01_leash_70x70.png",
+		Value = 2500,
+		PartyStrength = 45.0,
+		Variant = function() { return 1; },
+		BasicQuirks = [
+			"scripts/skills/perks/perk_overwhelm",
+			"scripts/skills/perks/perk_legend_escape_artist"
+		],
+		BasicAttributes = { 
+			Hitpoints = 160,
+			Bravery = 80,
+			Stamina = 180,
+			MeleeSkill = 75,
+			RangedSkill = 0,
+			MeleeDefense = 5,
+			RangedDefense = 20,
+			Initiative = 75
+		},
+		PreferredAttribute = this.Const.Attributes.Hitpoints,
+		Script = "scripts/companions/types/companions_basilisk_sentry",
+		ArmorScript = null,
+		UnleashSounds = ["sounds/enemies/Basilisk_hurt01.wav","sounds/enemies/Basilisk_hurt02.wav"],
+		InventorySounds = ["sounds/enemies/Basilisk_hurt01.wav","sounds/enemies/Basilisk_hurt02.wav"],
+		Unleash = {	Script = "scripts/companions/onequip/companions_unleash",
+					Icon = function(variant) { return "skills/basilisk_sentry_0" + variant + "_ac.png"; },
+					IconDisabled = function(variant) { return "skills/basilisk_sentry_0" + variant + "_sw_ac.png"; },
+					Overlay = "",
+					onActorDied = true	},
+		Leash = {	Script = "scripts/companions/onequip/companions_leash",
+					Icon = function(variant) { return "skills/basilisk_sentry_0" + variant + "_ac.png"; },
+					IconDisabled = function(variant) { return "skills/basilisk_sentry_0" + variant + "_sw_ac.png"; },
+					Overlay = ""}
+	},
+	{
+		ID = "accessory.spider_eggs",
+		Type = this.Const.Companions.TypeList.SpiderEggs,
+		Name = function() { return "Webknecht Eggs"; },
+		NameUnleashed = "Webknecht Eggs",
+		Description = "A group of webknecht eggs, ready to hatch webknecht companions in battle. Can be unleashed in battle for scouting, tracking or running down routing enemies.",
+		DescriptionUnleashed = "A webknecht egg cluster that has been unleashed onto the battlefield.",
+		IconLeashed = function(variant) { return "tools/spider_eggs_0" + variant + "_ac.png"; },
+		IconUnleashed = "tools/hound_01_leash_70x70.png",
+		Value = 1500,
+		PartyStrength = 20.0,
+		Variant = function() { return 1; },
+		BasicAttributes = { Hitpoints = 60, Stamina = 130, Bravery = 45, Initiative = 150, MeleeSkill = 60, RangedSkill = 0, MeleeDefense = 10, RangedDefense = 20 },
+		PreferredAttribute = this.Const.Attributes.MeleeSkill,
+		Script = "scripts/companions/types/companions_spider_eggs",
+		ArmorScript = null,
+		UnleashSounds = ["sounds/enemies/dlc2/giant_spider_idle_04.wav", "sounds/enemies/dlc2/giant_spider_idle_10.wav", "sounds/enemies/dlc2/giant_spider_idle_11.wav", "sounds/enemies/dlc2/giant_spider_idle_12.wav", "sounds/enemies/dlc2/giant_spider_idle_14.wav", "sounds/enemies/dlc2/giant_spider_idle_15.wav"],
+		InventorySounds = ["sounds/enemies/dlc2/giant_spider_idle_11.wav", "sounds/enemies/dlc2/giant_spider_idle_12.wav"],
+		Unleash = {	Script = "scripts/companions/onequip/companions_unleash",
+					Icon = function(variant) { return "skills/spider_eggs_0" + variant + "_ac.png"; },
+					IconDisabled = function(variant) { return "skills/spider_eggs_0" + variant + "_sw_ac.png"; },
+					Overlay = "",
+					onActorDied = true	},
+		Leash = {	Script = "scripts/companions/onequip/companions_leash",
+					Icon = function(variant) { return "skills/spider_eggs_0" + variant + "_ac.png"; },
+					IconDisabled = function(variant) { return "skills/spider_eggs_0" + variant + "_sw_ac.png"; },
+					Overlay = ""	}
 	}
+
 ];

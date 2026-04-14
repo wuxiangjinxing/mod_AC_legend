@@ -39,23 +39,17 @@ this.legend_rock_unhold_racial <- this.inherit("scripts/skills/skill", {
 		local newHeadArmor = currentHeadArmor + addedHeadArmor;
 		
 		if (newBodyArmor > totalBodyArmor)
-		{
 			newBodyArmor = totalBodyArmor;
-		}
 		if (newHeadArmor > totalHeadArmor)
-		{
-			newHeadArmor = totalHeadArmor;	
-		}
+			newHeadArmor = totalHeadArmor;
 		
 		if( actor.getSkills().hasSkill("perk.ptr_man_of_steel"))
-			newBodyArmor = this.Math.round(newBodyArmor * 0.909)		
+			newBodyArmor = this.Math.round(newBodyArmor * 0.909);
 		if( actor.getSkills().hasSkill("perk.ptr_man_of_steel"))
-			newHeadArmor = this.Math.round(newHeadArmor * 0.909)
+			newHeadArmor = this.Math.round(newHeadArmor * 0.909);
 
 		if (addedBodyArmor <= 0 && addedHeadArmor <= 0)
-		{
 			return;
-		}
 
 		//this.logInfo("Set " + newBodyArmor + " " + newHeadArmor);
 	
@@ -70,9 +64,7 @@ this.legend_rock_unhold_racial <- this.inherit("scripts/skills/skill", {
 				this.spawnIcon("status_effect_79", actor.getTile());
 
 				if (this.m.SoundOnUse.len() != 0)
-				{
 					this.Sound.play(this.m.SoundOnUse[this.Math.rand(0, this.m.SoundOnUse.len() - 1)], this.Const.Sound.Volume.RacialEffect * 1.25, actor.getPos());
-				}
 
 				this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(actor) + " regenerated " + addedBodyArmor + " points of body armor");
 				this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(actor) + " regenerated " + addedHeadArmor + " points of head armor");
@@ -85,9 +77,7 @@ this.legend_rock_unhold_racial <- this.inherit("scripts/skills/skill", {
 		local actor = this.getContainer().getActor().get();
 
 		if ((!this.Tactical.State.isScenarioMode() && this.Time.getRound() <= 2 || this.Tactical.State.isScenarioMode() && this.Time.getRound() <= 3) && (this.isKindOf(actor, "unhold_armored") || this.isKindOf(actor, "unhold_frost_armored")))
-		{
 			_properties.InitiativeForTurnOrderAdditional += 40;
-		}
 	}
 
 	function onBeforeDamageReceived( _attacker, _skill, _hitInfo, _properties )
@@ -110,4 +100,3 @@ this.legend_rock_unhold_racial <- this.inherit("scripts/skills/skill", {
 	}
 
 });
-

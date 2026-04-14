@@ -17,21 +17,14 @@ this.armored_wolf_item <- this.inherit("scripts/items/accessory/wolf_item", {
 		this.m.Entity = _e;
 
 		if (this.m.Variant > 2)
-		{
 			this.m.Variant = this.Math.rand(1, 2);
-		}
 
 		local variant = this.m.Variant == 1 ? 2 : 1;
 
 		if (this.m.Entity != null)
-		{
 			this.m.Icon = "tools/dog_01_leash_70x70.png";
-		}
 		else
-		{
 			this.m.Icon = "tools/wolf_0" + variant + "_armor_01_70x70.png";
-		}
 	}
 
 });
-

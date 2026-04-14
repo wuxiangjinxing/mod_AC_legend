@@ -1,159 +1,94 @@
-::modAccessoryCompanions.HooksMod.hook("scripts/skills/actives/legend_skin_ghoul_swallow_whole_skill", function( q ) 
-{
+::modAccessoryCompanions.HooksMod.hook("scripts/skills/actives/legend_skin_ghoul_swallow_whole_skill", function( q ) {
+
+	q.m.SwallowedKill <- [];
+
 	q.onVerifyTarget = @(__original) function(_originTile, _targetTile)
 	{
 		if (!this.skill.onVerifyTarget(_originTile, _targetTile))
-		{
 			return false;
-		}
-		
+
 		local entities = this.Tactical.Entities.getInstancesOfFaction(this.Const.Faction.Player);
 
 		if (entities.len() == 1)
-		{
 			return false;
-		}
-		
+
 		local hostilesNum = this.Tactical.Entities.getHostilesNum();
-		
+
 		if (hostilesNum == 1)
-		{
 			return false;
-		}
 
 		local target = _targetTile.getEntity();
 
 		if (target == null)
-		{
 			return false;
-		}
+
+		// The removed vanilla functions, doesn't apply any more
 
 		//if (target.getFlags().has("IsSummoned"))
 		//{
 		//	return false;
 		//}
-		
-		//if ((target.getFaction() != this.Const.Faction.Player) && (this.getContainer().getActor().getFaction() != this.Const.Faction.PlayerAnimals))
+
+		//if ((target.getFaction() != this.Const.Faction.Player) && (this.gIsontainer().getActor().getFaction() != this.Const.Faction.PlayerAnimals))
 		//{
 		//	return false;
 		//}
-		
-		local ET = _targetTile.getEntity().getType();
-		local ETC = this.Const.EntityType;
 
-		if (ET == ETC.Kraken || ET == ETC.KrakenTentacle)
-		{
+		// Adding checks to stop bad interactions with specific entities and cheesing others
+		local Who = _targetTile.getEntity().getType();
+		local Is = this.Const.EntityType;
+
+		// Legendary location entities
+		if (Who == Is.Kraken || Who == Is.KrakenTentacle)
 			return false;
-		}
-		if (ET == ETC.SkeletonLich || ET == ETC.SkeletonLichMirrorImage || ET == ETC.SkeletonPhylactery || ET == ETC.FlyingSkull)
-		{
+		if (Who == Is.SkeletonLich || Who == Is.SkeletonLichMirrorImage || Who == Is.SkeletonPhylactery || Who == Is.FlyingSkull)
 			return false;
-		}
-		if (ET == ETC.BarbarianMadman || ET == ETC.TricksterGod)
-		{
+		if (Who == Is.BarbarianMadman || Who == Is.TricksterGod)
 			return false;
-		}
-		if (ET == ETC.ZombieBoss)
-		{
+
+		// Greenskin and high tier enemies
+		if (Who == Is.OrcWarlord || Who == Is.LegendOrcBehemoth || Who == Is.LegendOrcElite)
 			return false;
-		}
-		if (ET == ETC.SkeletonBoss || ET == ETC.SkeletonHeavy || ET == ETC.SkeletonLight || ET == ETC.SkeletonMedium || ET == ETC.SkeletonPriest)
-		{
+		if (Who == Is.LegendRobberBaron || Who == Is.BarbarianChosen)
 			return false;
-		}
-		if (ET == ETC.OrcWarlord)
-		{
+
+		// Siege weapons
+		if (Who == Is.Mortar || Who == Is.GreenskinCatapult)
 			return false;
-		}
-		if (ET == ETC.BarbarianChosen)
-		{
+
+		// Beasts and their Legendary counterparts
+		if (Who == Is.SandGolem || Who == Is.Schrat || Who == Is.LegendGreenwoodSchrat)
 			return false;
-		}
-		if (ET == ETC.Lindwurm)
-		{
+		if (Who == Is.Lindwurm || Who == Is.LegendStollwurm)
 			return false;
-		}
-		if (ET == ETC.Mortar)
-		{
+		if (Who == Is.LegendRedbackSpider || Who == Is.LegendWhiteDirewolf || Who == Is.LegendRockUnhold || Who == Is.LegendSkinGhoul)
 			return false;
-		}
-		if (ET == ETC.GreenskinCatapult)
-		{
+
+		// Undead entities
+		if (Who == Is.LegendVampireLord || Who == Is.Vampire)
 			return false;
-		}
-		if (ET == ETC.Schrat)
-		{
+		if (Who == Is.LegendMummyQueen || Who == Is.LegendMummyPriest || Who == Is.LegendMummyHeavy)
 			return false;
-		}
-		if (ET == ETC.LegendOrcBehemoth)
-		{
+		if (Who == Is.LegendBanshee || Who == Is.Ghost || Who == Is.LegendDemonHound)
 			return false;
-		}
-		if (ET == ETC.LegendStollwurm)
-		{
+		if (Who == Is.ZombieBoss)
 			return false;
-		}
-		if (ET == ETC.LegendRockUnhold)
-		{
+		if (Who == Is.SkeletonBoss || Who == Is.SkeletonHeavy || Who == Is.SkeletonPriest)
 			return false;
-		}
-		if (ET == ETC.LegendGreenwoodSchrat)
-		{
-			return false;
-		}
-		if (ET == ETC.LegendVampireLord || ET == ETC.Vampire)
-		{
-			return false;
-		}
-		if (ET == ETC.BanditWarlord)
-		{
-			return false;
-		}
-		if (ET == ETC.LegendMummyQueen || ET == ETC.LegendMummyPriest || ET == ETC.LegendMummyMedium || ET == ETC.LegendMummyLight || ET == ETC.LegendMummyHeavy)
-		{
-			return false;
-		}
-		if (ET == ETC.LegendOrcElite)
-		{
-			return false;
-		}
-		if (ET == ETC.LegendWhiteDirewolf)
-		{
-			return false;
-		}
-		if (ET == ETC.LegendSkinGhoul || ET == ETC.Ghoul)
-		{
-			return false;
-		}
-		if (ET == ETC.LegendRedbackSpider)
-		{
-			return false;
-		}
-		if (ET == ETC.LegendBanshee || ET == ETC.Ghost || ET == ETC.LegendDemonHound)
-		{
-			return false;
-		}
-		if (ET == ETC.SandGolem)
-		{
-			return false;
-		}
-		
+
+		// Champion entities
 		if(target.m.IsMiniboss)
-		{
 			return false;
-		}
 
 		return this.skill.onVerifyTarget(_originTile, _targetTile) && !_targetTile.getEntity().getCurrentProperties().IsImmuneToKnockBackAndGrab;
 	}
-	
+
 	q.onUse = @(__original) function(_user, _targetTile)
 	{
 		local target = _targetTile.getEntity();
 
 		if (!_user.isHiddenToPlayer() && (_targetTile.IsVisibleForPlayer || this.knockToTile.IsVisibleForPlayer))
-		{
 			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " devours " + this.Const.UI.getColorizedEntityName(target));
-		}
 
 		local skills = target.getSkills();
 		skills.removeByID("effects.shieldwall");
@@ -166,29 +101,37 @@
 		skills.removeByID("effects.legend_vala_in_trance");
 
 		if (target.getMoraleState() != this.Const.MoraleState.Ignore)
-		{
 			target.setMoraleState(this.Const.MoraleState.Breaking);
-		}
 
 		this.Tactical.getTemporaryRoster().add(target);
 		this.Tactical.TurnSequenceBar.removeEntity(target);
+		this.m.SwallowedKill.push([target, _user]);
 		this.m.SwallowedEntity = target;
 		this.m.SwallowedEntity.getFlags().set("Devoured", true);
 		this.m.SwallowedEntity.setHitpoints(this.Math.max(5, this.m.SwallowedEntity.getHitpoints() - this.Math.rand(10, 20)));
 		target.removeFromMap();
-		_user.getSprite("body").setBrush("bust_ghoulskin_body_04");
+		_user.getSprite("body").setBrush("bust_ghoul_body_04");
 		_user.getSprite("injury").setBrush("bust_ghoul_04_injured");
-		_user.getSprite("head").setBrush("bust_ghoulskin_04_head_0" + _user.m.Head);
+		_user.getSprite("head").setBrush("bust_ghoul_04_head_0" + _user.m.Head);
 		_user.m.Sound[this.Const.Sound.ActorEvent.Death] = _user.m.Sound[this.Const.Sound.ActorEvent.Other2];
 		local effect = this.new("scripts/skills/effects/swallowed_whole_effect");
 		effect.setName(target.getName());
 		_user.getSkills().add(effect);
 
 		if (this.m.SoundOnHit.len() != 0)
-		{
 			this.Sound.play(this.m.SoundOnHit[this.Math.rand(0, this.m.SoundOnHit.len() - 1)], this.Const.Sound.Volume.Skill, _user.getPos());
-		}
 
 		return true;
 	}
+
+	q.onCombatFinished = @(__original) function()
+	{
+		while(this.m.SwallowedKill.len() != 0)
+		{
+			local pair = this.m.SwallowedKill.pop();
+			pair[0].kill(pair[1], this, this.Const.FatalityType.Kraken, true);
+		}
+		__original();
+	}
+
 });

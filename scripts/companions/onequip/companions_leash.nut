@@ -15,7 +15,7 @@ this.companions_leash <- this.inherit("scripts/skills/skill", {
 		this.m.IsTargetingActor = true;
 		this.m.IsUsingHitchance = false;
 		this.m.ActionPointCost = 3;
-		this.m.FatigueCost = 30;
+		this.m.FatigueCost = 20;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 1;
 	}
@@ -28,13 +28,9 @@ this.companions_leash <- this.inherit("scripts/skills/skill", {
 	function setItem(_i)
 	{
 		if (typeof _i == "instance")
-		{
 			this.m.Item = _i;
-		}
 		else
-		{
 			this.m.Item = this.WeakTableRef(_i);
-		}
 	}
 
 	function applyCompanionModification()
@@ -75,9 +71,7 @@ this.companions_leash <- this.inherit("scripts/skills/skill", {
 	function isUsable()
 	{
 		if (!this.m.Item.isUnleashed() || !this.skill.isUsable())
-		{
 			return false;
-		}
 
 		return true;
 	}
@@ -97,29 +91,17 @@ this.companions_leash <- this.inherit("scripts/skills/skill", {
 		local range = this.Math.min(this.m.MaxRange, actor.getCurrentProperties().getVision());
 
 		if (distance > range)
-		{
 			return false;
-		}
 		if (target != companion)
-		{
 			return false;
-		}
 		if (!actor.isAlliedWith(target))
-		{
 			return false;
-		}
 		if (target.getCurrentProperties().IsStunned)
-		{
 			return false;
-		}
 		if (target.getCurrentProperties().IsRooted)
-		{
 			return false;
-		}
 		if (target.getMoraleState() == this.Const.MoraleState.Fleeing)
-		{
 			return false;
-		}
 
 		return this.skill.onVerifyTarget(_originTile, _targetTile);
 	}
@@ -129,9 +111,7 @@ this.companions_leash <- this.inherit("scripts/skills/skill", {
 		local entity = _targetTile.getEntity();
 
 		if ((this.isKindOf(entity, "companions_noodle") || this.isKindOf(entity, "companions_stollwurm")) && entity.m.Tail != null && !entity.m.Tail.isNull() && entity.m.Tail.isAlive())
-		{
 			entity.m.Tail.removeFromMap();
-		}
 
 		this.m.Item.m.Wounds = this.Math.floor((1.0 - entity.getHitpointsPct()) * 100.0);
 		entity.removeFromMap();
